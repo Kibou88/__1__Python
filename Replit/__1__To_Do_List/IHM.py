@@ -29,8 +29,8 @@ def program_choiced(choice, to_do_list):
     """Function to access in the different menu about the user choice"""
     from Add import add_task_all
     from View import view_task_all
-    # from Move import *
-    # from Edit import *
+    from Move import move_task_all
+    from Edit import edit_task_all
     # from Remove import *
 
     match choice:
@@ -38,8 +38,6 @@ def program_choiced(choice, to_do_list):
             name = "Add"
             welcome_message(name)
             to_do_list = add_task_all(to_do_list)
-            # print(to_do_list)
-            return to_do_list
         case "2":
             name = "View"
             welcome_message(name)
@@ -47,9 +45,11 @@ def program_choiced(choice, to_do_list):
         case "3":
             name = "Move"
             welcome_message(name)
+            to_do_list = move_task_all(to_do_list)
         case "4":
             name = "Edit"
             welcome_message(name)
+            to_do_list = edit_task_all(to_do_list)
         case "5":
             name = "Remove"
             welcome_message(name)
@@ -57,6 +57,7 @@ def program_choiced(choice, to_do_list):
             print("Your choice is out of the list")
             print("Bye bye")
             exit()
+    return to_do_list
 
 def welcome_message(name):
     """Function to show a welcome message

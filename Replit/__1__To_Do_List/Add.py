@@ -1,5 +1,5 @@
 def add_task_all(to_do_list):
-    """Function to gather all functions in Add module"""
+    """Function to gather all functions in Add functions"""
 
     name, date, priority = add_message() # Function to save the command entered by user
     to_do_task = add_task(name, date, priority) # Function to add name, date, priority in a 1st list

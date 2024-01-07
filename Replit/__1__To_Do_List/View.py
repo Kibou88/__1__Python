@@ -1,5 +1,5 @@
 def view_task_all(to_do_list):
-    """Function to gather all functions in View modules"""
+    """Function to gather all functions in View functions"""
     if to_do_list != []: # If the list is not empty
         view_choice = view_message() # Function to show the View menu with options and input user
         view_test_choice(view_choice) # Function to test the user's choice, if it's not good => bye bye
@@ -20,7 +20,7 @@ def view_message():
 def view_test_choice(view_choice):
     """Function to test the user's choice
     If choice is not good => break"""
-    if view_choice != "1" and view_choice != "2":
+    if not view_choice in ["1","2"]:
         print("Your choice is not good!")
         print("Au revoir!!")
         exit()
