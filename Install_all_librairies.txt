@@ -1,2 +1,0 @@
-@echo "Installation de Scrapy"
-pip install scrapy
