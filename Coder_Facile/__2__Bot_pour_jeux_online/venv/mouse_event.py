@@ -29,7 +29,7 @@ def left_click_down():
 def left_click_up():
     """Fonction pour relâcher le click gauche de la souris"""
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0) # Le bouton gauche de la souris est relaché
-    time.sleep(1)
+    # time.sleep(1)
     # print("click gauche ok")
 
 def mouse_pos(cord,x_pad,y_pad):
@@ -48,9 +48,10 @@ def get_cords(x_pad,y_pad):
         - x_pad: Contient la coordonnée x du coin supérieur gauche
         - y_pad: Contient la coordonnée y du coin supérieur gauche"""
     x,y=win32api.GetCursorPos()
-    x = x - x_pad
-    y = y - y_pad
+    # x = x - x_pad
+    # y = y - y_pad
     print(x,y)
+    return x,y
 
 
 if __name__ == "__main__":

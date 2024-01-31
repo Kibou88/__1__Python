@@ -1,0 +1,6 @@
+Les couleurs RVB de Shrimp sont (225, 181, 105)	
+Les couleurs RVB de Unagi sont (225, 181, 105)	
+Les couleurs RVB de Nori sont (74, 107, 41)	
+Les couleurs RVB de Fish egg sont (224, 200, 137)	
+Les couleurs RVB de Salmon sont (228, 206, 148)	
+Les couleurs RVB de assiette vide sont (253, 153, 204)	
