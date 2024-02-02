@@ -1,5 +1,6 @@
 from mouse_event import mouse_pos, left_click_down, left_click_up
 import time
+from coordonnees import *
 def make_food(food,food_on_hand):
     """Fonction pour créer les sushis
     ---------------------------------
@@ -11,15 +12,15 @@ def make_food(food,food_on_hand):
             food_on_hand["rice"] -= 1
             food_on_hand["nori"] -= 1
             food_on_hand["roe"] -= 1
-            mouse_pos(Cord.f_rice)
+            mouse_pos(Cord("f_rice"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)
-            mouse_pos(Cord.f_nori)
+            mouse_pos(Cord("f_nori"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)
-            mouse_pos(Cord.f_roe)
+            mouse_pos(Cord("f_roe"))
             left_click_down()
             left_click_up()
             time.sleep(0.1)
@@ -30,15 +31,15 @@ def make_food(food,food_on_hand):
             print("Onigiri")
             food_on_hand["rice"] -= 2
             food_on_hand["nori"] -= 1
-            mouse_pos(Cord.f_rice)
+            mouse_pos(Cord("f_rice"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)
-            mouse_pos(Cord.f_rice)
+            mouse_pos(Cord("f_rice"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)
-            mouse_pos(Cord.f_nori)
+            mouse_pos(Cord("f_nori"))
             left_click_down()
             left_click_up()
             time.sleep(0.1)
@@ -50,18 +51,18 @@ def make_food(food,food_on_hand):
             food_on_hand["rice"] -= 1
             food_on_hand["nori"] -= 1
             food_on_hand["roe"] -= 2
-            mouse_pos(Cord.f_rice)
+            mouse_pos(Cord("f_rice"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)
-            mouse_pos(Cord.f_nori)
+            mouse_pos(Cord("f_nori"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)
-            mouse_pos(Cord.f_roe)
+            mouse_pos(Cord("f_roe"))
             left_click_down()
             left_click_up()
-            mouse_pos(Cord.f_roe)
+            mouse_pos(Cord("f_roe"))
             left_click_down()
             left_click_up()
             time.sleep(0.05)

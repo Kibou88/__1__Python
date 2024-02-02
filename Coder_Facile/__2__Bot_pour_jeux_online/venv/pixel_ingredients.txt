@@ -1,6 +1,8 @@
-Les couleurs RVB de Shrimp sont (225, 181, 105)	
-Les couleurs RVB de Unagi sont (225, 181, 105)	
-Les couleurs RVB de Nori sont (74, 107, 41)	
-Les couleurs RVB de Fish egg sont (224, 200, 137)	
-Les couleurs RVB de Salmon sont (228, 206, 148)	
-Les couleurs RVB de assiette vide sont (253, 153, 204)	
+Les RVB de t_shrimp sont (127, 127, 127)	
+Les RVB de t_unagi sont (204, 172, 89)	
+Les RVB de t_nori sont (255, 250, 208)	
+Les RVB de t_roe sont (34, 25, 15)	
+Les RVB de t_salmon sont (40, 134, 210)	
+Les RVB de t_rice sont (255, 250, 208)	
+
+<class 'PIL.Image.Image'>

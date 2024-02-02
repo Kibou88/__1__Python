@@ -6,6 +6,7 @@
 # Package pywin32 à installer avant
 import win32api, win32con
 import time
+from coordonnees import *
 def left_click_down():
     """Fonction pour appuyer sur le click  gauche
     -------------------------------------
@@ -32,14 +33,14 @@ def left_click_up():
     # time.sleep(1)
     # print("click gauche ok")
 
-def mouse_pos(cord,x_pad,y_pad):
+def mouse_pos(cord):
     """Fonction pour déplacer la souris
     -----------------------------------
     Param:
         - cord: Liste qui contient les coordonnées sous la forme cord=(x,y)
         - x_pad: Contient la coordonnée x du coin supérieur gauche
         - y_pad: Contient la coordonnée y du coin supérieur gauche"""
-    win32api.SetCursorPos((x_pad + cord[0], y_pad + cord[1]))
+    win32api.SetCursorPos((cord[0],cord[1]))
 
 def get_cords(x_pad,y_pad):
     """Fonction pour récupérer l'emplacement de la souris

@@ -13,20 +13,10 @@ from PIL import Image, ImageGrab
 import os
 import time
 
-def screen_grab():
+def screen_grab(coord_table,table):
     """Fonction pour faire une copie d'écran en PNG de l'écran actuel"""
-    # Variables
-    x_pad = 360  # Coordonnées de x dans le coin supérieur gauche
-    y_pad = 227  # Coordonnées de y dans le coin supérieur gauche
-    x_pad2 = 1170
-    y_pad2 = 834
-    box = (x_pad,y_pad,x_pad2,y_pad2) # Assigne un tuple à la variable "box"
-    """ImageGrab.grab prend les paramètres suivants "ImageGrab.grab(x,y,x,y)":
-        -   1er x,y => correspond au coin supérieur gauche
-        -   2nd x,y => correspond au coin inférieur droit"""
-    im = ImageGrab.grab(box) # Créer une copie d'écran et renvoie une image RVB à l'instance im
-    print(os.getcwd())
-    im.save(os.getcwd() + '\\full_snap__' + str(int(time.time())) + '.png', 'PNG')
+    im = ImageGrab.grab(coord_table) # Créer une copie d'écran et renvoie une image RVB à l'instance im
+    im.save(os.getcwd() + '\\pictures\\Temp\\s' + str(table) + '.png', 'PNG')
     """partie "im.save": Appelle la méthode save de la classe Image. Attends 2 paramètres:
                             - Emplacement dans lequel enregistrer le fichier
                             - Format du fichier
