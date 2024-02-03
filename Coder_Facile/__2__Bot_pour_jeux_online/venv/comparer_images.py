@@ -9,57 +9,106 @@ from coordonnees import Cord
 import os
 import time
 
-def compare_picture_all_in_one(x_pad,y_pad):
+def compare_picture_all_in_one():
     """Fonction permettant de rassembler toutes les fonctions pour comparer les images"""
-    onigiri, caliroll, gunkan = ini_images_source()
-    for i in range(1,7,1):
-        coord_table = coordonnee_table(i,x_pad,y_pad) # Fonction pour récupérer les coordonnées de la bulle à sushi par rapport à la table
+    meal_onigiri = 0
+    meal_gunkan =0
+    meal_caliroll = 0
+
+    for i in range(1,7,1): # Boucle pour prendre en photo les tables
+        coord_table = coordonnee_table(i) # Fonction pour récupérer les coordonnées de la bulle à sushi par rapport à la table
         screen_grab(coord_table,i) # Prend le screen de l'endroit et le stocke
-        # onigiri, caliroll, gunkan, picture_table = converter_gray_scale(onigiri, caliroll, gunkan, picture_table) # Niveau de gris
-        print(f"Table {i} OK")
-def ini_images_source():
-    """Fonction pour récupérer et stocker les images sources"""
+
+    onigiri, caliroll, gunkan = init_images_source()
+    s1,s2,s3,s4,s5,s6 = init_images_tables()
+    onigiri, caliroll, gunkan, s1,s2,s3,s4,s5,s6 = converter_gray_scale(onigiri, caliroll, gunkan, s1,s2,s3,s4,s5,s6) # Niveau de gris
+
+    # Rassemble les images tables dans une liste et source dans une autre
+    origin_sushis = (onigiri, gunkan, caliroll)
+    tables = (s1, s2, s3, s4, s5, s6)
+
+    i = 0
+    x = 0
+    for table in tables:
+        i += 1
+        recap_error = []
+        food = 0
+        meal = ""
+        for sushi in origin_sushis:
+            error, diff = mse(sushi, table)
+            recap_error.append((error, food))
+            food += 1
+        # print("Avant tri: ", recap_error)
+        recap_error.sort(key=lambda x: x[0])
+        # print("Après tri: ", recap_error)
+        if recap_error[0][1] == 0 and recap_error[0][0] <= 10:
+            meal = "onigiri"
+            meal_onigiri += 1
+        elif recap_error[0][1] == 1 and recap_error[0][0] <= 10:
+            meal = "gunkan"
+            meal_gunkan += 1
+        elif recap_error[0][1] == 2 and recap_error[0][0] <= 10:
+            meal = "caliroll"
+            meal_caliroll += 1
+        elif recap_error[0][0] >= 10:
+            print(f"Le sushi de la table {i} n'as pas de choix")
+            continue
+        print(f"Le sushi de la table {i} est {meal}")
+
+    return meal_onigiri, meal_gunkan, meal_caliroll
+
+def init_images_source():
+    """Fonction pour récupérer et stocker les images sources
+    /!\SOUCI AVEC CE LIEN : \pictures\Images_sources\gunkan.png"
+    PASSAGE EN TOUT LOCAL/!\ """
 
     # Récupérer les images à comparer
-    onigiri = cv2.imread("\Pictures\Images_sources\onigiri.png")
-    caliroll = cv2.imread("\Pictures\Images_sources\caliroll.png")
-    gunkan = cv2.imread("\Pictures\Images_sources\gunkan.png")
+    onigiri = cv2.imread("onigiri.png")
+    caliroll = cv2.imread("caliroll.png")
+    gunkan = cv2.imread("gunkan.png")
 
     return onigiri, caliroll, gunkan
 
-def converter_gray_scale(onigiri,caliroll, gunkan, picture_table):
+def init_images_tables():
+    """Fonction pour mettre sous cv2 les images des tables"""
+    s1 = cv2.imread("s1.png")
+    s2 = cv2.imread("s2.png")
+    s3 = cv2.imread("s3.png")
+    s4 = cv2.imread("s4.png")
+    s5 = cv2.imread("s5.png")
+    s6 = cv2.imread("s6.png")
+
+    return s1,s2,s3,s4,s5,s6
+def converter_gray_scale(onigiri,caliroll, gunkan, s1,s2,s3,s4,s5,s6):
     """Fonction pour convertir en échelle de girs les images"""
 
     #Convertit les images en échelle de gris
     onigiri = cv2.cvtColor(onigiri,cv2.COLOR_BGR2GRAY)
     gunkan = cv2.cvtColor(gunkan,cv2.COLOR_BGR2GRAY)
     caliroll = cv2.cvtColor(caliroll, cv2.COLOR_BGR2GRAY)
-    picture_table = cv2.cvtColor(picture_table, cv2.COLOR_BGR2GRAY)
+    s1 = cv2.cvtColor(s1, cv2.COLOR_BGR2GRAY)
+    s2 = cv2.cvtColor(s2, cv2.COLOR_BGR2GRAY)
+    s3 = cv2.cvtColor(s3, cv2.COLOR_BGR2GRAY)
+    s4 = cv2.cvtColor(s4, cv2.COLOR_BGR2GRAY)
+    s5 = cv2.cvtColor(s5, cv2.COLOR_BGR2GRAY)
+    s6 = cv2.cvtColor(s6, cv2.COLOR_BGR2GRAY)
 
-    return onigiri, caliroll, gunkan, picture_table
+    return onigiri, caliroll, gunkan, s1,s2,s3,s4,s5,s6
 
     # Définit la fonction pour définir le Mean Squarred Error (Correspondance erreur) entre les images
-def mse(onigiri,caliroll):
-    h, w = onigiri.shape
-    diff = cv2.subtract(onigiri,caliroll)
-    err = np.sum(diff**2)
-    mse = err/(float(h*w))
+
+def mse(sushi, table):
+    """Fonction pour comparer les sushis templates avec ce que demande le client"""
+    h, w = sushi.shape
+    diff = cv2.subtract(sushi, table)
+    err = np.sum(diff)
+    mse = err / (float(h * w))
     return mse, diff
 
-# error, diff = mse(onigiri,caliroll)
-# print("Erreur: ", error) # Renvoie une valeur différente de 0
-#
-# error, diff2 = mse(onigiri, onigiri2)
-# print("Erreur: ", error)
-
-def coordonnee_table(i,x_pad,y_pad):
+def coordonnee_table(i):
     """Fonction permettant de renvoyer les coordonnées de l'envie de sushi correspondant au numéro de la table"""
     match i:
         case 1:
-            # x=Cord("s1_hg")[0]+x_pad
-            # y=Cord("s1_hg")[1]+y_pad
-            # x1 = Cord("s1_bd")[0] + x_pad
-            # y1= Cord("s1_bd")[1] + y_pad
             box = (Cord("s1_hg")+ Cord("s1_bd"))
         case 2:
             box = (Cord("s2_hg")+ Cord("s2_bd"))

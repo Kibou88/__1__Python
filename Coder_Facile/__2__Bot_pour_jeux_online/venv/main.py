@@ -15,6 +15,8 @@ import sys
 from mouse_event import *
 from lancement import lancer_jeu
 from comparer_images import compare_picture_all_in_one
+from creation_sushi import make_food, check_food, foldMat
+from tables import clear_tables
 
 # Variables
 x_pad = 360  # Coordonnées de x dans le coin supérieur gauche
@@ -70,5 +72,26 @@ if __name__ == '__main__':
     # lancer_jeu()
     while True:
         # main()
-        time.sleep(2)
-        compare_picture_all_in_one(x_pad,y_pad)
+        # time.sleep(2)
+        meal_onigiri, meal_gunkan, meal_caliroll = compare_picture_all_in_one()
+
+        check_food(food_on_hand)
+        for onigiri in range(meal_onigiri):
+            food_on_hand = make_food("onigiri", food_on_hand)
+            foldMat()
+            print(f"Onigiri envoyé")
+            check_food(food_on_hand)
+
+        for gunkan in range(meal_gunkan):
+            food_on_hand = make_food("gunkan", food_on_hand)
+            foldMat()
+            print(f"Gunkan envoyé")
+            check_food(food_on_hand)
+        for caliroll in range(meal_caliroll):
+            food_on_hand = make_food("caliroll", food_on_hand)
+            foldMat()
+            print(f"Caliroll envoyé")
+            check_food(food_on_hand)
+        time.sleep(1)
+        clear_tables()
+        print("\n")

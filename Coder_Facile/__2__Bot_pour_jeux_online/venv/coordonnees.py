@@ -32,7 +32,7 @@ def Cord(coordonnee):
             return 838,474
         case "delivery_norm":
             return 796,474
-        case "exit":
+        case "t_exit":
             return 888,520
 
         case "f_rice":
@@ -54,28 +54,30 @@ def Cord(coordonnee):
             return 778,390
         case "table 6":
             return 880,395
+        case "fold mat":
+            return 484, 565
 
         case"s1_hg": # Récupère le coin haut gauche du sushi voulu table 1
             return 407,288
         case "s1_bd":
             return 459,336
         case "s2_hg":  # Récupère le coin haut gauche du sushi voulu table 2
-            return 247, 106
+            return 535, 288
         case "s2_bd":
-            return 298, 253
+            return 587, 336
         case "s3_hg":  # Récupère le coin haut gauche du sushi voulu table 3
-            return 375, 106
+            return 663,288
         case "s3_bd":
-            return 426, 253
+            return 715, 336
         case "s4_hg":  # Récupère le coin haut gauche du sushi voulu table 4
-            return 503, 106
+            return 791, 288
         case "s4_bd":
-            return 554, 253
+            return 843, 336
         case "s5_hg":  # Récupère le coin haut gauche du sushi voulu table 5
-            return 631, 106
+            return 919,288
         case "s5_bd":
-            return 682, 253
+            return 971, 336
         case "s6_hg":  # Récupère le coin haut gauche du sushi voulu table 6
-            return 759, 106
+            return 1047,288
         case "s6_bd":
-            return 810, 253
+            return 1099, 336

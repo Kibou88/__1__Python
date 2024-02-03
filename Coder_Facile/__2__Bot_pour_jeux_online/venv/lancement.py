@@ -10,12 +10,12 @@ def lancer_jeu():
     mouse_pos(Cord("play now"))
     left_click_down()
     left_click_up()
-    time.sleep(9)
+    time.sleep(8)
 
     mouse_pos(Cord("big play"))
     left_click_down()
     left_click_up()
-    time.sleep(10)
+    time.sleep(9)
 
     mouse_pos(Cord("play"))
     time.sleep(1)

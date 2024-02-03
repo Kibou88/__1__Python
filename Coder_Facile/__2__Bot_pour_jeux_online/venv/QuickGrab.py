@@ -16,7 +16,7 @@ import time
 def screen_grab(coord_table,table):
     """Fonction pour faire une copie d'écran en PNG de l'écran actuel"""
     im = ImageGrab.grab(coord_table) # Créer une copie d'écran et renvoie une image RVB à l'instance im
-    im.save(os.getcwd() + '\\pictures\\Temp\\s' + str(table) + '.png', 'PNG')
+    im.save(os.getcwd() + '\\s' + str(table) + '.png', 'PNG')
     """partie "im.save": Appelle la méthode save de la classe Image. Attends 2 paramètres:
                             - Emplacement dans lequel enregistrer le fichier
                             - Format du fichier
