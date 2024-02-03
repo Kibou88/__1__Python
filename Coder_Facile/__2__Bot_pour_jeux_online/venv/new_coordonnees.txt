@@ -1,0 +1,32 @@
+Les coordonnees de play now sont (598, 530)	
+Les coordonnees de big button sont (611, 437)	
+
+Les coordonnees de f_shrimp sont (326, 518)	
+Les coordonnees de f_rice sont (381, 522)	
+Les coordonnees de f_nori sont (330, 570)	
+Les coordonnees de f_roe sont (378, 577)	
+Les coordonnees de f_salmon sont (322, 618)	
+Les coordonnees de f_unagi sont (372, 628)
+	
+Les coordonnees de foldmat sont (484, 565)	
+
+Les coordonnees de phone sont (863, 569)	
+Les coordonnees de topping sont (830, 456)	
+Les coordonnees de t_shrimp sont (786, 404)	
+Les coordonnees de t_unagi sont (878, 406)		
+Les coordonnees de t_nori sont (794, 464)	
+Les coordonnees de t_roe sont (877, 466)	
+Les coordonnees de t_salmon sont (784, 518)	
+
+Les coordonnees de exit_phone sont (888, 520)	
+
+Les coordonnees de rice sont (838, 474)	
+Les coordonnees de buy_rice sont (838, 474)	
+Les coordonnees de delivery_free sont (796, 474)	
+
+Les coordonnees de table_1 sont (366, 386)	
+Les coordonnees de table_2 sont (476, 387)	
+Les coordonnees de table_3 sont (575, 390)	
+Les coordonnees de table_4 sont (676, 390)	
+Les coordonnees de table_5 sont (778, 391)	
+Les coordonnees de table_6 sont (880, 395)	
