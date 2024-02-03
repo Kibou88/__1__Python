@@ -1,0 +1,8 @@
+Les RVB de t_shrimp sont (127, 127, 127)	
+Les RVB de t_unagi sont (204, 172, 89)	
+Les RVB de t_nori sont (255, 250, 208)	
+Les RVB de t_roe sont (34, 25, 15)	
+Les RVB de t_salmon sont (40, 134, 210)	
+Les RVB de t_rice sont (255, 250, 208)	
+
+<class 'PIL.Image.Image'>
