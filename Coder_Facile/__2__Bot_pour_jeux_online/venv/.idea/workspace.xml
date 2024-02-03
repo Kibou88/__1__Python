@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ff76fe5e-b177-4f52-aa80-d0f6891ef92e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/QuickGrab.py" beforeDir="false" afterPath="$PROJECT_DIR$/QuickGrab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comparer_images.py" beforeDir="false" afterPath="$PROJECT_DIR$/comparer_images.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/coordonnees.py" beforeDir="false" afterPath="$PROJECT_DIR$/coordonnees.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/creation_sushi.py" beforeDir="false" afterPath="$PROJECT_DIR$/creation_sushi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lancement.py" beforeDir="false" afterPath="$PROJECT_DIR$/lancement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phone_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/phone_menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Images_sources/gunkan.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Images_sources/gunkan.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Temp/s1.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Temp/s2.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Temp/s3.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Temp/s4.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Temp/s5.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Temp/s6.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Test ok/comparer_images_test_ok.py" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Test ok/comparer_images_test_ok.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Test ok/gunkan.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Test ok/gunkan.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/Test ok/s1.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Test ok/s1.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2bgqvaewQQyK6dLfZwaDEKdhAyi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/Coder_Facile/__2__Bot_pour_jeux_online/venv&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ff76fe5e-b177-4f52-aa80-d0f6891ef92e" name="Changes" comment="" />
+      <created>1706647300555</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706647300555</updated>
+    </task>
+    <servers />
+  </component>
+</project>
