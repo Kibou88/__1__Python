@@ -63,20 +63,20 @@ def init_images_source():
     PASSAGE EN TOUT LOCAL/!\ """
 
     # Récupérer les images à comparer
-    onigiri = cv2.imread("onigiri.png")
-    caliroll = cv2.imread("caliroll.png")
-    gunkan = cv2.imread("gunkan.png")
+    onigiri = cv2.imread(".\\pictures\\Images_sources\\onigiri.png")
+    caliroll = cv2.imread(".\\pictures\\Images_sources\\caliroll.png")
+    gunkan = cv2.imread(".\\pictures\\Images_sources\\gunkan.png")
 
     return onigiri, caliroll, gunkan
 
 def init_images_tables():
     """Fonction pour mettre sous cv2 les images des tables"""
-    s1 = cv2.imread("s1.png")
-    s2 = cv2.imread("s2.png")
-    s3 = cv2.imread("s3.png")
-    s4 = cv2.imread("s4.png")
-    s5 = cv2.imread("s5.png")
-    s6 = cv2.imread("s6.png")
+    s1 = cv2.imread(".\\pictures\\Temp\\s1.png")
+    s2 = cv2.imread(".\\pictures\\Temp\\s2.png")
+    s3 = cv2.imread(".\\pictures\\Temp\\s3.png")
+    s4 = cv2.imread(".\\pictures\\Temp\\s4.png")
+    s5 = cv2.imread(".\\pictures\\Temp\\s5.png")
+    s6 = cv2.imread(".\\pictures\\Temp\\s6.png")
 
     return s1,s2,s3,s4,s5,s6
 def converter_gray_scale(onigiri,caliroll, gunkan, s1,s2,s3,s4,s5,s6):
