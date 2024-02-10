@@ -1,0 +1,13 @@
+INFO:root:Exécution de la fonction add
+DEBUG:root:A et B sont positifs
+INFO:root:Exécution de la fonction add
+DEBUG:root:A et B sont positifs
+INFO:root:Exécution de la fonction add
+DEBUG:root:(5, 10)
+DEBUG:root:A et B sont positifs
+INFO:root:Exécution de la fonction add
+DEBUG:root:(5, 10)
+DEBUG:root:A et B sont positifs
+INFO:root:Exécution de la fonction add
+DEBUG:root:(5, 10)
+DEBUG:root:A et B sont positifs
