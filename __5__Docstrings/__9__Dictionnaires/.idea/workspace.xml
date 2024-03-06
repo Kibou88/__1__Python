@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9bde2a5-9135-4daa-9ef9-4c57816fd20f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/2_Actions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/3_Creation-dico-d-autre-dico.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1_Introduce.py" beforeDir="false" afterPath="$PROJECT_DIR$/1_Introduce.py" afterDir="false" />
-    </list>
+    <list default="true" id="a9bde2a5-9135-4daa-9ef9-4c57816fd20f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +30,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__9__Dictionnaires",
+    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__10__Gestion_erreurs",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
