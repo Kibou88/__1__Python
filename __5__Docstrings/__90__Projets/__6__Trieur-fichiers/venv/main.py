@@ -12,7 +12,7 @@ from pathlib import Path
 from pprint import pprint
 
 # Dico pour répertorié tout les types de fichiers
-typeFiles={
+EXTENSIONS_MAPPING={
     ".mp3":"Musique",
     ".wav":"Musique",
     ".flac":"Musique",
@@ -35,15 +35,11 @@ typeFiles={
 #     "Documents":["txt","pptx","csv","xls","odp","pages"],
 # }
 
-chemin = Path.cwd() # Retourne le chemin actuel
-cheminData = chemin / "data" # Chemin dans le dossier "data"
+BASE_DIR=Path.cwd()
 
-# for i in typeFiles.keys(): # Permet de boucler sur chaque clé du dico
-#     cheminDataType= cheminData / i
-#     cheminDataType.mkdir(exist_ok=True) # Va créer le dossier en fonction du type de fichier SI il existe déjà => ne rien faire
-
-files=[f for f in cheminData.iterdir() if f.is_file()] # Répertorie SEULEMENT les fichiers
-for f in files:
-    output_dir = cheminData / typeFiles.get(f.suffix,"Divers")
-    output_dir.mkdir(exist_ok=True)
-    f.rename(output_dir / f.name)
+files=[f for f in BASE_DIR.iterdir() if f.is_file()]
+for file in files:
+    dossier_cible=EXTENSIONS_MAPPING.get(file.suffix,"Divers")
+    dossier_cible_absolu= BASE_DIR / dossier_cible
+    dossier_cible_absolu.mkdir(exist_ok=True)
+    fichier_cible=dossier_cible_absolu / file.name
