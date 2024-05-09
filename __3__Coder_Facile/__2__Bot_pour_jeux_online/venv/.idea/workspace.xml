@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff76fe5e-b177-4f52-aa80-d0f6891ef92e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../__5__Docstrings/__12__Docstrings-commentaires/1_Types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../__5__Docstrings/__5__Modules/Cours/1__name__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../__5__Docstrings/__5__Modules/Cours/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuickGrab.py" beforeDir="false" afterPath="$PROJECT_DIR$/QuickGrab.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comparer_images.py" beforeDir="false" afterPath="$PROJECT_DIR$/comparer_images.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/Temp/s1.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/Temp/s2.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/Temp/s3.png" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/Temp/s3.png" afterDir="false" />
@@ -41,13 +44,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/Coder_Facile/__2__Bot_pour_jeux_online/venv&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__13__Logger"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

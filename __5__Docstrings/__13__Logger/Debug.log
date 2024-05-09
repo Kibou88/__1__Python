@@ -1,0 +1,10 @@
+2024-04-04 21:58:06,228 - DEBUG - La fonction a bien été exécutée
+2024-04-04 21:58:06,229 - INFO - Message d'information général
+2024-04-04 21:58:06,229 - WARNING - Attention!
+2024-04-04 21:58:06,229 - ERROR - Une erreur est arrivée
+2024-04-04 21:58:06,229 - CRITICAL - Erreur critique
+2024-04-04 21:59:50,095 - DEBUG - La fonction a bien été exécutée
+2024-04-04 21:59:50,095 - INFO - Message d'information général
+2024-04-04 21:59:50,095 - WARNING - Attention!
+2024-04-04 21:59:50,095 - ERROR - Une erreur est arrivée
+2024-04-04 21:59:50,095 - CRITICAL - Erreur critique
