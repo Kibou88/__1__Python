@@ -7,7 +7,7 @@ def lire_liste():
         datas=json.load(file_json) #Récupère le JSON et le stocke
     # print(data) #Affiche le JSON
     return datas
-    file_json.close()
+  
 
 def ecrire_liste(donnees):
     """Fonction pour écrire dans la liste des course, sauver dans le fichier"""

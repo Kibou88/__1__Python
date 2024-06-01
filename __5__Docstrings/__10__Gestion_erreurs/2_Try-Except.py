@@ -20,5 +20,5 @@ except NameError: # Va gérer l'erreur NameError => Problème de nom de variable
 else: # Condition si aucune erreur n'est remontée
     print(resultat)
 
-finally: # Va exécuter le script dessous peu import le résultat du try-except
+finally: # Va exécuter le script dessous peu importe le résultat du try-except
     print("Fin du bloc")
