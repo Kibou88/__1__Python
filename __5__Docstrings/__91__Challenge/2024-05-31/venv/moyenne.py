@@ -6,16 +6,22 @@
 # Date de création: 2024-06-01
 # Date de dernière modification: 2024-06-01
 # ------------------------------------------
-# version: 1.0
+# version: 2.0
+# - Compréhension liste
 #-------------------------------------------
 
 def moyenne_eleves(LISTE_ELEVES):
-    dict_eleves={}
-    for eleves in LISTE_ELEVES:
-        moyenne_float = sum(eleves[1])/len(eleves[1])
-        moyenne = int(round(moyenne_float, 0)) # Retourne la moyenne arrondi à l'entier le + proche
-        dict_eleves[eleves[0]] = moyenne # Sauvegarde de la moyenne avec l'élève associé
-    return dict_eleves
+    # dict_eleves={}
+    # dict_eleves = {eleves[0]: int(round(sum(eleves[1]) / len(eleves[1]))) for eleves in LISTE_ELEVES
+    return {nom: int(round(sum(notes)/len(notes))) for nom, notes in LISTE_ELEVES}
+    # return dict_eleves
+
+    # dict_eleves={}
+    # for eleves in LISTE_ELEVES:
+    #     moyenne_float = sum(eleves[1])/len(eleves[1])
+    #     moyenne = int(round(moyenne_float, 0)) # Retourne la moyenne arrondi à l'entier le + proche
+    #     dict_eleves[eleves[0]] = moyenne # Sauvegarde de la moyenne avec l'élève associé
+    # return dict_eleves
 
 
 
