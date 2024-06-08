@@ -1,4 +1,2 @@
-*.xml
-*.iml
-*.pyc
-*.cfg
+# created by virtualenv automatically
+*
