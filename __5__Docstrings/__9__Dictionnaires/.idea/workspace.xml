@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9bde2a5-9135-4daa-9ef9-4c57816fd20f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../__11__Fonctions/1_Foncions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/10_Exercice_moyenne_eleves.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/11_Reduction_prix.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../__1__Chaine de caractère/Liste des méthodes de chaînes de caractères.txt" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/4_Dico-2D.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +27,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2dEsSUcXja95Zv8NGP6UGXrZ9sU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,7 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__11__Fonctions",
+    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__9__Dictionnaires",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
