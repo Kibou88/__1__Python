@@ -2,8 +2,8 @@
 # But:
 # Contient la logique du programme
 # -----------------------------------
-# Date de création:
-# Date de dernière modification:
+# Date de création: 2024-06-08
+# Date de dernière modification: 2024-06-08
 # ----------------------------------------------------------------
 # version: 1.0
 # -
