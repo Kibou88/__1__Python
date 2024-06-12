@@ -23,8 +23,10 @@ window_root.configure(bg="purple")
 window_root.geometry('1000x700')
 
 frm = ttk.Frame(window_root, padding=10) #Créer l'objet cadre dans la fenêtre racine
-
+window_root.columnconfigure(0, weight=1)
+window_root.columnconfigure(1, weight=3)
 frm.grid() #Créer une grille
+
 ttk.Label(frm, text="Hello World!").grid(column=0, row=0) #Créer un label avec une position dans la grille
 
 # Création d'un bouton pour quitter la fenêtre avec position dans la grille
@@ -32,11 +34,11 @@ ttk.Label(frm, text="Hello World!").grid(column=0, row=0) #Créer un label avec 
 for i in list(DO_VINOS):
     # Création d'un bouton pour quitter la fenêtre avec position dans la grille
     ttk.Button(frm, text=i, command=window_root.destroy, width=WIDTH).grid(column=0, row=POS_ROW)
-    POS_ROW += 10
+    POS_ROW += 1
 
 
 print(ttk.Button().configure().keys())
 print(frm.configure().keys())
 style = ttk.Style(window_root)
-print(.configure().keys())
+# print(style.configure().keys())
 window_root.mainloop() #Affiche la fenêtre

@@ -22,9 +22,9 @@ class MainWindow(Tk):
     - Tk: Permet à MainWindow d'hériter de la classe Tk
     """
     # Variables de la classe
-    POS_ROW = 0
-    POS_COLUMN = 0
-    WIDTH = 20
+    POS_ROW = 15
+    POS_COLUMN = 20
+    WIDTH = 130
     def __init__(self):
         super().__init__()
         # Windows options
@@ -34,8 +34,8 @@ class MainWindow(Tk):
 
         # Grid options
         frm = ttk.Frame(self, padding=10)  # Créer l'objet cadre dans la fenêtre racine
-        frm.grid()  # Créer une grille
-        ttk.Label(self, text="Hello World!", style='TLabel').grid(column=20, row=0)  # Créer un label avec une position dans la grille
+        # frm.grid()  # Créer une grille
+        # ttk.Label(self, text="Hello World!", style='TLabel').grid(column=20, row=0)  # Créer un label avec une position dans la grille
 
         # Style options
         self.style = ttk.Style(self)
@@ -53,14 +53,15 @@ class MainWindow(Tk):
         # Buttons options
         for i in list(DO_VINOS):
             # Création de tout les boutons pour quitter la fenêtre avec position dans la grille
-            buttonVin = ttk.Button(self, text=i, command=self.destroy, width=self.WIDTH, style='TButton')
-            buttonVin.grid(column=self.POS_COLUMN, row=self.POS_ROW)
-            # buttonVin.pack()
-            # button.pack()
-            self.POS_ROW += 1
-            self.POS_COLUMN += 1
-
-
+            button = ttk.Button(self, text=i, command=self.destroy, style='TButton')
+            button.place(x=self.POS_COLUMN,y=self.POS_ROW, width=self.WIDTH, height=40)
+            self.POS_ROW += 45
+            # self.POS_COLUMN += 50
+        separator = ttk.Separator(self, orient='vertical')
+        separator.pack(fill='y')
+        label2 = ttk.Label(self, text="Second Label")
+        label2.place(x=100, y =10)
+        label2.pack()
 
 if __name__ == "__main__":
     main_window = MainWindow()
