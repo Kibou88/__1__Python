@@ -1,90 +1,126 @@
-#---------BIBLIOTHEQUES/MODULES---------
-import folium
-import webbrowser
-from tkinter.messagebox import * # boîte de dialogue
-from tkinter import *
-import tkinter as tk
+import sys
+import tkinter
+import tkinter.messagebox
+from tkintermapview import TkinterMapView
 
-#----------FONCTIONS----------
-# Fonction carte
-def carte():
-    # Récupération des données entrées
-    nomlieu = nom.get()
-    longitude = long.get()
-    latitude = lat.get()
-    cercle1 = per1.get()
-    cercle2 = per2.get()
-    # lieu = [46.548312, 3.287667]
-    lieu = [longitude, latitude]
-    # Création d'une carte
-    carte= folium.Map(location=lieu,zoom_start=12)
-    # Ajout marqueur avec légende, couleur
-    folium.Marker(
-        location=lieu,
-        popup=nomlieu,
-        icon=folium.Icon(color='green')
-        ).add_to(carte)
-    # Cercle de confinement en mètres (radius = 1000 pour 1 km)
-    folium.Circle(lieu,radius = cercle1, fill=True, color='red' ).add_to(carte)
-    folium.Circle(lieu,radius = cercle2, fill=True, color='orange' ).add_to(carte)
-    # enregistrement et affichage de la carte
-    nomcarte = nomlieu+'_'+cercle1+'_'+cercle2+'.html'
-    carte.save(nomcarte)
-    webbrowser.open(nomcarte)
 
-#----------PROGRAMME PRINCIPAL----------
+class App(tkinter.Tk):
 
-# Création de la fenêtre principale (main window)
-Mafenetre = tk.Tk()
-Mafenetre.title('Périmètres')
-# Taille de la fenêtre
-Mafenetre.geometry("460x220")
-Mafenetre.configure(bg = 'orange')
-tk.Label(Mafenetre, text = 'Périmètre(s) d'+"'"+'influence ',
-bg = 'orange', font=("Arial", 12, "bold")).grid(row=0, column=1)
+    APP_NAME = "map_view_demo.py"
+    WIDTH = 800
+    HEIGHT = 750
 
-# widget Nom du Lieu
-tk.Label(Mafenetre, text = 'Nom du Lieu ',
-bg = 'orange', font=("Arial", 11)).grid(row=1)
-nom = tk.Entry(Mafenetre, bg ='bisque', fg='blue', font=("Arial", 11))
-nom.grid(row=1, column=1)
-tk.Label(Mafenetre, text = '*', bg = 'orange', fg = 'red', font=("Arial", 11)).grid(row=1, column=2)
-# widget Longitude
-tk.Label(Mafenetre, text = 'Longitude ',
-bg = 'orange', font=("Arial", 11)).grid(row=2)
-long = tk.Entry(Mafenetre, bg ='bisque', fg='green', font=("Arial", 11))
-long.grid(row=2, column=1)
-tk.Label(Mafenetre, text = '*', bg = 'orange', fg = 'red', font=("Arial", 11)).grid(row=2, column=2)
-# widget Latitude
-tk.Label(Mafenetre, text = 'Latitude ',
-bg = 'orange', font=("Arial", 11)).grid(row=3)
-lat = tk.Entry(Mafenetre, bg ='bisque', fg='green', font=("Arial", 11))
-lat.grid(row=3, column=1)
-tk.Label(Mafenetre, text = '*', bg = 'orange', fg = 'red', font=("Arial", 11)).grid(row=3, column=2)
+    def __init__(self, *args, **kwargs):
+        tkinter.Tk.__init__(self, *args, **kwargs)
 
-# widget Petit périmètre
-tk.Label(Mafenetre, text = 'Petit Périmètre (en m) ',
-bg = 'orange', font=("Arial", 11)).grid(row=4)
-per1 = tk.Entry(Mafenetre, bg ='bisque', fg='red', font=("Arial", 11))
-per1.grid(row=4, column=1)
-tk.Label(Mafenetre, text = '*', bg = 'orange', fg = 'red', font=("Arial", 11)).grid(row=4, column=2)
+        self.title(self.APP_NAME)
+        self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
 
-# widget Grand périmètre
-tk.Label(Mafenetre, text = 'Grand Périmètre (en m) ',
-bg = 'orange', font=("Arial", 11)).grid(row=5)
-per2 = tk.Entry(Mafenetre, bg ='bisque', fg='red', font=("Arial", 11))
-per2.grid(row=5, column=1)
-tk.Label(Mafenetre, text = 'Optionnel', bg = 'orange', font=("Arial", 11)).grid(row=5, column=2)
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.bind("<Return>", self.search)
 
-# widget bouton Valider
-Valider = tk.Button(Mafenetre, text ='Valider', font=("Arial", 12, "bold"), command=carte)
-Valider.grid(row=6, column=1, sticky=tk.W, pady=4)
+        if sys.platform == "darwin":
+            self.bind("<Command-q>", self.on_closing)
+            self.bind("<Command-w>", self.on_closing)
 
-# widget bouton Quitter
-Quitter = tk.Button(Mafenetre, text ='Quitter', font=("Arial", 12, "bold"), command = Mafenetre.destroy)
-Quitter.grid(row=6, column=2, sticky=tk.W, pady=4)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(1, weight=0)
+        self.grid_columnconfigure(2, weight=0)
+        self.grid_rowconfigure(1, weight=1)
 
-# widget Obligatoire
-tk.Label(Mafenetre, text = '* Champs obligatoire', bg = 'orange', fg = 'red', font=("Arial", 11)).grid(row=7, column=1)
+        self.search_bar = tkinter.Entry(self, width=50)
+        self.search_bar.grid(row=0, column=0, pady=10, padx=10, sticky="we")
+        self.search_bar.focus()
 
-Mafenetre.mainloop()
+        self.search_bar_button = tkinter.Button(master=self, width=8, text="Search", command=self.search)
+        self.search_bar_button.grid(row=0, column=1, pady=10, padx=10)
+
+        self.search_bar_clear = tkinter.Button(master=self, width=8, text="Clear", command=self.clear)
+        self.search_bar_clear.grid(row=0, column=2, pady=10, padx=10)
+
+        self.map_widget = TkinterMapView(width=self.WIDTH, height=600, corner_radius=0)
+        self.map_widget.grid(row=1, column=0, columnspan=3, sticky="nsew")
+
+        self.marker_list_box = tkinter.Listbox(self, height=8)
+        self.marker_list_box.grid(row=2, column=0, columnspan=1, sticky="ew", padx=10, pady=10)
+
+        self.listbox_button_frame = tkinter.Frame(master=self)
+        self.listbox_button_frame.grid(row=2, column=1, sticky="nsew", columnspan=2)
+
+        self.listbox_button_frame.grid_columnconfigure(0, weight=1)
+
+        self.save_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="save current marker",
+                                                 command=self.save_marker)
+        self.save_marker_button.grid(row=0, column=0, pady=10, padx=10)
+
+        self.clear_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="clear marker list",
+                                                  command=self.clear_marker_list)
+        self.clear_marker_button.grid(row=1, column=0, pady=10, padx=10)
+
+        self.connect_marker_button = tkinter.Button(master=self.listbox_button_frame, width=20, text="connect marker with path",
+                                                    command=self.connect_marker)
+        self.connect_marker_button.grid(row=2, column=0, pady=10, padx=10)
+
+        self.map_widget.set_address("NYC")
+
+        self.marker_list = []
+        self.marker_path = None
+
+        self.search_marker = None
+        self.search_in_progress = False
+
+    def search(self, event=None):
+        if not self.search_in_progress:
+            self.search_in_progress = True
+            if self.search_marker not in self.marker_list:
+                self.map_widget.delete(self.search_marker)
+
+            address = self.search_bar.get()
+            self.search_marker = self.map_widget.set_address(address, marker=True)
+            if self.search_marker is False:
+                # address was invalid (return value is False)
+                self.search_marker = None
+            self.search_in_progress = False
+
+    def save_marker(self):
+        if self.search_marker is not None:
+            self.marker_list_box.insert(tkinter.END, f" {len(self.marker_list)}. {self.search_marker.text} ")
+            self.marker_list_box.see(tkinter.END)
+            self.marker_list.append(self.search_marker)
+
+    def clear_marker_list(self):
+        for marker in self.marker_list:
+            self.map_widget.delete(marker)
+
+        self.marker_list_box.delete(0, tkinter.END)
+        self.marker_list.clear()
+        self.connect_marker()
+
+    def connect_marker(self):
+        print(self.marker_list)
+        position_list = []
+
+        for marker in self.marker_list:
+            position_list.append(marker.position)
+
+        if self.marker_path is not None:
+            self.map_widget.delete(self.marker_path)
+
+        if len(position_list) > 0:
+            self.marker_path = self.map_widget.set_path(position_list)
+
+    def clear(self):
+        self.search_bar.delete(0, last=tkinter.END)
+        self.map_widget.delete(self.search_marker)
+
+    def on_closing(self, event=0):
+        self.destroy()
+        exit()
+
+    def start(self):
+        self.mainloop()
+
+
+if __name__ == "__main__":
+    app = App()
+    app.start()

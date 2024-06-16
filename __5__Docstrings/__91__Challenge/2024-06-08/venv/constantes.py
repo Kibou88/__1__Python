@@ -3,11 +3,12 @@
 # Contient les constantes du code
 # -----------------------------------
 # Date de création: 2024-06-08
-# Date de dernière modification: 2024-06-08
+# Date de dernière modification: 2024-06-16
 # ------------------------------------------
 # version: 1.0
 # -
 #-------------------------------------------
+import os
 
 DO_VINOS = {
     "Alicante": ((38.3436365, -0.4881708), "Tinto"),
@@ -27,6 +28,10 @@ DO_VINOS = {
     "Xérès": ((36.6816936, -6.1377402), "Blanco")
 }
 
-print(list(DO_VINOS))
+CURRENT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__))) # Variable pour le répertoire de travail
 
-# <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4149612.82522296!2d-2.662655818895687!3d40.45674451738455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2sfr!4v1717873015663!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+if __name__ == "__main__":
+    print(list(DO_VINOS))
+    for i in list(DO_VINOS):
+        print(f"Les coordonées de {i} sont {DO_VINOS[i][0]} et le type de vin {DO_VINOS[i][1]}")
