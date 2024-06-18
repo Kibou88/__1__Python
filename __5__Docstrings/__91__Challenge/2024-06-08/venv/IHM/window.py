@@ -78,8 +78,10 @@ class MainWindow(Tk):
                 self.map_widget.set_marker(DO_VINOS[i][0][0], DO_VINOS[i][0][1], icon=tinto)  # change position
             elif DO_VINOS[i][1].lower() == "blanco":
                 self.map_widget.set_marker(DO_VINOS[i][0][0], DO_VINOS[i][0][1], icon=blanco)  # change position
+                
     def set_coordonnees(self, i):
         """
+        Méthode pour centrer la carte sur la ville en fonction des coordonnées
         :param i: Récupère le nom de la ville de la méthode set_button
         :return: Permet de centrer la carte sur la ville sélectionnée
         """
