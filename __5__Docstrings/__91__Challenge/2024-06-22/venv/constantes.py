@@ -10,3 +10,4 @@
 #-------------------------------------------
 
 PHRASE = "Salut, je suis ici pour apprendre Python"
+CLEF = 6

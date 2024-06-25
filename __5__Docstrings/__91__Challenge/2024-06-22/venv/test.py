@@ -4,12 +4,8 @@
 # -----------------------------------
 
 from constantes import *
-
-print(len(PHRASE))
-phrase_out_space = PHRASE.replace(" ", "_")
-lignes = len(phrase_out_space)/6
-
-while lignes != round(lignes, 0):
-    phrase_out_space += "*"
-    lignes = len(phrase_out_space) / 6
-print(phrase_out_space)
+phrase_space = "Salut, je suis ici pour apprendre Python****"
+fin_chaine = (len(phrase_space) if phrase_space.find("*") == -1 else phrase_space.find("*"))
+phrase = phrase_space[:fin_chaine:]
+print(phrase)
+print(phrase_space.find("*"))
