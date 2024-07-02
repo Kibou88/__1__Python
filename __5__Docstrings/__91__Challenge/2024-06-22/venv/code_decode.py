@@ -5,12 +5,13 @@
 # Date de création: 2024-06-24
 # Date de dernière modification: 2024-07-02
 # ----------------------------------------------------------------
-# version: 4.1
+# version: 4.2
 # - Combiner les 2 classes en 1 (V2)
 # - Faire une méthode pour le codage, une pour le décodage et une autre pour gérer l'affichage en sortie (V2)
 # - Docstrings corrigées avec la PEP257 (V3)
 # - Suppression des 3 variables de classe dans __init__ (V3)
 # - Simplification de la méthode codage (V4.1)
+# - Simplification de la méthode décodage (V4.2)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
@@ -48,7 +49,7 @@ class CodageDecodage:
 
         return "".join([sentence_to_code[ligne::self.clef] for ligne in range(self.clef)])
 
-    def decodage(self, phrase_codee: str):
+    def decodage(self, sentence_coded: str):
         """
         Permet de coder la phrase:
             - Fais un codage symmétrique en fonction de la valeur de la clé
@@ -57,15 +58,17 @@ class CodageDecodage:
         :return:
             - phrase codée
         """
-        phrase_decode = ''
-        lignes_decode = len(phrase_codee) / self.clef
-        for ligne in range(int(lignes_decode)):
-            phrase_decode += phrase_codee[ligne::int(lignes_decode)]
+        lenght_sentence = len(sentence_coded)
+        segment_numbers = int(lenght_sentence / self.clef)
+        sentence_shaped = \
+            "".join([sentence_coded[ligne::segment_numbers] for ligne in range(segment_numbers)])
 
-        phrase_space = phrase_decode.replace("_", " ")
+        ending_sentence = \
+            (lenght_sentence if sentence_shaped.find("*") == -1 else sentence_shaped.find("*"))
 
-        fin_chaine = (len(phrase_space) if phrase_space.find("*") == -1 else phrase_space.find("*"))
-        return phrase_space[:fin_chaine:]
+        sentence_decoded = sentence_shaped.replace("_", " ")
+
+        return sentence_decoded[:ending_sentence:]
 
 if __name__ == '__main__':
     cryptage = CodageDecodage(CLEF, PHRASE)
