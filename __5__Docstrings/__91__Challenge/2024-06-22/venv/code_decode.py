@@ -3,14 +3,14 @@
 # Contient les classes Phrase_Code et Phrase_Decode
 # -----------------------------------
 # Date de création: 2024-06-24
-# Date de dernière modification: 2024-06-29
+# Date de dernière modification: 2024-07-02
 # ----------------------------------------------------------------
-# version: 3.0
+# version: 4.1
 # - Combiner les 2 classes en 1 (V2)
 # - Faire une méthode pour le codage, une pour le décodage et une autre pour gérer l'affichage en sortie (V2)
 # - Docstrings corrigées avec la PEP257 (V3)
 # - Suppression des 3 variables de classe dans __init__ (V3)
-# -
+# - Simplification de la méthode codage (V4.1)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
@@ -41,17 +41,12 @@ class CodageDecodage:
         :return:
             - phrase codée
         """
-        phrase_code = ''
-        phrase_out_space = self.phrase.replace(" ", "_")  # Remplacer les espaces par des "_"
-        lignes = len(phrase_out_space) / self.clef
-        while lignes != round(lignes, 0):  # Rajout "*" pour compléter l'espace vide à la fin de la phrase
-            phrase_out_space += "*"
-            lignes = len(phrase_out_space) / self.clef
+        sentence_without_space = self.phrase.replace(" ", "_")
+        total_lenght = len(sentence_without_space) / CLEF
+        missing_stars = CLEF * int(round(total_lenght, 0)) - len(sentence_without_space)
+        sentence_to_code = sentence_without_space + "*" * missing_stars
 
-        for ligne in range(self.clef):
-            phrase_code += phrase_out_space[ligne::self.clef]
-
-        return phrase_code
+        return "".join([sentence_to_code[ligne::self.clef] for ligne in range(self.clef)])
 
     def decodage(self, phrase_codee: str):
         """
@@ -74,8 +69,8 @@ class CodageDecodage:
 
 if __name__ == '__main__':
     cryptage = CodageDecodage(CLEF, PHRASE)
-    phrase_cryptee = cryptage.codage()
-    print("Voici la phrase codée: ", phrase_cryptee)
+    sentence_coded = cryptage.codage()
+    print("Voici la phrase codée: ", sentence_coded)
 
-    phrase_decryptee = cryptage.decodage(phrase_cryptee)
-    print("Voici la phrase décodée: ", phrase_decryptee)
+    sentence_decoded = cryptage.decodage(sentence_coded)
+    print("Voici la phrase décodée: ", sentence_decoded)
