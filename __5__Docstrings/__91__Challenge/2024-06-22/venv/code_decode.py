@@ -12,10 +12,12 @@
 # - Suppression des 3 variables de classe dans __init__ (V3)
 # - Simplification de la méthode codage (V4.1)
 # - Simplification de la méthode décodage (V4.2)
+# - Correction de la méthode codage (V5)
+# - Ajout du module math pour arrondir au supérieur (V5)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
-
+import math
 # Appel des modules internes
 from constantes import PHRASE, CLEF
 
@@ -42,12 +44,11 @@ class CodageDecodage:
         :return:
             - phrase codée
         """
-        sentence_without_space = self.phrase.replace(" ", "_")
-        total_lenght = len(sentence_without_space) / CLEF
-        missing_stars = CLEF * int(round(total_lenght, 0)) - len(sentence_without_space)
-        sentence_to_code = sentence_without_space + "*" * missing_stars
+        total_lenght = len(self.phrase) / self.clef
+        missing_stars = self.clef * int(math.ceil(total_lenght)) - len(self.phrase)
+        sentence_to_code = f"{self.phrase.replace(' ', '_')}{'*' * missing_stars}"
 
-        return "".join([sentence_to_code[ligne::self.clef] for ligne in range(self.clef)])
+        return "".join(sentence_to_code[ligne::self.clef] for ligne in range(self.clef))
 
     def decodage(self, sentence_coded: str):
         """
@@ -58,22 +59,25 @@ class CodageDecodage:
         :return:
             - phrase codée
         """
-        lenght_sentence = len(sentence_coded)
-        segment_numbers = int(lenght_sentence / self.clef)
+        segment_numbers = int(len(sentence_coded) / self.clef)
         sentence_shaped = \
-            "".join([sentence_coded[ligne::segment_numbers] for ligne in range(segment_numbers)])
+            "".join(sentence_coded[ligne::segment_numbers] for ligne in range(segment_numbers))
 
         ending_sentence = \
-            (lenght_sentence if sentence_shaped.find("*") == -1 else sentence_shaped.find("*"))
+            (len(sentence_coded) if sentence_shaped.find("*") == -1 else sentence_shaped.find("*"))
 
         sentence_decoded = sentence_shaped.replace("_", " ")
 
         return sentence_decoded[:ending_sentence:]
 
+    def __str__(self):
+        return "Voici la phrase codée: " + self.codage() + \
+            "\nVoici la phrase décodée: " + self.decodage(sentence_coded)
+
 if __name__ == '__main__':
     cryptage = CodageDecodage(CLEF, PHRASE)
     sentence_coded = cryptage.codage()
-    print("Voici la phrase codée: ", sentence_coded)
 
     sentence_decoded = cryptage.decodage(sentence_coded)
-    print("Voici la phrase décodée: ", sentence_decoded)
+
+    print(str(cryptage))

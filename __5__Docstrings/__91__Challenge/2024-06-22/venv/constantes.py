@@ -10,4 +10,6 @@
 #-------------------------------------------
 
 PHRASE = "Salut, je suis ici pour apprendre Python"
+# PHRASE2 = "Ceci est un test"
 CLEF = 6
+# CLEF2 = 5
