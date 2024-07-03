@@ -3,9 +3,9 @@
 # Contient les classes Phrase_Code et Phrase_Decode
 # -----------------------------------
 # Date de création: 2024-06-24
-# Date de dernière modification: 2024-07-02
+# Date de dernière modification: 2024-07-03
 # ----------------------------------------------------------------
-# version: 4.2
+# version: 5.0
 # - Combiner les 2 classes en 1 (V2)
 # - Faire une méthode pour le codage, une pour le décodage et une autre pour gérer l'affichage en sortie (V2)
 # - Docstrings corrigées avec la PEP257 (V3)
@@ -14,6 +14,7 @@
 # - Simplification de la méthode décodage (V4.2)
 # - Correction de la méthode codage (V5)
 # - Ajout du module math pour arrondir au supérieur (V5)
+# - Ajout de la méthode __str__ (V5)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
