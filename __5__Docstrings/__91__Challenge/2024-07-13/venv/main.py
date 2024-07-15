@@ -3,12 +3,17 @@
 # Contient la logique du programme
 # -----------------------------------
 # Date de création: 2024-07-13
-# Date de dernière modification: 2024-07-14
+# Date de dernière modification: 2024-07-15
 # ----------------------------------------------------------------
-# version: 2.0
+# version: 3.0
 # - Ajout de message pour stocker le message à afficher (V2)
 # - La valeur nombre est arrondi à 2 chiffres (V2)
 # - Mise en forme du message à afficher (V2)
+# - Suppression du round (V3)
+# - Remplacement message de type 'str' par un type 'list' (V3)
+# - Ajout de '+0.01' dans l'équation pour faire l'arrondit (V3)
+# - Changement des variables: "nombre" -> "argent" (programme) (V3)
+#                             "nombre" -> "monnaies" (fonction) (V3)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
@@ -17,26 +22,27 @@
 from constantes import DEVISE_MEXICAINE
 
 
-def decomposition_monnaie(nombre: int) -> str:
+def decomposition_monnaie(monnaies: int) -> str:
     """
     Décompose le nombre en différents billets
     :param
     nombre (int): Argent à décomposer
     :return:
-    message (str): affiche le billet et la quantité
+    liste_devise (list): stocke le message à afficher
     """
-    message = ""
+    liste_devise = []
     for key, value in DEVISE_MEXICAINE.items():
-        if round(nombre,2) >= key:
-            message += f"{value} : {int(round(nombre,2) / key)}//"
-            nombre -= key * int(nombre / key)
-    return message
+        if monnaies >= key:
+            liste_devise.append(f"{value} : {int(round(monnaies,2) / key)}")
+            monnaies = monnaies % key + 0.01
+
+    return liste_devise
 
 if __name__ == '__main__':
     try:
-        nombre = float(input("Entrez une quantité d'argent > "))
+        argent = float(input("Entrez une quantité d'argent > "))
     except ValueError:
         print("Erreur de type. Inscrire un nombre!!")
     else:
-        print(decomposition_monnaie(nombre).replace("//","\n"))
+        print("\n".join(decomposition_monnaie(argent)))
 
