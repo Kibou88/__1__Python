@@ -14,6 +14,10 @@
 # - Ajout de '+0.01' dans l'équation pour faire l'arrondit (V3)
 # - Changement des variables: "nombre" -> "argent" (programme) (V3)
 #                             "nombre" -> "monnaies" (fonction) (V3)
+# - Changement de "int" dans la fonction par "float" (V4)
+# - Remplacement '+0.01' par un round (V4)
+# - Simplification de la formule pour afficher le nombre de billets/pièces (V4)
+# - Ajout du join dans la fonction plutôt que dans le print (V4)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
@@ -22,7 +26,7 @@
 from constantes import DEVISE_MEXICAINE
 
 
-def decomposition_monnaie(monnaies: int) -> str:
+def decomposition_monnaie(monnaies: float) -> str:
     """
     Décompose le nombre en différents billets
     :param
@@ -33,10 +37,10 @@ def decomposition_monnaie(monnaies: int) -> str:
     liste_devise = []
     for key, value in DEVISE_MEXICAINE.items():
         if monnaies >= key:
-            liste_devise.append(f"{value} : {int(round(monnaies,2) / key)}")
-            monnaies = monnaies % key + 0.01
+            liste_devise.append(f"{value} : {int(monnaies // key)}")
+            monnaies = round(monnaies % key, 2)
 
-    return liste_devise
+    return "\n".join(liste_devise)
 
 if __name__ == '__main__':
     try:
@@ -44,5 +48,5 @@ if __name__ == '__main__':
     except ValueError:
         print("Erreur de type. Inscrire un nombre!!")
     else:
-        print("\n".join(decomposition_monnaie(argent)))
+        print(decomposition_monnaie(argent))
 
