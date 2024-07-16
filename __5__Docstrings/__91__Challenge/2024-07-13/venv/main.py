@@ -3,9 +3,9 @@
 # Contient la logique du programme
 # -----------------------------------
 # Date de création: 2024-07-13
-# Date de dernière modification: 2024-07-15
+# Date de dernière modification: 2024-07-16
 # ----------------------------------------------------------------
-# version: 3.0
+# version: 4.0
 # - Ajout de message pour stocker le message à afficher (V2)
 # - La valeur nombre est arrondi à 2 chiffres (V2)
 # - Mise en forme du message à afficher (V2)
