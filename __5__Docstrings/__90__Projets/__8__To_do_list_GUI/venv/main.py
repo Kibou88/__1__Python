@@ -8,7 +8,7 @@
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QListWidget
 
 
-class MainWindow(QWidget): #La classe hérite de QWidget
+class MainWindow(QWidget):
     def __init__(self, nom):
         super().__init__()
         self.nom = nom
@@ -21,13 +21,16 @@ class MainWindow(QWidget): #La classe hérite de QWidget
         self.le_text.setPlaceholderText("Tâche à effectuer...") # Permet de mettre un texte en arrière plan
         self.btn_clear = QPushButton("Clear list")
 
+
         self.main_layout.addWidget(self.lw_todoList)
         self.main_layout.addWidget(self.le_text)
         self.main_layout.addWidget(self.btn_clear)
 
+
         self.le_text.textChanged.connect(self.le_text.setText)
         self.le_text.returnPressed.connect(self.add_text_list) # Ajouter la tâche dans la liste en appuyant sur Entrée
         self.btn_clear.clicked.connect(self.clear_text_list) # Efface toute la liste ainsi que la saisie
+        self.lw_todoList.itemDoubleClicked.connect(self.delete_todo)
 
     def add_text_list(self):
         """
@@ -50,8 +53,8 @@ class MainWindow(QWidget): #La classe hérite de QWidget
         self.le_text.clear()
         self.lw_todoList.clear()
 
-    def enter_touch(self):
-        print(self.le_text.returnPressed)
+    def delete_todo(self, item):
+        self.lw_todoList.takeItem(self.lw_todoList.row(item))
 
 
 app = QApplication() #1 seule  QApplication
