@@ -3,13 +3,15 @@
 # Contient la logique du programme
 # -----------------------------------
 # Date de création: 2024-07-19
-# Date de dernière modification: 2024-07-25
+# Date de dernière modification: 2024-07-29
 # ----------------------------------------------------------------
-# version: 1.0
-# -
+# version: 2.0
+# - Variable 'coups' initialisée à 12 (V2)
+# - Rassemblement en 1 print du message d'accueil (V2)
 #-------------------------------------------------------------------
 
 # Appel des modules externes
+
 import random
 # Appel des modules internes
 from constantes import CARRE, PASTILLE, COLOR_TABLE
@@ -21,12 +23,12 @@ def game_message():
    :return:
    N/A
    """
-   print("JEU MASTERMIND")
-   print("Trouver la bonne combinaison de quatre couleurs secrètes que notre 'IA' aura généré.")
-   print("A chaque couleur bien positionnée, vous aure en retour un indicateur rouge")
-   print("A chaque couleur présente mais mal positionnée, vous aurez en retour un indicateur blanc")
-   print("Entrez votre combinaison secrète en utilisantes les chiffres des couleurs disponibles.")
-   print(f"[1]:{COLOR_TABLE['YELLOW']} Jaune{COLOR_TABLE['WHITE']}\t"
+   print("JEU MASTERMIND\n"
+         "Trouver la bonne combinaison de quatre couleurs secrètes que notre 'IA' aura généré.\n"
+         "A chaque couleur bien positionnée, vous aure en retour un indicateur rouge\n"
+         "A chaque couleur présente mais mal positionnée, vous aurez en retour un indicateur blanc\n"
+         "Entrez votre combinaison secrète en utilisantes les chiffres des couleurs disponibles.\n"
+         f"[1]:{COLOR_TABLE['YELLOW']} Jaune{COLOR_TABLE['WHITE']}\t"
          f"[2]:{COLOR_TABLE['BLUE']} Bleu{COLOR_TABLE['WHITE']}\t"
          f"[3]:{COLOR_TABLE['RED']} Rouge{COLOR_TABLE['WHITE']}\t"
          f"[4]:{COLOR_TABLE['GREEN']} Vert{COLOR_TABLE['WHITE']}\t"
@@ -71,7 +73,7 @@ if __name__ == '__main__':
    game_message()
    code_secret = random.sample(range(1, 7), 4)
    find_code = False
-   coups = 0
+   coups = 12
    
    while not find_code:
        try:
@@ -97,8 +99,4 @@ if __name__ == '__main__':
                print(f"Vous avez perdu. Le code secret était: {code_secret}")
                exit()
 
-   print(f"Félicitation!! Vous avez trouvé le code secret en {12-coups} coups")
-
-
-
-
+   print(f"Félicitation!! Vous avez trouvé le code secret en {coups} coups")
