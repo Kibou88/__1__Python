@@ -6,10 +6,11 @@
 # Date de modification: 2024-07-11
 ###################################
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QListWidget
-
+from datetime import date, time, datetime
 
 class MainWindow(QWidget):
     def __init__(self, nom):
+        self.dt = datetime.now()
         super().__init__()
         self.nom = nom
         self.setWindowTitle(nom)
@@ -41,6 +42,7 @@ class MainWindow(QWidget):
         - Supprime les données du champ
         """
         if self.le_text.text() != "":
+            self.lw_todoList.addItem(f"Utilisateur [{dt('%d')}]:")
             self.lw_todoList.addItem(self.le_text.text())
         self.le_text.clear()
 
