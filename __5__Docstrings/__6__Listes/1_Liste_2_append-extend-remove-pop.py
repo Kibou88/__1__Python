@@ -22,15 +22,3 @@ print("Affiche l'élément de l'indice -2:", liste[-2]) #L'indice de droite à g
 print(liste[0:4:2]) #Récupère les éléments de l'indice 0 à 3 par pas 2
 print(liste[:-1]) #S'arrête à l'avant dernier indice
 print(liste[::2]) #Prendre un élément sur 2
-
-employes = ["Carlos", "Max", "Martine", "Patrick", "Max"]
-resultat = employes.index("Max") # Récupère l'index où se trouve la 1er fois l'élément
-count_name=employes.count("Max") # Compte le nombre d'occurence de l'élément
-
-liste_tri=sorted(employes) #Permet de récupérer dans une variable la chaine trier
-employes.sort()
-
-print(resultat)
-print(count_name)
-
-employes.reverse()#Inverse les éléments de la liste
