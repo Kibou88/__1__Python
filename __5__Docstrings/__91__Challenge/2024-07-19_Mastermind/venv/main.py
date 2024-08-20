@@ -3,11 +3,15 @@
 # Contient la logique du programme
 # -----------------------------------
 # Date de création: 2024-07-19
-# Date de dernière modification: 2024-07-29
+# Date de dernière modification: 2024-08-01
 # ----------------------------------------------------------------
-# version: 2.0
+# version: 4.0
 # - Variable 'coups' initialisée à 12 (V2)
 # - Rassemblement en 1 print du message d'accueil (V2)
+# - Fonction 'game_message' renvoie le texte d'accueil (V3)
+# - Condition du while qui change (V3)
+# - Ajout d'une condition pour faire apparaître le nombre de coups restants (V3)
+# - Modification du code suite passage 'COLOR_TABLE' en tuple
 #-------------------------------------------------------------------
 
 # Appel des modules externes
@@ -21,19 +25,19 @@ def game_message():
    """
    Présentation des règles du jeu et des commandes
    :return:
-   N/A
+   (str): Renvoie le texte d'accueil
    """
-   print("JEU MASTERMIND\n"
-         "Trouver la bonne combinaison de quatre couleurs secrètes que notre 'IA' aura généré.\n"
-         "A chaque couleur bien positionnée, vous aure en retour un indicateur rouge\n"
-         "A chaque couleur présente mais mal positionnée, vous aurez en retour un indicateur blanc\n"
-         "Entrez votre combinaison secrète en utilisantes les chiffres des couleurs disponibles.\n"
-         f"[1]:{COLOR_TABLE['YELLOW']} Jaune{COLOR_TABLE['WHITE']}\t"
-         f"[2]:{COLOR_TABLE['BLUE']} Bleu{COLOR_TABLE['WHITE']}\t"
-         f"[3]:{COLOR_TABLE['RED']} Rouge{COLOR_TABLE['WHITE']}\t"
-         f"[4]:{COLOR_TABLE['GREEN']} Vert{COLOR_TABLE['WHITE']}\t"
-         f"[5]:{COLOR_TABLE['WHITE']} Blanc{COLOR_TABLE['WHITE']}\t"
-         f"[6]:{COLOR_TABLE['PURPLE']} Magenta{COLOR_TABLE['WHITE']}\t")
+   return "JEU MASTERMIND\n" \
+         "Trouver la bonne combinaison de quatre couleurs secrètes que notre 'IA' aura généré.\n" \
+         "A chaque couleur bien positionnée, vous aurez en retour un indicateur rouge\n" \
+         "A chaque couleur présente mais mal positionnée, vous aurez en retour un indicateur blanc\n" \
+         "Entrez votre combinaison secrète en utilisantes les chiffres des couleurs disponibles.\n" \
+         f"[1]:{COLOR_TABLE[0]} Jaune{COLOR_TABLE[4]}\t" \
+         f"[2]:{COLOR_TABLE[1]} Bleu{COLOR_TABLE[4]}\t" \
+         f"[3]:{COLOR_TABLE[2]} Rouge{COLOR_TABLE[4]}\t" \
+         f"[4]:{COLOR_TABLE[3]} Vert{COLOR_TABLE[4]}\t" \
+         f"[5]:{COLOR_TABLE[4]} Blanc{COLOR_TABLE[4]}\t" \
+         f"[6]:{COLOR_TABLE[5]} Magenta{COLOR_TABLE[4]}\t"
 
 def comparaison_code(code_secret: list, liste_user: list) -> int:
     """
@@ -65,17 +69,17 @@ def result_message(liste_user: list):
     N/A
     """
     return "".join(
-    f"{COLOR_TABLE[list(COLOR_TABLE)[liste_user[carre]-1]]}{CARRE} {COLOR_TABLE['WHITE']}"
-    for carre in range(len(liste_user))
+    f"{COLOR_TABLE[carre-1]}{CARRE} {COLOR_TABLE[4]}"
+    for carre in liste_user
     )
 
 if __name__ == '__main__':
-   game_message()
+   print(game_message())
    code_secret = random.sample(range(1, 7), 4)
-   find_code = False
    coups = 12
+   right_positioning = 0
    
-   while not find_code:
+   while not right_positioning == 4:
        try:
            user_code = int(input("\nVeuillez saisir vos quatre chiffres pour les couleurs : "))
        except ValueError: # Si un caractère n'est pas un chiffre
@@ -85,15 +89,13 @@ if __name__ == '__main__':
            liste_user = [int(i) for i in str(user_code)]
            right_positioning, wrong_positioning = comparaison_code(code_secret, liste_user)
 
-           print(result_message(liste_user) + COLOR_TABLE['WHITE'] +
-                 "Indicateurs:", COLOR_TABLE['RED'] + PASTILLE*right_positioning +
-                 COLOR_TABLE['WHITE'] + PASTILLE*wrong_positioning)
+           print(result_message(liste_user) + COLOR_TABLE[4] +
+                 "Indicateurs:", COLOR_TABLE[2] + PASTILLE*right_positioning +
+                 COLOR_TABLE[4] + PASTILLE*wrong_positioning)
 
-           if right_positioning == 4:
-               find_code = True
-
-           coups -= 1
-           print(f"Il vous reste {coups} coups")
+           if right_positioning != 4:
+               coups -= 1
+               print(f"Il vous reste {coups} coups")
 
            if coups == 0:
                print(f"Vous avez perdu. Le code secret était: {code_secret}")
