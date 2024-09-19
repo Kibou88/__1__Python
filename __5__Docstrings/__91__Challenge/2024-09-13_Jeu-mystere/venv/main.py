@@ -14,7 +14,9 @@
 # - Ajout opérateur ternaire dans "user_try" (V3)
 # - Message d'accueil dans le constructeur "__init__" (V3)
 # - Simplification de la méthode "difference_user_mystere" (V3)
-#-------------------------------------------
+# - Modification "Game_Mystere" by "GameMystere" (V4)
+# - Passage des méthodes "user_try" et "difference_user_mystere" en privée (V4)
+#-----------------------------------------------------------------------------------
 
 # Appel des modules externes
 import random
@@ -23,7 +25,7 @@ import random
 from constantes import Colors
 
 
-class Game_Mystere:
+class GameMystere:
     """
     Classe contenant les méthodes pour la logique du jeu
     """
@@ -38,7 +40,7 @@ class Game_Mystere:
         self.nombre_essais = int(input("Veuillez choisir le nombre d'essai maximum: "))
         self.essais_restants = self.nombre_essais
 
-    def user_try(self):
+    def __user_try(self):
         """
         Indique au joueur que le nombre d'essais restants, et vérifie la saisie utilisateur
         :return:
@@ -60,7 +62,7 @@ class Game_Mystere:
             print(f"{Colors.YELLOW}ERREUR!! Veuillez écrire un nombre entre 1 et 100....{Colors.WHITE}")
             return True
 
-    def difference_user_mystere(self):
+    def __difference_user_mystere(self):
         """
         Compare la valeur de l'utilisateur et le nombre mystère
         :return:
@@ -80,19 +82,18 @@ class Game_Mystere:
 
     def game(self):
 
-        while jeu_mystere.essais_restants > 0 and jeu_mystere.nombre_utilisateur != jeu_mystere.nombre_mystere:
+        while self.essais_restants > 0 and self.nombre_utilisateur != self.nombre_mystere:
 
-            if jeu_mystere.user_try():
+            if jeu_mystere.__user_try():
                 continue
 
-            jeu_mystere.difference_user_mystere()
+            jeu_mystere.__difference_user_mystere()
 
-            if jeu_mystere.essais_restants == 0 or jeu_mystere.nombre_mystere == jeu_mystere.nombre_utilisateur:
+            if self.essais_restants == 0 or self.nombre_mystere == self.nombre_utilisateur:
                 print(str(jeu_mystere))
                 break
 
 
-
 if __name__ == "__main__":
-    jeu_mystere = Game_Mystere()
+    jeu_mystere = GameMystere()
     jeu_mystere.game()
