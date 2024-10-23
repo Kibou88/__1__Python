@@ -10,7 +10,7 @@
 # - Modification "return list_nodes" par "return list_nodes.reverse()"
 # - Fonction "shortest_distance" suppresion des ".keys()" non nécessaire
 # - Fonction "convert_list_dico" simplificatio avec setdefault
-# - Amélioration efficience des messages avec ajout de la fonction display
+# - Amélioration efficience des messages en 1 print
 #-----------------------------------------------------------------------------------
 
 # Appel des modules internes
