@@ -3,39 +3,89 @@
 # Contient la logique du code
 # -----------------------------------
 # Date de création: 2024-11-13
-# Date de dernière modification: 2024-11-13
+# Date de dernière modification: 2024-11-16
 # ------------------------------------------
 # version: 1.0
 
 #-----------------------------------------------------------------------------------
 
 # Appel des librairies externes
-from time import perf_counter, sleep, time
 
+import time
 
 class Chrono():
     """
-
+    Classe contentant les commandes et l'affichage pour l'appli Chronomètre
     """
 
     def __init__(self):
         self.timelaps = 0
         self.timestop = 0
+        self.userchoice = 0
 
 
-    def start(self):
-        self.timelaps = perf_counter()
+    def hmi(self):
+        """
+        Affiche le menu à l'utilisateur et appelle la méthode par rapport au choix utilisateur
+        :return:
+        Appel de la méthode correspondant au choix de l'utilisateur
+        """
+        print("Application Chrono:\n"
+              "Choix 1: Start\n"
+              "Choix 2: Afficher le temps\n"
+              "Choix 3: Stop\n"
+              "Choix 4: Reset\n")
+        self.userchoice = int(input("Quel est votre choix? "))
 
-    def stop(self):
-        self.timestop = perf_counter() - self.timelaps
+        match self.userchoice:
+            case 1:
+                self.start()
+            case 2:
+                self.__repr__()
+            case 3:
+                self.stop()
+            case 4:
+                self.reset()
 
 
-    def reset(self):
+    def start(self: int) -> float:
+        """
+        Permet de lancer ou relance le chronomètre
+        :return:
+        self.timelaps (float) = Valeur de temps en secondes
+        """
+        self.timelaps = time.time() + self.timestop
+        print(type(self.timelaps))
+
+
+    def stop(self: float) -> float:
+        """
+        Permet de faire un stop sur le chronomètre et affiche le temps actuel
+        :return:
+        TBD (To Be Defined)
+        """
+        self.timestop = time.time() - self.timelaps
+        self.__repr__()
+
+        
+
+    def reset(self: float) -> int:
+        """
+        Permet de remettre le chronomètre à 0
+        :return:
+        self.timelaps(int): Remise à 0
+        """
         self.timelaps = 0
+        print(f"Chronomètre remis à zéro\n\n")
 
-    def show(self):
-        return f"{round(perf_counter() - self.timelaps, 2)}"
 
     def __repr__(self):
-        return f"{round(self.timestop,2)}"
+        print(f"TimeLaps: {round(time.time() - self.timelaps, 2)}")
 
+if __name__ == "__main__":
+    my_chrono = Chrono()
+    while True:
+        try:
+            my_chrono.hmi()
+        except KeyboardInterrupt: # Pour stopper avec combinaison de touche "CTRL + C"
+            print("Fermeture de l'application Chronomètre")
