@@ -1,17 +1,13 @@
-from time import perf_counter, sleep
+import keyboard
 
+while True:
+    if keyboard.read_key() == "p":
+        print("You pressed p")
+        break
 
-class Timer:
-    def __init__(self):
-        self.start = perf_counter()
+while True:
+    if keyboard.is_pressed("q"):
+        print("You pressed q")
+        break
 
-    def restart(self):
-        self.start = perf_counter()
-
-    def get_time(self):
-        return perf_counter() - self.start
-
-if __name__ == "__main__":
-    my_timer = Timer()
-    sleep(1)
-    print(my_timer.get_time())
+keyboard.on_press_key("r", lambda _: print("You pressed r"))

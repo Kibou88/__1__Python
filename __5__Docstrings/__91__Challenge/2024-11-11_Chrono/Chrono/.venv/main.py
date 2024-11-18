@@ -10,8 +10,8 @@
 #-----------------------------------------------------------------------------------
 
 # Appel des librairies externes
-
 import time
+import pyautogui
 
 class Chrono():
     """
@@ -19,6 +19,7 @@ class Chrono():
     """
 
     def __init__(self):
+        self.starttime = 0
         self.timelaps = 0
         self.timestop = 0
         self.userchoice = 0
@@ -54,8 +55,7 @@ class Chrono():
         :return:
         self.timelaps (float) = Valeur de temps en secondes
         """
-        self.timelaps = time.time() + self.timestop
-        print(type(self.timelaps))
+        self.startTime = time.time()
 
 
     def stop(self: float) -> float:
@@ -64,7 +64,7 @@ class Chrono():
         :return:
         TBD (To Be Defined)
         """
-        self.timestop = time.time() - self.timelaps
+        self.timelaps += time.time() - self.startTime
         self.__repr__()
 
         
@@ -76,16 +76,14 @@ class Chrono():
         self.timelaps(int): Remise à 0
         """
         self.timelaps = 0
+        self.starttime = 0
         print(f"Chronomètre remis à zéro\n\n")
 
 
     def __repr__(self):
-        print(f"TimeLaps: {round(time.time() - self.timelaps, 2)}")
+        print(f"TimeLaps: {round(self.timelaps, 2)}")
 
 if __name__ == "__main__":
     my_chrono = Chrono()
     while True:
-        try:
             my_chrono.hmi()
-        except KeyboardInterrupt: # Pour stopper avec combinaison de touche "CTRL + C"
-            print("Fermeture de l'application Chronomètre")
