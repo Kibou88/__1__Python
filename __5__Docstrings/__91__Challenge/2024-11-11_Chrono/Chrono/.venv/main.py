@@ -11,7 +11,7 @@
 
 # Appel des librairies externes
 import time
-import pyautogui
+import keyboard
 
 class Chrono():
     """
@@ -36,6 +36,10 @@ class Chrono():
               "Choix 2: Afficher le temps\n"
               "Choix 3: Stop\n"
               "Choix 4: Reset\n")
+        if keyboard.is_pressed('a'):
+            self.start()
+            print("Le chrono est lancé\n")
+
         self.userchoice = int(input("Quel est votre choix? "))
 
         match self.userchoice:
@@ -55,7 +59,7 @@ class Chrono():
         :return:
         self.timelaps (float) = Valeur de temps en secondes
         """
-        self.startTime = time.time()
+        self.starttime = time.time()
 
 
     def stop(self: float) -> float:
@@ -64,7 +68,7 @@ class Chrono():
         :return:
         TBD (To Be Defined)
         """
-        self.timelaps += time.time() - self.startTime
+        self.timelaps += time.time() - self.starttime
         self.__repr__()
 
         
