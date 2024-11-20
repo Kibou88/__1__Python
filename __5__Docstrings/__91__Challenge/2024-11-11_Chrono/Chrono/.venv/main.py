@@ -3,14 +3,17 @@
 # Contient la logique du code
 # -----------------------------------
 # Date de création: 2024-11-13
-# Date de dernière modification: 2024-11-16
+# Date de dernière modification: 2024-11-20
 # ------------------------------------------
-# version: 1.0
-
+# version: 2.0
+# - Ajout de la méthode "keyboard_event" + ajout des touches à utiliser dans l'IHM
+# - Arrangement de la logique du code
+# - Suppression de la partie "choix utilisateur" de l'IHM
 #-----------------------------------------------------------------------------------
 
 # Appel des librairies externes
 import time
+import os
 import keyboard
 
 class Chrono():
@@ -32,26 +35,38 @@ class Chrono():
         Appel de la méthode correspondant au choix de l'utilisateur
         """
         print("Application Chrono:\n"
-              "Choix 1: Start\n"
-              "Choix 2: Afficher le temps\n"
-              "Choix 3: Stop\n"
-              "Choix 4: Reset\n")
-        if keyboard.is_pressed('a'):
+              "Choix 1 ou DROITE: Start\n"
+              "Choix 2 ou HAUT: Afficher le temps\n"
+              "Choix 3 ou GAUCHE: Stop\n"
+              "Choix 4 ou BAS: Reset\n"
+              "ESPACE: Afficher l'IHM\n")
+
+    def keyboard_event(self):
+        """
+        Permet de gérer les évènements clavier
+        :return:
+        Appel de la méthode correspondant en fonction des évènements clavier
+        """
+
+        if keyboard.is_pressed('RIGHT'):
             self.start()
-            print("Le chrono est lancé\n")
+            print("Chronomètre lancé")
+        elif keyboard.is_pressed('LEFT'):
+            self.stop()
+            print("Chronomètre arrêté")
+        elif keyboard.is_pressed('UP'):
+            self.__repr__()
+        elif keyboard.is_pressed('DOWN'):
+            self.reset()
+            print("Reset du chronomètre")
+        elif keyboard.is_pressed('SPACE'):
+            os.system('cls')
+            self.hmi()
+        elif keyboard.is_pressed('ESC'):
+            print("Fermeture de l'application chronomètre")
+            exit()
 
-        self.userchoice = int(input("Quel est votre choix? "))
-
-        match self.userchoice:
-            case 1:
-                self.start()
-            case 2:
-                self.__repr__()
-            case 3:
-                self.stop()
-            case 4:
-                self.reset()
-
+        time.sleep(0.1)
 
     def start(self: int) -> float:
         """
@@ -87,7 +102,10 @@ class Chrono():
     def __repr__(self):
         print(f"TimeLaps: {round(self.timelaps, 2)}")
 
+
 if __name__ == "__main__":
     my_chrono = Chrono()
+    my_chrono.hmi()
     while True:
-            my_chrono.hmi()
+        my_chrono.keyboard_event()
+
