@@ -1,0 +1,1 @@
+TEXTE = "1abc2\tpqr3stu8vwx\ta1b2c3d4e5f\ttreb7uchet\t"
