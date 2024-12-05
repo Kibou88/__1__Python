@@ -1,3 +1,6 @@
+# Day 4 Advent of Code 2024
+#----------------------------
+
 FILE_TEST = "./datas/data_test_4.txt"
 FILE_PUZZLE = "./datas/4.txt"
 
