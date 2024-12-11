@@ -1,7 +1,7 @@
 # Day 2 Advent of Code 2024
 #----------------------------
-file_test = "/home/kibou/Bureau/Python/__1__Python/__5__Docstrings/__92__Advent_of_Code/2024/.venv/datas/data_test.txt"
-file = "/home/kibou/Bureau/Python/__1__Python/__5__Docstrings/__92__Advent_of_Code/2024/.venv/datas/2.txt"
+file_test = "./datas/datas_test_2.txt"
+file = "./datas/2.txt"
 number_table = []
 origine = 0
 total_safe = 0
@@ -9,7 +9,7 @@ total_unsafe = 0
 variation = None  # True si increase // False si decrease
 unsafe_table = []
 
-with open(file, "r") as f:
+with open(file_test, "r") as f:
     lines = f.read().splitlines()
 
 # Partie 1
@@ -65,58 +65,38 @@ for line in lines:
             break
 
 print(unsafe_table)
-# Partie 2
+
+# ------------------------ Partie 2 ----------------------
+new_unsafe_table = []
 for ko_numbers in unsafe_table:
-    # print(unsafe_table)
-    deleted_level_remaining = 1
-    origine = 0
-    variation = None
-
-
-
-    for number in ko_numbers:
-
-        for reverse_number in ko_numbers[::-1]:
-            if reverse_number == number and ko_numbers.count(number) == 2:
-                ko_numbers.remove(reverse_number)
-                deleted_level_remaining -= 1
-                new_ko_numbers.append(ko_numbers)
-        number = int(number)
-        print(f"Number {number}")
-        print(f"longueur {len(ko_numbers)}\n")
-        print(new_ko_numbers)
-        if origine == 0:
-            origine = number
-        elif ko_numbers.count(str(number)) >= 3:
+    # Si il ya plus de 2 éléments identiques, suppression de la liste => OK
+    for index, number in enumerate(ko_numbers):
+        print(number, ko_numbers.count(number))
+        if ko_numbers.count(number) == 2:
+            ko_numbers.pop(number)
+        elif ko_numbers.count(number) > 2:
+            unsafe_table.pop(unsafe_table.index(ko_numbers))
+            print("Liste retirée: ", ko_numbers)
             break
-        elif ko_numbers.index(str(number)) ==  len(ko_numbers):
-            total_unsafe += 1
-        elif (origine + 1) == number or (origine + 2) == number or (origine + 3) == number:
-            if variation != False:
-                origine = number
-                variation = True
-            elif variation == False and deleted_level_remaining == 1:
-                print(number)
-                ko_numbers.remove(str(number))
-                deleted_level_remaining -= 1
-            else:
-                break
-        elif (origine - 1) == number or (origine - 2) == number or (origine - 3) == number:
-            if variation != True:
-                origine = number
-                variation = False
 
-            elif variation == True and deleted_level_remaining == 1:
-                print(number)
-                ko_numbers.remove(str(number))
-                deleted_level_remaining -= 1
-            else:
-                break
-        elif ((origine + 3) > number or (origine - 3) < number) and deleted_level_remaining == 1:
-            print(number)
-            ko_numbers.remove(str(number))
-            deleted_level_remaining -= 1
+    print(unsafe_table)
 
-print()
-print(total_safe)
-print(total_unsafe)
+    for index_number in range(len(ko_numbers)):
+        if (int(ko_numbers[index_number]) + 1) == ko_numbers[index_number + 1] or \
+            (int(ko_numbers[index_number]) + 2) == ko_numbers[index_number + 1] or \
+              (int(ko_numbers[index_number]) + 3) == ko_numbers[index_number + 1]:
+            pass
+        elif (int(ko_numbers[index_number]) - 1) == ko_numbers[index_number + 1] or \
+              (int(ko_numbers[index_number]) - 2) == ko_numbers[index_number + 1] or \
+                (int(ko_numbers[index_number]) - 3) == ko_numbers[index_number + 1]:
+            pass
+
+        else:
+            pass
+
+    # print()
+
+
+# print()
+# print(total_safe)
+# print(total_unsafe)
