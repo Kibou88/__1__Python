@@ -1,6 +1,6 @@
 # Day 11 Advent of Code 2024
 #----------------------------
-from logging.config import stopListening
+from
 
 FILE_TEST = "./datas/datas_test_11.txt"
 FILE = "./datas/11.txt"
