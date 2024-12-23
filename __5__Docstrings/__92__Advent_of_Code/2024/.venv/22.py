@@ -2,10 +2,13 @@
 #----------------------------
 from functools import cache
 
+FILE_TEST = "./datas/datas_test_22.txt"
+FILE_PUZZLE = "./datas/22.txt"
+
 @cache
-def mix(a, b):
+def mix(new_number, number):
     # OK --> Bitwise XOR operation
-    return a ^ b
+    return new_number ^ number
 
 @cache
 def prune(number):
@@ -28,7 +31,14 @@ def multiply_2048(number):
     return prune(mix(number * 2048, number))
 
 if __name__ == "__main__":
-    secret_number = 1
-    for i in range(2000):
-        secret_number = multiply_2048(divide_32(multiply_64(secret_number)))
-    print(secret_number)
+    # secret_number = 1
+    total = 0
+    with open(FILE_PUZZLE, 'r') as f:
+        datas = f.read().splitlines()
+    for lines in datas:
+        secret_number = int(lines)
+        for i in range(2000):
+            secret_number = multiply_2048(divide_32(multiply_64(secret_number)))
+        # print(f"{lines}: {secret_number}")
+        total += secret_number
+    print(total)
