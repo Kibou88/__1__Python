@@ -8,7 +8,7 @@
 """
 On stocke le résultat de lambda dans une variable (multiplication)
 Forme:
-lambda arg1, arg2,...: tâche
+lambda argument: expression
 """
 multiplication = lambda a, b: a * b
 resultat = multiplication(5,10)
