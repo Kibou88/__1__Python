@@ -2,7 +2,9 @@
 # - Apprendre à utiliser la fonction match
 #---------------------------------------------
 import re
-
+"""
+Cherche le premier caractère
+"""
 # Ajout du 'r'
 print('\tBonjour') # \t va compter comme une tabulation
 print(r'\tBonjour') # \t va compter comme des caractères
