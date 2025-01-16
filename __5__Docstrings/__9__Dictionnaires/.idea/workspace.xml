@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9bde2a5-9135-4daa-9ef9-4c57816fd20f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/4_Dico-2D.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/5_Eviter_erreur_clé_inexistante.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__9__Dictionnaires",
+    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__6__Listes",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
