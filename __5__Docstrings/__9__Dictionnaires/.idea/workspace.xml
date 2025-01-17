@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9bde2a5-9135-4daa-9ef9-4c57816fd20f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/5_Eviter_erreur_clé_inexistante.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../__6__Listes/1_Liste_8_Aplatir_supprimer_doublon.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/6_Inverser_clé_valeur.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/7_defaultdict_OrderedDict.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +41,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__6__Listes",
+    "last_opened_file_path": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__50__Tips",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
