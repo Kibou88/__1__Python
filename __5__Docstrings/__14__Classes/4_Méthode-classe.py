@@ -16,6 +16,6 @@ class Voiture:
     def porsche(cls):
         return cls(marque="Porsche", vitesse=200, prix = 180000)
 
-lambo=Voiture.lamborghini() #Création d'une instance
+lambo = Voiture.lamborghini() #Création d'une instance
 porsche = Voiture.porsche()
 print(porsche.prix)
