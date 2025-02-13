@@ -21,12 +21,17 @@ def remove_exif_data(input_image_path, output_image_path):
     image_without_exif.save(output_image_path)
 
 if __name__ == "__main__":
-    input_image_path = sys.argv[0]
+    input_image_path = sys.argv[1]
     path_input_image = Path(input_image_path)
     folder_parent = path_input_image.parent
+    name_input = path_input_image.stem
+    name_output = name_input + "_modified" + path_input_image.suffix
+    output_image_path = folder_parent / name_output
+
     print(input_image_path)
-    print(path_input_image)
+    print(output_image_path)
     print(folder_parent)
-input_image_path = 'chemin/vers/image_avec_exif.jpg'
-output_image_path = 'chemin/vers/image_sans_exif.jpg'
-remove_exif_data(input_image_path, output_image_path)
+    try:
+        remove_exif_data(input_image_path, output_image_path)
+    except:
+        print("Problème suppression exif")
