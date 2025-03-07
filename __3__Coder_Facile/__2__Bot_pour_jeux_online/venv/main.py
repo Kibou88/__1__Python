@@ -69,7 +69,7 @@ def main():
         file.write(f"{type(im)}")
 
 if __name__ == '__main__':
-    # lancer_jeu()
+    lancer_jeu()
     while True:
         # main()
         # time.sleep(2)
