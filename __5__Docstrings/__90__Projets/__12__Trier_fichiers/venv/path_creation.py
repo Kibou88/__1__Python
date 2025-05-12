@@ -5,12 +5,21 @@ path_creation.py
 But: Contient la classe permettant de créer toutes les variables de path
 --------------------------------
 Date de création: 2025-05-11
-Date de modification: 2025-05-11
+Date de modification: 2025-05-12
 --------------------------------
-Version: 1.0
+Version: 1.1
+- Suppression de contrôle dans la méthode file_path (contrôle fait avant) (V1.1)
+- Ajout log dans la méhode path_year_month lors de la création des répertoires (V1.1)
 """
 
 from pathlib import Path
+import logging
+
+# Initialisation du fichier de log pour la classe
+logging.basicConfig(level=logging.INFO,
+                        filename="Path_Creation.log",
+                        filemode="a+",
+                        format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class Path_Creation:
@@ -20,6 +29,7 @@ class Path_Creation:
     This class provides methods to create and manage file paths and directory paths,
     including the creation of directories based on year and month.
     """
+
 
     def __init__(self, user_path: str, dico_month: dict = None):
         """
@@ -33,20 +43,17 @@ class Path_Creation:
         """
         self.user_path = Path(user_path)
         self.dico_month = dico_month
+        self.logger = logging.getLogger("Path_Creation")
 
     def file_path(self, file: str) -> Path:
         """
-        Create the path including the file to manage and check the presence of extension
+        Create the path including the file to manage
         :param file: str
             Name of the file with this extension
         :return: self.file_path: Path
             The absolute path including the file to manage
         """
-        self.file_path = self.user_path.joinpath(file)
-        if not self.file_path.suffix:
-            raise TypeError(f"Le fichier {file} n'as pas d'extension")
-        print("Lien OK")
-        return self.file_path
+        return self.user_path.joinpath(file)
 
     def path_year_month(self, year: int, month: int) -> Path:
         """
@@ -76,10 +83,7 @@ class Path_Creation:
 
         if not self.path_year_month.exists():
             self.path_year_month.mkdir(exist_ok=True, parents=True)
-            print(f"Le dossier {self.path_year_month} a ete cree")
-        else:
-            print(f"Le dossier {self.path_year_month} est deja existant")
-
+            self.logger.info(f'Les repertoires {year} et {self.dico_month.get(str(month))} ont ete crees')
         return self.path_year_month
 
 
