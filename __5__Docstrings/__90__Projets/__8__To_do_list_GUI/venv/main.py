@@ -42,7 +42,7 @@ class MainWindow(QWidget):
         - Supprime les données du champ
         """
         if self.le_text.text() != "":
-            self.lw_todoList.addItem(f"Utilisateur [{dt('%d')}]:")
+            # self.lw_todoList.addItem(f"Utilisateur [{dt('%d')}]:")
             self.lw_todoList.addItem(self.le_text.text())
         self.le_text.clear()
 
