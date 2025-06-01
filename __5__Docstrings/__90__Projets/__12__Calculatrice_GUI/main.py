@@ -25,6 +25,12 @@ class Calculator(QWidget): #La classe hérite de QWidget
         super().__init__()
         self.nom = nom
         self.setWindowTitle(nom) #Mettre un nom à la fenêtre
+        # Permet de configurer le style de l'appli comme le CSS
+        self.setStyleSheet("""
+            background-color: rgb(20, 20, 20);
+            color: rgb(220, 220, 220);
+            font-size: 18px;
+        """)
 
         self.main_layout = QGridLayout(self)
         self.main_layout.setSpacing(0) # Enlève les marges entres les boutons
@@ -35,6 +41,13 @@ class Calculator(QWidget): #La classe hérite de QWidget
         self.le_result.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.le_result.setAlignment(QtCore.Qt.AlignRight) # Permet de mettre le texte à droite
         self.le_result.setEnabled(False) # Verrouillage du Line Edit
+        self.le_result.setStyleSheet("""
+            border: none;
+            border-bottom: 2px solid rgb(30, 30, 30);
+            padding: 0 8px;
+            font-size: 24px;
+            font-weight: bold;
+        """)
         self.button = {}
 
         self.main_layout.addWidget(self.le_result, 0, 0, 1, 4)
@@ -47,6 +60,14 @@ class Calculator(QWidget): #La classe hérite de QWidget
             # *button_position: permet de faire passer toutes les coordonnées du tuple
             # revient à faire button_position[0], ...button_position[3]
             self.main_layout.addWidget(button, *button_position)
+            button.setStyleSheet(f"""
+                QPushButton {{
+                    border: none;
+                    font-weight: bold;
+                    background-color: {'#1e1e2d' if button_text in OPERATIONS else 'none'}
+                    }}
+                QPushButton:pressed {{background-color: #bcaaa4}}
+            """)
 
             if button_text not in ["=", "C"]:
                 button.clicked.connect(self.number_or_operations_pressed)
@@ -54,6 +75,10 @@ class Calculator(QWidget): #La classe hérite de QWidget
             self.button[button_text] = button
         self.button["C"].clicked.connect(self.clear_result)
         self.button["="].clicked.connect(self.resultat_operation)
+        self.button["="].setStyleSheet(f"""
+            font-weight: bold;
+            background-color: #f31d58;
+        """)
         self.connect_keyboard_shortcut()
 
     @property
