@@ -15,22 +15,25 @@
 # Version: V1.0
 from PySide6 import QtCore
 from PySide6.QtGui import QShortcut, QKeySequence
-from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton
+from PySide6.QtWidgets import QApplication, QWidget, QGridLayout, QLineEdit, QPushButton, QSizePolicy
 
 from boutons import BUTTONS, OPERATIONS
 
 
 class Calculator(QWidget): #La classe hérite de QWidget
-    def __init__(self, nom, width=300, heigth=200):
+    def __init__(self, nom,):
         super().__init__()
         self.nom = nom
         self.setWindowTitle(nom) #Mettre un nom à la fenêtre
-        self.setMinimumSize(width, heigth) # Mets une taille minimale à l'application
-        self.resize(width, heigth)  # Fenêtre ajustable en largeur, hauteur
 
         self.main_layout = QGridLayout(self)
+        self.main_layout.setSpacing(0) # Enlève les marges entres les boutons
+        self.main_layout.setContentsMargins(0, 0, 0, 0) # Enlever toutes les marges
 
         self.le_result = QLineEdit("0")
+        self.le_result.setMinimumHeight(50) # Permet de mettre une hauteur par défaut de 50 du Line Edit
+        self.le_result.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.le_result.setAlignment(QtCore.Qt.AlignRight) # Permet de mettre le texte à droite
         self.le_result.setEnabled(False) # Verrouillage du Line Edit
         self.button = {}
 
@@ -38,6 +41,9 @@ class Calculator(QWidget): #La classe hérite de QWidget
 
         for button_text, button_position in BUTTONS.items():
             button = QPushButton(button_text)
+            button.setMinimumSize(48, 48) # Configuer la taille minimum des boutons
+        # Permet d'étendre les boutons sur la largeur et hauteur automatiquement par rapport à la taille de la fenêtre
+            button.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             # *button_position: permet de faire passer toutes les coordonnées du tuple
             # revient à faire button_position[0], ...button_position[3]
             self.main_layout.addWidget(button, *button_position)
