@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta content="noindex,nofollow" name="robots"/>
+<title>AUTHENTICATION</title>
+<!-- Bootstrap -->
+<link crossorigin="anonymous" href="/data/contrib/css/bootstrap.min.css" rel="stylesheet"/>
+<link crossorigin="anonymous" href="/data/contrib/css/bootstrap-theme.min.css" rel="stylesheet"/>
+<link href="/data/favicon.ico" rel="shortcut icon"/>
+<link href="/data/common/css/common.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="/data/custom.css" media="all" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+
+			"use strict";
+			function createXmlHttpRequest() {
+				var req = null;
+				if (window.XMLHttpRequest) {
+					req = new XMLHttpRequest();
+					if (req.overrideMimeType) {
+						req.overrideMimeType('text/xml');
+					}
+				} else if (window.ActiveXObject) {
+					try {
+						req = new ActiveXObject("Msxml2.XMLHTTP");
+					} catch (e)	{
+						try {
+							req = new ActiveXObject("Microsoft.XMLHTTP");
+						} catch (e) {
+							return null;
+						}
+					}
+				}
+				return req;
+			}
+
+			function activate_submit() {
+				$("#submit_btn").attr('disabled', false);
+			}
+
+			function deactivate_submit() {
+				$("#submit_btn").attr('disabled', true);
+			}
+
+			function setError(error) {
+				$('#warning').css('display', 'none');
+				$('#error').css('display', 'block');
+				$('#error').html(error);
+				$('#error').focus();
+			}
+
+			function setWarning(error) {
+				$('#warning').css('display', 'block');
+				$('#error').css('display', 'none');
+				$('#warning').html(error);
+				$('#warning').focus();
+			}
+
+			function submitForm() {
+				var submit_req = null;
+				var userinfo_req = null;
+				var params = [];
+				var paramline = "";
+				var url = "";
+				var forminputs = [];
+				var formselects = [];
+				var count = 0;
+				var i;
+
+				var limit_userinfo_req = true;
+				var max_userinfo_req = 300;
+				var period_userinfo_req = 3000;
+
+				try {
+					// Try to create XHR object depending of OS and Browser
+					//  * For form submit
+					setWarning("Sending...");
+					submit_req = createXmlHttpRequest();
+					if (submit_req === null) {
+						setError("ERROR");
+						return false;
+					}
+					submit_req.open("POST", "sponsor.html", true);
+					// * For userinfo.html request
+					userinfo_req = createXmlHttpRequest();
+					if (userinfo_req === null) {
+						setError("ERROR");
+						return false;
+					}
+					userinfo_req.open("GET", "userinfo.html", true);
+
+					// Form submit callback
+					submit_req.onreadystatechange = function() {
+						// readyState === DONE
+						if (submit_req.readyState === 4)	{
+							// http status code === OK
+							if (submit_req.status === 200) {
+								setWarning("Pending validation of the request");
+								userinfo_req.send(null);
+							} else if(submit_req.status === 429) {
+								// http status code === TOO MANY REQUESTS
+								setError("ERROR: Brute force attack detected");
+							} else {
+								activate_submit();
+								setError("ERROR");
+							}
+						}
+					}
+
+					// Userinfo request callback
+					userinfo_req.onreadystatechange = function() {
+						var nb_tries;
+
+						// readyState === DONE
+						if (userinfo_req.readyState === 4) {
+							nb_tries = count++;
+							// http status code === OK
+							if (userinfo_req.status === 200) {
+								window.setTimeout("window.location=\"/auth/userinfo.html\"", 5000);
+								setWarning("Your request was validated. " + "<a class=\"redirectlink\" href=\"/auth/userinfo.html\">&raquo; Click here if you are not automatically redirected</a>");
+							} else if (userinfo_req.status === 401) {
+								// http status code === UNAUTHORIZED
+								if ( limit_userinfo_req && (nb_tries >= max_userinfo_req) ) {
+									// no more try (timeout)
+									activate_submit();
+									setError("Your request was not validated");
+									$('#info').css('display', 'block');
+									return false;
+								}
+								window.setTimeout(function() { userinfo_req.send(null); }, period_userinfo_req);
+								userinfo_req.open("GET", "userinfo.html", true);
+							} else {
+								activate_submit();
+								setError("ERROR");
+							}
+						}
+					};
+
+					// Construct form submit POST request
+					//  * Add input tags to params
+					forminputs = $('input');
+					for (i = 0; i < forminputs.length; i++) {
+						if (paramline.length !== 0)
+							paramline += "&";
+						paramline += $(forminputs[i]).attr('name') + "=" + escape($(forminputs[i]).val());
+					}
+
+					// * Add select tags to params
+					formselects = $('select');
+					for (i = 0; i < formselects.length; i++) {
+						if (paramline.length !== 0)
+							paramline += "&";
+						paramline += $(formselects[i]).attr('name') + "=" + escape($(formselects[i]).val());
+					}
+
+					// Send POST form
+					deactivate_submit()
+					submit_req.send(paramline);
+
+					// Cancel browser submit event
+					return false;
+				} catch (e) {
+					setError("ERROR");
+					return false;
+				}
+		}
+		</script>
+</head>
+<body id="sponsor_page">
+<div class="container">
+<div class="row page-header">
+<div class="col-xs-9 col-md-10">
+<img class="img-responsive stormshield-logo" src="/data/res/logo-SNS.svg"/>
+</div>
+<div class="col-xs-2 col-md-2 text-right language-combo">
+<div class="dropdown language">
+<button aria-expanded="true" aria-haspopup="true" class="btn btn-default dropdown-toggle text-uppercase" data-toggle="dropdown" id="dropdownMenu1" type="button">
+		us
+		<span class="caret"></span>
+</button>
+<ul aria-labelledby="dropdownMenu1" class="dropdown-menu text-uppercase">
+<li><span class="flag"><img src="/data/res/flag-bg.jpg"/><a href="/auth/lang.html?l=bg&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">bg</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-cs.jpg"/><a href="/auth/lang.html?l=cs&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">cs</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-de.jpg"/><a href="/auth/lang.html?l=de&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">de</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-en.jpg"/><a href="/auth/lang.html?l=en&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">en</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-es.jpg"/><a href="/auth/lang.html?l=es&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">es</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-fr.jpg"/><a href="/auth/lang.html?l=fr&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">fr</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-hu.jpg"/><a href="/auth/lang.html?l=hu&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">hu</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-it.jpg"/><a href="/auth/lang.html?l=it&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">it</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-nl.jpg"/><a href="/auth/lang.html?l=nl&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">nl</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-pl.jpg"/><a href="/auth/lang.html?l=pl&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">pl</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-pt.jpg"/><a href="/auth/lang.html?l=pt&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">pt</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-sk.jpg"/><a href="/auth/lang.html?l=sk&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">sk</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-us.jpg"/><a href="/auth/lang.html?l=us&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">us</a></span></li>
+<li><span class="flag"><img src="/data/res/flag-zh_CN.jpg"/><a href="/auth/lang.html?l=zh_CN&amp;rurl=%2Fauth%2Fsponsor.html%3Furl%3D1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl%2B5luT4xL1WKs1u6EpSUK1N2db%2BPmQobtd%2FglKsVAc7s6KuR6kB8vOt5M%3D">zh_CN</a></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row page-infos">
+<div class="col-xs-9 header-info">
+<div></div>
+</div>
+</div>
+<div class="main">
+<div class="hidden-xs spacer-big"></div>
+<nav class="navbar navbar-default hidden-sm hidden-md hidden-lg">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+<button aria-expanded="false" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav">
+<li class="login_page_link" role="presentation">
+<a class="text-uppercase" href="/auth/login.html">Login / Logout</a>
+</li>
+<li class="sponsor_page_link" role="presentation">
+<a class="text-uppercase" href="/auth/sponsor.html">Sponsorship</a>
+</li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</div>
+<!-- /.container-fluid -->
+</nav>
+<ul class="nav nav-pills hidden-xs">
+<li class="login_page_link" role="presentation">
+<a class="text-uppercase" href="/auth/login.html">Login / Logout</a>
+</li>
+<li class="sponsor_page_link" role="presentation">
+<a class="text-uppercase" href="/auth/sponsor.html">Sponsorship</a>
+</li>
+</ul>
+<div>
+<div class=""></div>
+</div>
+<div class="row visible-xs">
+<h3 class="panel-heading col-sm-8 col-sm-offset-4">SPONSORING</h3>
+</div>
+<div class="hidden-xs spacer-small"></div>
+<div class="panel panel-default">
+<div class="panel-body">
+<div><div><p>Conditions Générales d’Utilisation du Service WIFI - SCALIAN</p>
+<p>Le présent document a pour objet de définir les conditions d’utilisation du service de connexion à Internet par Wifi disponible aux Utilisateurs depuis les zones couvertes dans l’enceinte des sites SCALIAN, dénommé « WIFI SCA GUEST ».</p>
+<p>ARTICLE 1 - DEFINITIONS</p>
+<p></p>
+<p>« Administrateur » : Utilisateur désigné par SCALIAN parmi les membres de son personnel comme étant en charge de la gestion du Service.</p>
+<p> « Service » : désigne le service d’accès et de fonctionnement au wifi « WIFI SCA GUEST ». Ce service permet à l'Utilisateur possédant un équipement informatique personnel (ordinateur portable, tablette, assistant personnel (PDA), smartphone) doté d'une carte réseau sans fil Wifi de se connecter à Internet sans fil et à haut débit depuis les zones couvertes par le réseau Internet SCALIAN.</p>
+<p>« Utilisateur » : désigne l’ensemble des personnes (tels que des clients, des partenaires, des collaborateurs externes, des sous-traitants, des conseils extérieurs, des consultants, etc.), autorisés à accéder au Service.</p>
+<p>« Valideur » : La personne désignée par l’Administrateur habilitée à permettre l’accès au Service.</p>
+<p></p>
+<p>L'accès au Service est à disposition aux heures d'ouverture des sites SCALIAN et pour une durée temporaire. L'utilisation du Service est gratuite.</p>
+<p>L’Utilisateur doit préalablement activer la carte réseau sans fil Wifi de son équipement (ordinateur, tablette, smartphone…). Il s’assure que sa carte est paramétrée pour « Obtenir une adresse IP automatiquement ».</p>
+<p>La connexion au réseau s’effectue comme suit, l’Utilisateur est invité à se présenter au Valideur afin que celui-ci recueille son nom et son prénom aux fins d’utilisation du Service. Le Valideur réalise la procédure nécessaire pour permettre à l’Utilisateur l’accès via un portail captif à Internet. Pour bénéficier du Service, l’Utilisateur sélectionne ensuite le Wifi « WIFI SCA GUEST ». Lors de la première connexion à Internet, l’Utilisateur est redirigé vers le portail captif d’accès à Internet et doit entrer ses informations (nom et prénom) préalablement transmis au Valideur. Chaque Utilisateur doit accepter les présentes Conditions Générales d’Utilisation en cochant la case prévue à cet effet. La durée de l’accès au Service ne pouvant excéder 8 heures consécutives. Une fois ladite durée expirée, l’Utilisateur est invité à se présenter au Valideur afin de renouveler la procédure susmentionnée.</p>
+<p></p>
+<p>Tout accès ou utilisation du Service à partir des informations transmises au Valideur sera considéré comme ayant été effectué par l’Utilisateur.</p>
+<p>Il appartient à l'Utilisateur de vérifier qu'il dispose des équipements matériels, logiciels, navigateurs à jour et sécurisés lui permettant d'utiliser le Service.</p>
+<p>3.1 - S'agissant de l'utilisation d'Internet, l'Utilisateur est informé que l'Internet est un réseau véhiculant des données susceptibles d'être protégées par des droits de propriété intellectuelle ou d'enfreindre les dispositions légales en vigueur. L’Utilisateur s’engage à utiliser le Service conformément à l’objet du Service et s’interdit de l’utiliser à des fins personnelles au-delà des limites souscrites au titre de l’article 6 des présentes, de consultation ou de téléchargement de contenus illicites comme stipulé à l’article 5 ou portant atteinte aux droits d’autrui.</p>
+<p>3.2 -Tout abus ou utilisation non conforme aux présentes Conditions Générales d’Utilisation reste la responsabilité de l’Utilisateur.</p>
+<p>3.3 - L’utilisateur s’engage à ne pas divulguer/partager d’informations confidentielles sur des clients ou autres activités sensibles de SCALIAN et à respecter la confidentialité des informations recueillies dans le cadre de son utilisation au Service.</p>
+<h2>ARTICLE 4 - TELECHARGEMENT DE LOGICIELS, OU D’ŒUVRES PROTEGEES</h2>
+<p>Le téléchargement par l’Utilisateur de logiciels ou d’œuvres protégées, sans autorisation des ayants-droits, est de nature à engager la responsabilité de SCALIAN et comme tels sont strictement interdits.</p>
+<h2>ARTICLE 5 - CONSULTATION DE SITES ILLICITES</h2>
+<p>La consultation et le téléchargement du contenu de sites à caractère pornographique, pédophile, raciste, ou xénophobe sont contraires aux bonnes mœurs et peuvent revêtir le caractère d’une infraction pénale. Cette activité est strictement interdite.</p>
+<p>L'Utilisateur s'interdit de transmettre sur l'Internet toute donnée prohibée, illicite, illégale, contraire aux bonnes mœurs ou à l'ordre public et portant atteinte ou susceptibles de porter atteinte aux droits de tiers et notamment aux droits de propriété intellectuelle.</p>
+<h2>ARTICLE 6 - CONSULTATION D’INTERNET A DES FINS PRIVEES</h2>
+<p>La consultation de sites web à titre privé est autorisée dans la mesure où cette navigation est exceptionnelle, limitée, n'entrave pas l’accès professionnel et qu’elle ne gêne pas de façon significative la productivité et la bonne marche du travail de l’Utilisateur.</p>
+<p>Il est précisé que le téléchargement de fichiers multimédia ou tout autre format de compression ne rentrant pas dans l’accès professionnel et gênant la bonne marche du système d’information SCALIAN en raison de l’encombrement qu’il génère est strictement prohibé.</p>
+<p>Il est également interdit d’utiliser les réseaux de « Peer-to-Peer » pour un usage ne rentrant pas dans l’accès professionnel pour des raisons de sécurité et d’encombrement du réseau.</p>
+<p></p>
+<p>Il est expressément rappelé qu’Internet n'est pas un réseau sécurisé. Dans ces conditions, il appartient à l'Utilisateur de prendre toutes les mesures appropriées de façon à protéger ses propres données et/ou logiciels notamment de la contamination par d'éventuels virus circulant sur le réseau Internet ou de l'intrusion d'un tiers dans le système de son terminal à quelque fin que ce soit, et de procéder sur son équipement informatique personnel à des sauvegardes régulières.</p>
+<p>L'Utilisateur reconnaît également être pleinement informé du défaut de fiabilité du réseau Internet, tout particulièrement en termes d'absence de sécurité relative à la transmission de données et de non garantie des performances relatives au volume et à la rapidité de transmission des données.</p>
+<p>L'Utilisateur reconnaît être informé que l'intégrité, l'authentification et la confidentialité des informations, fichiers et données de toute nature qu'il souhaite échanger sur le réseau Internet ne peuvent être garanties sur ce réseau. L'Utilisateur ne doit donc pas transmettre via le réseau Internet des messages dont il souhaiterait voir la confidentialité garantie de manière infaillible.</p>
+<p></p>
+<p>L’Utilisateur est en outre responsable du respect des règles de confidentialité applicables à l’activité de SCALIAN et s’engage notamment, dans le cadre du recours au Service, à ne pas :</p>
+<ul>
+<li>Envoyer ou soumettre ou collecter des informations jugées confidentielles, sous toute forme, à un tiers non habilité à en avoir connaissance,</li>
+<li>Utiliser des Services d’échanges et de synchronisation de fichiers pour publier ou échanger des informations jugées confidentielles, </li>
+<li>Laisser sans surveillance et en tout lieu accessible à des tiers des informations jugées confidentielles.</li>
+<li>Ne pas diffuser ou publier sous toute forme que ce soit, sur les espaces en ligne accessibles au public et les réseaux sociaux externes, toute information ayant trait à SCALIAN et aux autres Utilisateurs, ainsi que les signes distinctifs de SCALIAN (marques, logos…).</li>
+</ul>
+<p></p>
+<p>Les informations sont collectées pour les besoins du fonctionnement du Service et la fourniture du Service lui-même. Les informations collectées ne feront l’objet d’aucune exploitation commerciale étrangère à celle de la fourniture du Service.</p>
+<p></p>
+<p>SCALIAN met en œuvre tous les moyens dont il dispose pour assurer l'accès au Service même s’il ne peut garantir le débit, lequel est dépendant notamment du nombre d'Utilisateurs connectés simultanément.</p>
+<p>SCALIAN n'est pas responsable des contenus accessibles par le réseau Internet et des dommages qui peuvent naître de leur utilisation.</p>
+<p>SCALIAN ne saurait être tenu responsable de l'exploitation des données et informations que l'Utilisateur du Service aurait introduites sur le réseau Internet. SCALIAN décline toute responsabilité quant aux conséquences d'une utilisation frauduleuse, abusive ou excessive du Service, telles que notamment l'encombrement volontaire ou involontaire des serveurs de messagerie ou des destinataires de mails par du publipostage sauvage (spamming, bulk e-mail, junk e-mail ou mail bombing) ou de son réseau, ou l'envoi de messages attractifs générant nécessairement un nombre imposant de réponses (teasing ou trolling) pouvant ainsi perturber la disponibilité desdits serveurs ou réseau. La responsabilité de SCALIAN ne peut pas être engagée vis-à-vis de l'Utilisateur du Service :</p>
+<ul>
+<li>En cas de mauvaise utilisation du Service,</li>
+<li>En cas de mauvaise installation et/ou de mauvaise configuration et/ou de dysfonctionnement de l’équipement informatique de l’Utilisateur et/ou de la carte réseau sans fil Wifi,</li>
+<li>En cas de non-respect de ses obligations,</li>
+<li>En cas d'impossibilité d'accès par Internet au réseau privé virtuel d'un organisme,</li>
+<li>En cas de perturbations ou d'interruptions,</li>
+<li>En cas de perturbations et/ou d'indisponibilité totale ou partielle, et/ou d'interruption de tout ou partie des services proposés sur les réseaux exploités par des opérateurs tiers,</li>
+<li>En cas de force majeure au sens de la jurisprudence de la Cour de Cassation.</li>
+</ul>
+<p>L'Utilisateur du Service est seul responsable de tout préjudice direct ou indirect, matériel ou immatériel causé à des tiers du fait de son utilisation.</p>
+<p>Tout détournement ou utilisation non autorisée de la connexion au Service d'un Utilisateur et leurs conséquences relèvent de la seule responsabilité de cet Utilisateur.</p>
+<p></p>
+<p></p>
+<p>SCALIAN s’engage à respecter les dispositions de la loi n°78-17 du 6 janvier 1978 dite « Informatique et Libertés » ainsi que Règlement Européen 2016/679 relatif à la protection des personnes physiques à l’égard du traitement des données à caractère personnel et la libre circulation de ces données.</p>
+<p></p>
+<ul>
+<li><u>Les données identifiantes</u>
+<ul>
+<li>Pour accéder au Service, l’Utilisateur sera amené à communiquer des informations identifiantes dont notamment son NOM, PRENOM.</li>
+<li>La collecte de ces données personnelles par SCALIAN a pour objet la gestion des droits d’accès wifi « SCA GUEST ». Ces informations sont obligatoires. A défaut, l’Utilisateur ne pourra pas accéder au Service.</li>
+</ul>
+</li>
+<li><u>Les données non identifiantes</u></li>
+<li>Dans le cadre de l’utilisation du Service, SCALIAN n’a pas vocation à collecter des données dites non-identifiantes.</li>
+<li><u>Données sensibles</u>
+<ul>
+<li>Le wifi « SCA GUEST » n’a pas vocation à partager des informations sensibles, telles que l’origine raciale ou ethnique, les croyances religieuses, les antécédents judiciaires, la santé physique ou mentale ou l’orientation sexuelle. Il est de la responsabilité de l’Utilisateur de ne pas partager ce type d’informations sur le réseau du wifi « SCA GUEST ».</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+<ul>
+<li>Responsable de traitement
+<ul>
+<li>Les traitements de données personnelles sont réalisés sous la responsabilité de SCALIAN.</li>
+</ul>
+</li>
+<li>Destinataires des données
+<ul>
+<li>Les traitements de données personnelles sont réalisés sous la responsabilité de SCALIAN pour les stricts besoins du Service.</li>
+</ul>
+</li>
+<li>Durée de conservation des données
+<ul>
+<li>Données personnelles des utilisateurs décrits au paragraphe  : ces données seront conservées sans limite de temps pendant toute la durée de l’utilisation du Service.</li>
+<li>Dans le cadre de recherche de preuve juridique, une demande d’export de données devra donc être réalisée dans l’heure après l’utilisation du Service par l’Utilisateur.</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+<p>Conformément au Règlement Européen 2016/679 du 27 Avril 2016 sur la Protection des Données Personnelles des personnes physiques (dit RGPD), l’Utilisateur peut accéder durée de l’utilisation du service à ses données personnelles, les rectifier, demander qu’elles ne soient plus utilisées, demander leur effacement. Pour ce faire, il suffit à l’Utilisateur d’écrire par mail à .</p>
+<p> </p>
+<p></p>
+<p> </p>
+<p>Si une ou plusieurs stipulations des présentes sont tenues pour non valides ou déclarées comme telles en application d'une loi, d'un règlement ou d'une décision définitive d'une juridiction compétente, les autres stipulations garderont toute leur force et toute leur portée.</p>
+<p></p>
+<p></p>
+<p></p>
+<p> </p>
+<p>Les présentes Conditions Générales d'Utilisation et les opérations qui en découlent sont régies par le droit français.</p>
+<p>Elles sont rédigées en langue française. Dans le cas où elles seraient traduites en une ou plusieurs langues, seul le texte français ferait foi en cas de litige.</p>
+<p> </p>
+<p></p>
+<p> </p>
+<p>Tout litige relatif à l'interprétation et/ou à l'exécution des présentes Conditions Générales d’Utilisation relève des juridictions françaises.</p>
+<p></p>
+<p></p>
+<p> </p>
+<p>SCALIAN pourront être amenés à faire évoluer les présentes Conditions Générales d’Utilisation.</p>
+<p>Aussi, l’Utilisateur s’engage à consulter les Conditions Générales d’Utilisation afin de se tenir informé des évolutions les plus récentes.</p>
+<p> </p>
+<p>15.1 - Toute demande ou réclamation relative aux présentes Conditions Générales d’Utilisation doit être adressée à la société SCALIAN, 417, L’occitane 31670 Labège ou par mail à : </p>
+<p> </p></div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12">
+<a href="/data/disclaimer.pdf" target="new">Click here to download the charter</a>
+</div>
+</div>
+<div class="spacer-small"></div>
+<div class="row">
+<div class="col-xs-12">
+<span class="alert alert-success" id="warning" role="alert" style="display: none;"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12">
+<span class="alert alert-danger" id="error" role="alert" style="display: none;"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12">
+<span class="alert alert-info" id="info" role="alert" style="display: none;">You may submit a new request. Ensure that the email address is correct.</span>
+</div>
+</div>
+<div class="row">
+<h4 class="panel-heading col-sm-8 col-sm-offset-4 col-md-offset-3">Access request</h4>
+</div>
+<form accept-charset="utf-8" action="/auth/sponsor.html" autocomplete="off" class="form-horizontal" id="form" method="post" onsubmit="return submitForm();">
+<div class="form-group">
+<label class="help-block col-xs-12 col-sm-8 col-md-8 col-sm-offset-4 col-md-offset-3">Your access request will be sent to the email address entered. Once the sponsor validates this request, you will be automatically redirected.</label>
+</div>
+<input name="session" type="hidden" value=""/>
+<input name="url" type="hidden" value="1q6gPKCYnRMKnGybQ8twEMZcM4ihChOAFAqX0VNFsUtSXscl01P0FpFsK0i7rgDRZTOp201tvS0VUe0XB3JVpi40GgxD6Lk1AAn8No3e7KSYzQ4arUl+5luT4xL1WKs1u6EpSUK1N2db+PmQobtd/glKsVAc7s6KuR6kB8vOt5M="/>
+<input name="time" type="hidden" value=""/>
+<input name="authnum" type="hidden" value=""/>
+<div class="form-group">
+<label class="col-xs-12 col-sm-4 col-md-3 control-label" for="first_name">First name</label>
+<div class="col-xs-12 col-sm-6 col-md-4">
+<input autocapitalize="off" autocorrect="off" class="form-control" id="first_name" name="first_name" pattern='[^"]*' required="" title="No double quote allowed" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-4 col-md-3 control-label" for="last_name">Last Name</label>
+<div class="col-xs-12 col-sm-6 col-md-4">
+<input autocapitalize="off" autocorrect="off" class="form-control" id="last_name" name="last_name" pattern='[^"]*' required="" title="No double quote allowed" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-4 col-md-3 control-label" for="sponsor_mail">Sponsor's email address</label>
+<div class="col-xs-12 col-sm-6 col-md-4">
+<input autocapitalize="off" autocorrect="off" class="form-control" id="sponsor_mail" name="sponsor_mail" pattern='[^"]*' required="" title="No double quote allowed" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-4 col-md-3 control-label" for="time">Authentication duration</label>
+<div class="col-xs-12 col-sm-6 col-md-4">
+<select class="form-control" id="time" name="time">
+<option value="5">5 minutes</option><option value="10">10 minutes</option><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">1 hour</option><option value="120">2 hours</option><option value="180">3 hours</option><option selected="" value="240">4 hours</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label class="col-xs-12 col-sm-4 col-md-3 col-sm-offset-3">
+<input id="read_checkbox" name="read" type="checkbox" value="accepted"/> I have read the charter
+						</label>
+</div>
+<div class="form-group">
+<div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-offset-3">
+<input class="btn btn-default btn-success" id="submit_btn" type="submit" value="Send"/>
+</div>
+</div>
+</form>
+</div>
+</div>
+<!-- Populate global translations (common.js dependency) -->
+<script id="global-l10n" type="application/json">
+	{
+		"ERR_INTERNAL": "Internal System Error",
+		"ERR_PKI_INVALID_CERT": "Invalid certificate issued",
+		"ERR_PKI_INVALID_DECRYPTION": "Could not decrypt private key",
+		"ERR_PKI_INVALID_ENCRYPTION": "Could not encrypt private key",
+		"ERR_PKI_NO_SAVED_KEY": "Could not find private key associated with your certificate. Submit a new request",
+		"ERR_POLICY_INVALID_CHARSET": "Incomplete character set in password",
+		"ERR_POLICY_INVALID_CONFIRM": "Confirmation password does not match",
+		"ERR_POLICY_INVALID_ENTROPY": "Password insufficiently complex ",
+		"ERR_POLICY_INVALID_LENGTH": "Password must be at least {{length}} chars(s)"
+	}
+</script>
+<!-- jQuery (Bootstrap dependency) -->
+<script crossorigin="anonymous" src="/data/contrib/js/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script crossorigin="anonymous" src="/data/contrib/js/bootstrap.min.js"></script>
+<!-- Forge (common.js dependency) c.f. https://github.com/digitalbazaar/forge -->
+<script crossorigin="anonymous" src="/data/contrib/js/forge.min.js"></script>
+<!-- Expose window.stormshield -->
+<script src="/data/common/js/common.js"></script>
+</body>
+</html>
