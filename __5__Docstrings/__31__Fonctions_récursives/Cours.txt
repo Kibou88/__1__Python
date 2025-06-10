@@ -1,0 +1,53 @@
+Les fonctions récursives sont un concept fondamental en programmation où une fonction s'appelle elle-même afin de résoudre un problème. Cela peut être particulièrement utile pour résoudre des problèmes qui peuvent être décomposés en sous-problèmes similaires plus petits.
+Concepts de base
+
+    Cas de base (Base Case) : C'est la condition qui arrête la récursion. Sans cas de base, la fonction récursive continuerait à s'appeler indéfiniment.
+
+    Cas récursif (Recursive Case) : C'est la partie où la fonction s'appelle elle-même avec un problème légèrement plus petit ou modifié, se rapprochant du cas de base.
+
+Exemples de fonctions récursives
+1. Calcul de la factorielle
+
+La factorielle d'un nombre nn est le produit de tous les entiers de 1 à nn. Par exemple, 5!=5×4×3×2×1=1205!=5×4×3×2×1=120.
+
+def factorielle(n):
+    # Cas de base
+    if n == 0:
+        return 1
+    # Cas récursif
+    else:
+        return n * factorielle(n - 1)
+
+2. Suite de Fibonacci
+
+La suite de Fibonacci est une série de nombres où chaque nombre est la somme des deux précédents, généralement commençant par 0 et 1.
+
+def fibonacci(n):
+    # Cas de base
+    if n <= 1:
+        return n
+    # Cas récursif
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
+3. Calcul de la puissance
+
+Calculer xx élevé à la puissance nn.
+
+def puissance(x, n):
+    # Cas de base
+    if n == 0:
+        return 1
+    # Cas récursif
+    else:
+        return x * puissance(x, n - 1)
+
+Conseils pour utiliser la récursion
+
+    Éviter la récursion infinie : Assurez-vous toujours que votre fonction a un cas de base qui mettra fin à la récursion.
+
+    Efficacité : Les fonctions récursives peuvent parfois être moins efficaces que les solutions itératives en raison de l'overhead des appels de fonction. Dans certains cas, la récursion peut être optimisée avec des techniques comme la mémoïsation.
+
+    Lisibilité : Bien que la récursion puisse rendre le code plus élégant et plus lisible, elle peut aussi le rendre plus difficile à comprendre pour les débutants.
+
+Si tu as des questions ou si tu veux explorer un exemple spécifique, n'hésite pas à demander !
