@@ -1,0 +1,44 @@
+Background:
+
+As in standard chess, in the starting position the 2nd and 7th rank contain pawns and the remaining white/black
+pieces are on the 1st/8th rank. What changes is that the pieces on the first rank can be placed anywhere,
+as long as the two bishops are on different colored squares and the king is placed between the two rooks.
+The configuration of the 8th rank matches the 1st rank, so that white and black start in the same position.
+
+There are a total of 960 possible starting positions, hence the name. If these positions are sorted
+lexicographically, we can associate each integer from 1 to 960 with a specific Chess960 starting position.
+Task:
+
+Given a positive integer i between 1 and 960, return a string representing the board in the i'th Chess960
+starting position. The pieces are denoted using queen -> Q, rook -> R, king -> K, knight -> N, bishop -> B
+and pawn -> P, with lowercase letters representing black and uppercase white. "." is used for empty squares.
+"\n" should terminate each row, including the last.
+Examples:
+
+i = 1 => "b b n n q r k r\np p p p p p p p\n. . . . . . . .\n. . . . . . . .\n. . . . . . . .\n. . . . . . . .\nP P P P P P P P\nB B N N Q R K R\n"
+
+When printed:
+
+b b n n q r k r
+p p p p p p p p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+P P P P P P P P
+B B N N Q R K R
+
+i = 960 => "r q n n k r b b\np p p p p p p p\n. . . . . . . .\n. . . . . . . .\n. . . . . . . .\n. . . . . . . .\nP P P P P P P P\nR Q N N K R B B\n"
+
+When printed:
+
+r q n n k r b b
+p p p p p p p p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+P P P P P P P P
+R Q N N K R B B
+
+This kata was inspired by Is this a valid Chess960 position?.
