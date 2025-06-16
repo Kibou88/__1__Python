@@ -24,7 +24,12 @@ def boards_isomorphic(s1: str, s2: str) -> bool:
 
 
 if __name__ == '__main__':
-    color = ['c', 'd', 'h', 's']
+    color = {
+        'c': "",
+        'd': "",
+        'h': "",
+        's': ""
+    }
     boards_isomorphic("AcAh2h", "AsAd2d")  # True
     boards_isomorphic("AcAh2h", "AsAd2c")  # False
     str1 = "AcAh2h"
@@ -35,19 +40,20 @@ if __name__ == '__main__':
 
     liste_s2 = ["".join((str2[i], str2[i + 1])) for i in range(0, len(str2), 2)]
     liste_s2.sort(key=lambda x: x[0])
-    temp = list(liste_s1)
+    new_chaine = []
     print(chaine_s1, liste_s2)
     for i_s1 in range(len(liste_s1)):
         for j_s2 in range(len(liste_s2)):
             if liste_s1[i_s1][0] == liste_s2[j_s2][0]:
-                if liste_s1[i_s1][1] in color:
-                    q
-                    color.remove(liste_s1[i_s1][1])
-                    chaine_s1.replace(liste_s1[i_s1][1], liste_s2[j_s2][1])
-                else:
-                    continue
-                # color.remove(liste_s1[i_s1][1])
+                if color[liste_s1[i_s1][1]] == "":
+                    color[liste_s1[i_s1][1]] = liste_s2[j_s2][1]
+                new_chaine.append((liste_s1[i_s1][0], liste_s2[i_s1][1]))
+
+                # else:
+                #     continue
+            else:
+                continue
 
 
-    print(color)
+    print(new_chaine)
     print(chaine_s1, str2)
