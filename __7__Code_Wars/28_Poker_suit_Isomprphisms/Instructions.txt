@@ -1,0 +1,47 @@
+Introduction
+
+In poker, suits do not have intrinsic order or value — only the pattern of ranks and suit groupings
+matter when comparing hands or boards.
+Problem description
+
+We define two sets of cards (we'll call them boards) to be isomorphic if there exists a one-to-one
+mapping between the suits such that replacing each suit in the first board using this mapping produces
+the second board.
+
+For example:
+
+    "Ac9d" and "Ac9d" are isomorphic (and any other board is isomorphic to itself)
+    "AcAh2h" and "AsAd2d" are isomorphic via mapping: c -> s, h -> d, a consistent transformation.
+    "AcAh2h" and "AsAc2c" are isomorphic via mapping: c -> s, h -> c
+    "AcAh2h" and "AsAd2c" are not isomorphic, because no single consistent mapping of suits can turn the
+     first into the second.
+    "As9sJs5s4s" and "Ac9cJc5c4c" are isomorphic
+    "AsAh" and "Ac" are not isomorphic. Two boards of different length can never be isomorphic
+
+The order of cards in the input doesn't matter.
+
+    "Ac9d" and "9hAs" are isomorphic
+
+Task
+
+Write a function that determines whether two given poker boards (represented as strings) are isomorphic.
+Function Signature
+
+def boards_isomorphic(board1: str, board2: str) -> bool:
+
+Input
+
+    Two strings board1 and board2, each representing a valid set of 0 to 52 unique playing cards
+    (e.g., "AcAh2h").
+    Each card is represented by a rank (one of 23456789TJQKA) followed by a suit (one of cdhs).
+    There will be no duplicate cards within single board.
+
+Output
+
+    Return True if the boards are isomorphic, False otherwise.
+
+Example
+
+boards_isomorphic("AcAh2h", "AsAd2d") # True
+boards_isomorphic("AcAh2h", "AsAd2c") # False
+
