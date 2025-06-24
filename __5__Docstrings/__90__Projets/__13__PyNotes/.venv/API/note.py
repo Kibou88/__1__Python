@@ -26,6 +26,16 @@ class Note:
     def __str__(self):
         return self.title
 
+    @property
+    def content(self):
+        return self._content
+
+    @content.setter
+    def content(self, value):
+        if isinstance(value, str):
+            self._content = value
+        else:
+            raise TypeError(f"Content must be of type str")
 
 
 
