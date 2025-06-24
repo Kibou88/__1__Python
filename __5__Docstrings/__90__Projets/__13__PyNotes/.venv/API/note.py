@@ -1,5 +1,6 @@
 from uuid import uuid4
 import os
+import json
 from API.constants import NOTES_DIR
 
 class Note:
@@ -7,7 +8,7 @@ class Note:
         #uuid: Unique IDentifer
         self.title = title
         self.contents = contents
-        self.uuid = str(uuid4())
+        self.uuid = (str(uuid4()) if uuid is None else uuid)
 
     @property
     def path(self):
@@ -37,11 +38,41 @@ class Note:
         else:
             raise TypeError(f"Content must be of type str")
 
+    def save(self):
+        """
+        Permet de sauvegarder la note à l'emplacement path
+        """
+        if not os.path.exists(NOTES_DIR):
+            os.makedirs(NOTES_DIR)
 
+        data = {
+            "title": self.title,
+            "contents": self.contents
+        }
+        with open(self.path, "w") as f:
+            json.dump(data, f, indent=4)
+
+    def delete(self):
+        """
+        Supprime une note en fonction de son UUID et gère l'exception si la note n'as pas été trouvé
+        :return:
+        True ou Fale: Si la note a été supprimé ou non
+        """
+        try:
+            os.remove(self.path)
+        except FileNotFoundError:
+            print("File doesn't exist")
+            return False
+        else:
+            print("File deleted")
+            return True
 
 if __name__ == "__main__":
-    note = Note("Note", contents="Test")
+    note = Note("Note", contents="Test", uuid = "6c8a37b3-b455-4b94-930d-c4886af9495d")
     print(note.uuid)
     print(repr(note))
     # Si la méthode a un décorateur "@property" ne pas inclure les () à la fin de "path"
     print(note.path)
+    note.save()
+    note.uuid = "6c8a37b3-b455-4b94-930d-c4886af9495d"
+    note.delete()
