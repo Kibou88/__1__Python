@@ -1,0 +1,27 @@
+ligne de code self._message = int_value.to_bytes((int_value.bit_length() + 7) // 8, byteorder='big').decode('utf-8')
+
+voici une explication détaillée :
+to_bytes
+
+    Origine : to_bytes est une méthode intégrée des entiers en Python. Elle permet de convertir un entier en une séquence d'octets.
+    Utilisation : int_value.to_bytes(length, byteorder) convertit l'entier int_value en une séquence d'octets de longueur length. Cela est utile pour transformer un nombre en une représentation binaire qui peut être stockée ou transmise.
+
+bit_length
+
+    Origine : bit_length est également une méthode intégrée des entiers en Python.
+    Utilisation : int_value.bit_length() renvoie le nombre de bits nécessaires pour représenter un entier en binaire, sans compter le signe ni les zéros de tête.
+    Exemple : Si int_value est 13, int_value.bit_length() renvoie 4, car 13 est 1101 en binaire.
+
+byteorder
+
+    Origine : byteorder est un paramètre de la méthode to_bytes.
+    Utilisation : Il spécifie l'ordre des octets dans la séquence d'octets résultante. Les valeurs possibles sont :
+        'big' : L'ordre des octets est du plus significatif au moins significatif (big-endian). C'est l'ordre standard dans de nombreux protocoles réseau.
+        'little' : L'ordre des octets est du moins significatif au plus significatif (little-endian). C'est l'ordre utilisé par certaines architectures de processeurs.
+
+Explication de la ligne de code
+
+    (int_value.bit_length() + 7) // 8 : Cette expression calcule le nombre d'octets nécessaires pour représenter l'entier int_value. Elle ajoute 7 au nombre de bits, puis divise par 8 pour obtenir le nombre d'octets, en arrondissant à l'entier supérieur.
+    byteorder='big' : Cela signifie que les octets sont ordonnés du plus significatif au moins significatif.
+
+#-------------------------------------------------------------------------------------------------------------------------

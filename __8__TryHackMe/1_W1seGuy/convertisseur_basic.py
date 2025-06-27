@@ -1,4 +1,4 @@
-# convertisseur.py
+# convertisseur_basic.py
 # --------------------------------------------------------------------------------
 # But:
 # Transformer une chaine de type string, binaire ou hexadécimal par un autre type
@@ -40,7 +40,6 @@ class Convertisseur():
         """
         binary_str = '10'
         for character in self._message:
-            # print(character)
             if character not in binary_str:
                 return False
         return True
@@ -108,7 +107,7 @@ class Convertisseur():
             # Convertir l'entier en bytes et décoder en chaîne de caractères
             self._message = int_value.to_bytes((int_value.bit_length() + 7) // 8, byteorder='big').decode('utf-8')
         else:
-            raise Exception("Le message n'est ni au format hexa et binaire!!")
+            raise TypeError("Le message n'est ni au format hexa et binaire!!")
         return self._message
 
 
@@ -120,7 +119,6 @@ if __name__ == '__main__':
     test2 = Convertisseur(message_str)
     message_hexa = test1.to_hex() #output: 54484d7b
     message_bin = test2.to_bin() #output: 1010100010010000100110101111011
-    print(len("01010100010010000100110101111011"[::-1]))
     print("Message convertit en hexa: ", message_hexa)
     print("Message convertit en bin: ", message_bin)
     print("\n")

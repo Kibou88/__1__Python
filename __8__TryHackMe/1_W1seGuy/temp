@@ -1,0 +1,36 @@
+print("Chaine de base: ", message)
+    test_hexa1 = Convertisseur(message)
+    message_hexa1 = test_hexa1.to_hex() #output = 54484d7b
+    print("Conversion de string en hexa: ", message_hexa1)
+
+    test_bin1 = Convertisseur(message)
+    message_bin1 = test_bin1.to_bin()
+    print("Conversion de string en bin1: ", message_bin1) #output: 1010100010010000100110101111011
+    print(len(message_bin1))
+
+    test_hexa2 = Convertisseur(message_bin1)
+    message_hexa2 = test_hexa2.to_hex()
+    print("Conversion de string en hexa2: ", message_hexa2)
+    # ------------------------------------------------------
+    # ------------ Test d'hexa en bin et str ---------------
+    test_bin2 = Convertisseur(message_hexa1)
+    message_bin2 = test_bin2.to_bin()
+    print("Conversion d'hexa en bin2: ", message_bin2) #output: 1010100010010000100110101111011
+    print(len(message_bin2))
+
+    test_str = Convertisseur(message_hexa1)
+    message_str = test_str.to_str()
+    print("Conversion d'hexa en str: ", message_str) #output: THM{
+    # ------------------------------------------------------
+    # ------------ Test bin en str et hexa ---------------
+    test_str1 = Convertisseur(message_bin1)
+    message_str1 = test_str1.to_str()
+    print("Conversion d'bin1 en str1: ", message_str1)
+
+    test_str2 = Convertisseur(message_bin2)
+    message_str2 = test_str2.to_str()
+    print("Conversion d'bin2 en str2: ", message_str2)
+
+    test_converted = Convertisseur(message_hexa1)
+    test_converted = test_converted.to_str()
+    print("Conversion d'hexa en string: ", test_converted) #output = THM{
