@@ -1,7 +1,22 @@
 from uuid import uuid4
+from glob import glob
 import os
 import json
 from API.constants import NOTES_DIR
+
+def get_notes():
+    notes = []
+    fichiers = glob(os.path.join(NOTES_DIR, '*.json'))
+    for fichier in fichiers:
+        with open(fichier, 'r') as f:
+            note_data = json.load(f)
+            note_uuid = os.path.splitext(os.path.basename(fichier))[0]
+            note_title = note_data.get('title')
+            note_content = note_data.get('contents')
+            note = Note(uuid=note_uuid, title=note_title, contents=note_content)
+            notes.append(note)
+            # os.path.basename(fichier) # Va retourner tout le nom du fichier + extension
+    return notes
 
 class Note:
     def __init__(self, title="", contents="", uuid=None):
@@ -22,7 +37,7 @@ class Note:
         return os.path.join(NOTES_DIR, self.uuid + ".json")
 
     def __repr__(self):
-        return f"Note: {self.title}, {self.uuid})"
+        return f"Note {self.title}: {self.uuid}"
 
     def __str__(self):
         return self.title
@@ -68,11 +83,12 @@ class Note:
             return True
 
 if __name__ == "__main__":
-    note = Note("Note", contents="Test", uuid = "6c8a37b3-b455-4b94-930d-c4886af9495d")
-    print(note.uuid)
-    print(repr(note))
-    # Si la méthode a un décorateur "@property" ne pas inclure les () à la fin de "path"
-    print(note.path)
-    note.save()
-    note.uuid = "6c8a37b3-b455-4b94-930d-c4886af9495d"
-    note.delete()
+    # note = Note("Note", contents="Test", uuid = "6c8a37b3-b455-4b94-930d-c4886af9495d")
+    # print(note.uuid)
+    # print(repr(note))
+    # # Si la méthode a un décorateur "@property" ne pas inclure les () à la fin de "path"
+    # print(note.path)
+    # note.save()
+    # note.uuid = "6c8a37b3-b455-4b94-930d-c4886af9495d"
+    # note.delete()
+    print(get_notes())
