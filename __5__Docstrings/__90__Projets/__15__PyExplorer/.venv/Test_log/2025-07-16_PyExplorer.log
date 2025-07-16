@@ -1,0 +1,63 @@
+2025-07-16 09:21:05,238 | INFO | Successfully load style.css.
+2025-07-16 09:21:05,261 | ERROR | Class 'QStandardPaths' cannot be instantiated.
+2025-07-16 09:21:58,077 | INFO | Successfully load style.css.
+2025-07-16 09:21:58,098 | INFO | Successfully setup UI.
+2025-07-16 09:22:13,980 | INFO | Application is shutting down
+2025-07-16 09:55:51,083 | INFO | Successfully load style.css.
+2025-07-16 09:55:51,136 | INFO | Successfully setup UI.
+2025-07-16 09:55:56,882 | INFO | Application is shutting down
+2025-07-16 09:56:17,991 | INFO | Successfully load style.css.
+2025-07-16 09:56:18,009 | INFO | Successfully setup UI.
+2025-07-16 09:56:20,244 | INFO | Application is shutting down
+2025-07-16 09:57:07,086 | INFO | Successfully load style.css.
+2025-07-16 09:57:07,120 | INFO | Successfully setup UI.
+2025-07-16 09:57:10,774 | INFO | Application is shutting down
+2025-07-16 09:57:14,997 | INFO | Successfully load style.css.
+2025-07-16 09:57:15,018 | ERROR | QIcon expected at most 1 argument, got 2
+2025-07-16 09:57:37,012 | INFO | Successfully load style.css.
+2025-07-16 09:57:37,031 | ERROR | module 'PySide6.QtWidgets' has no attribute 'QIcon'
+2025-07-16 09:58:16,832 | INFO | Successfully load style.css.
+2025-07-16 09:58:16,918 | ERROR | 'PySide6.QtGui.QIcon.__init__' called with wrong argument types:
+  PySide6.QtGui.QIcon.__init__(tuple)
+Supported signatures:
+  PySide6.QtGui.QIcon.__init__()
+  PySide6.QtGui.QIcon.__init__(other: PySide6.QtGui.QIcon, /)
+  PySide6.QtGui.QIcon.__init__(engine: PySide6.QtGui.QIconEngine, /)
+  PySide6.QtGui.QIcon.__init__(fileName: str, /)
+  PySide6.QtGui.QIcon.__init__(pixmap: PySide6.QtGui.QPixmap | PySide6.QtGui.QImage, /)
+2025-07-16 09:58:39,984 | INFO | Successfully load style.css.
+2025-07-16 09:58:40,019 | INFO | Successfully setup UI.
+2025-07-16 09:58:46,253 | INFO | Application is shutting down
+2025-07-16 09:59:09,832 | INFO | Successfully load style.css.
+2025-07-16 09:59:09,857 | INFO | Successfully setup UI.
+2025-07-16 09:59:16,132 | INFO | Application is shutting down
+2025-07-16 10:24:05,408 | INFO | Successfully load style.css.
+2025-07-16 10:24:05,442 | INFO | Successfully setup UI.
+2025-07-16 10:24:14,162 | INFO | Application is shutting down
+2025-07-16 10:26:31,395 | INFO | Successfully load style.css.
+2025-07-16 10:26:31,421 | INFO | Successfully setup UI.
+2025-07-16 10:26:48,722 | INFO | Application is shutting down
+2025-07-16 10:27:34,459 | INFO | Successfully load style.css.
+2025-07-16 10:27:34,485 | INFO | Successfully setup UI.
+2025-07-16 10:27:45,149 | INFO | Application is shutting down
+2025-07-16 10:28:01,843 | INFO | Successfully load style.css.
+2025-07-16 10:28:01,865 | INFO | Successfully setup UI.
+2025-07-16 10:28:08,890 | INFO | Application is shutting down
+2025-07-16 10:28:12,778 | INFO | Successfully load style.css.
+2025-07-16 10:28:12,800 | INFO | Successfully setup UI.
+2025-07-16 10:28:16,189 | INFO | Application is shutting down
+2025-07-16 10:30:13,369 | INFO | Successfully load style.css.
+2025-07-16 10:30:13,394 | INFO | Successfully setup UI.
+2025-07-16 10:30:19,672 | INFO | Application is shutting down
+2025-07-16 10:34:13,010 | INFO | Successfully load style.css.
+2025-07-16 10:34:13,039 | INFO | Successfully setup UI.
+2025-07-16 10:34:22,017 | INFO | Application is shutting down
+2025-07-16 10:34:42,872 | INFO | Successfully load style.css.
+2025-07-16 10:34:42,911 | INFO | Successfully setup UI.
+2025-07-16 10:35:12,638 | INFO | Application is shutting down
+2025-07-16 10:36:54,218 | INFO | Successfully load style.css.
+2025-07-16 10:36:54,246 | INFO | Successfully setup UI.
+2025-07-16 10:37:04,147 | INFO | Application is shutting down
+2025-07-16 10:43:01,117 | INFO | Successfully load style.css.
+2025-07-16 10:43:01,145 | INFO | Successfully setup UI.
+2025-07-16 10:43:28,778 | INFO | Application is shutting down
