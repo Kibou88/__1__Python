@@ -1,0 +1,77 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__90__Projets/__100_Explorer_perso/.venv/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__90__Projets/__100_Explorer_perso/.venv/resources/icons/icons.ico"
+  },
+  {
+   "optionDest": "name",
+   "value": "Explorer"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "version_file",
+   "value": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__90__Projets/__100_Explorer_perso/.venv/version.txt"
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__90__Projets/__100_Explorer_perso/.venv/resources/icons/icon_app.ico;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Satoshi/Desktop/Code/__1__Entrainement_Python/__5__Docstrings/__90__Projets/__100_Explorer_perso/.venv/resources;resources/"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}
