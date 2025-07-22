@@ -23,10 +23,10 @@ class MainWindow(QWidget):
     def __init__(self, log_dir_name="Logs"):
         super().__init__()
         self.logs = Logs(application_name="PyPlayer", log_dir=log_dir_name)
-        self.setWindowTitle("PyPlayer")
-        self.setWindowIcon(QIcon("resources/icons/Icon.ico"))
+        self.setWindowTitle("PyPlayer") # Changer le titre
+        self.setWindowIcon(QIcon("resources/icons/Icon.ico")) # Changer le lien
+        self.current_dir = os.path.dirname(__file__)
         self.setup_ui()
-        self.load_notes()
 
     def setup_ui(self):
         """
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     app = QApplication() # 1. Instantiate QApplication
     windows = MainWindow(log_dir_name="Test_log")
     windows.show()
-    exit_app_logs = Logs(application_name="PyPlayer", log_dir="Test_log")
+    exit_app_logs = Logs(application_name="PyPlayer", log_dir="Test_log") # Changer le titre
 
     exit_code = app.exec() # 2. Invoke app.exec()
     exit_app_logs.log_info("Application is shutting down")
