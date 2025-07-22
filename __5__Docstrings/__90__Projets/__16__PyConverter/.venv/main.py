@@ -11,13 +11,16 @@
 
 import sys
 from PySide6.QtWidgets import QApplication
+from PySide6 import QtGui
+from functools import cached_property
 
-from main_window import MainWindow
 from misc.logs import Logs
+
 
 if __name__ == "__main__":
     app = QApplication() # 1. Instantiate QApplication
     windows = MainWindow()
+    windows.resize(800, 600)
     windows.show()
     exit_app_logs = Logs(application_name="Explorer", log_dir="Logs")
 
