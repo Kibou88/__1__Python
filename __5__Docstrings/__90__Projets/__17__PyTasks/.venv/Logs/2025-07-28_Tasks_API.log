@@ -1,0 +1,3 @@
+2025-07-28 10:15:39,699 | INFO | {'Apprendre Python': True, 'test': False} removed
+2025-07-28 10:19:37,628 | ERROR | Apprendre Python already added
+2025-07-28 10:19:51,639 | ERROR | Apprendre Python already added
