@@ -1,0 +1,19 @@
+C:.
+|   .gitkeep
+|   Architecture_projet.drawio
+|   tree_project.txt
+|   
++---0_Cahier_des_Charges
+|   |   .gitkeep
+|   |   
+|   \---1_V1
++---10_Apprentissage
+|   |   .gitkeep
+|   |   
+|   \---1_SQLite3
++---1_Code
+|       .gitkeep
+|       
+\---2_Tests
+        .gitkeep
+        
