@@ -78,9 +78,13 @@ class DataBase:
             for livre in resultats:
                 print(f"ID: {livre[0]}, Titre: {livre[1]}, Auteur: {livre[2]}, Année: {livre[3]}")
 
-    def show_tables(self)-> list:
+    def write_datas_table(self, table_selected):
+        pass
+
+    def show_tables(self, return_nom_table=0) -> list:
         """
         Permet d'afficher les noms des différentes tables de la base de données
+        :param return_nom_table (bool): A 1, pour récupérer les tables présentes
         :return: self.names_tables (list): noms des tables de la base de données
         """
         self.names_tables = []
@@ -90,12 +94,15 @@ class DataBase:
             noms_tables = cur.fetchall()
             # print(noms_tables)
             self.names_tables=["".join(list(nom_table)) for nom_table in noms_tables]
+            if(return_nom_table):
+                return self.names_tables
             # print(self.names_tables)
 
-    def check_tables_exists(self):
+    def check_tables_exists(self) -> bool:
         """
-
-        :return:
+        Vérifie si la table existe ou non
+        :return: True: la table n'existe pas
+        :return: False: la table n'existe pas
         """
         self.show_tables()
         if self.dbTableName not in self.names_tables:
@@ -109,5 +116,6 @@ if __name__ == "__main__":
     # db.create_table()
     db_test = DataBase("bibliotheque.db", "livres")
     # db_test.read_table()
-    # db_test.show_tables()
+    tables = db_test.show_tables(1)
+    print(tables)
     db_test.create_table()
