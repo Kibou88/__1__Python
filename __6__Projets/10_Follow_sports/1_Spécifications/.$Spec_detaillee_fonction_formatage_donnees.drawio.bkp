@@ -1,0 +1,66 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Page-1" id="zOkgT2M9Z-IAxVG_Ku9Z">
+    <mxGraphModel dx="1426" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-2" parent="1" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" value="DICO_USER" vertex="1">
+          <mxGeometry height="280" width="260" x="20" y="130" as="geometry">
+            <mxRectangle height="50" width="80" x="530" y="270" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-3" parent="s_SA-kj0GXBQPK-4xCES-2" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" value="&quot;date&quot;: &quot;dd/mm/yyyy&quot;&lt;div&gt;&quot;exercices&quot;: [{&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;nom&quot;: exercice1,&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;series&quot;: [{&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;series&quot;: X,&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;reps&quot;: Y,&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;charge&quot;: Z},&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;{&quot;series&quot;: X2,&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp;&quot;reps&quot;: Y2,&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;charge&quot;: Z}}&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;},&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;{&quot;nom&quot;: exercice2,&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&quot;series&quot;: [{&quot;series&quot;: X3, &quot;reps&quot;: Y3, &quot;charge&quot;: Z3&quot;}]&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;}}&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="260" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-5" parent="1" style="swimlane;glass=0;" value="class Formate_datas" vertex="1">
+          <mxGeometry height="300" width="590" x="520" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-16" edge="1" parent="s_SA-kj0GXBQPK-4xCES-5" source="s_SA-kj0GXBQPK-4xCES-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s_SA-kj0GXBQPK-4xCES-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-7" parent="s_SA-kj0GXBQPK-4xCES-5" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;glass=0;rounded=0;shadow=0;" value="Formate_name" vertex="1">
+          <mxGeometry height="60" width="180" x="20" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-17" edge="1" parent="s_SA-kj0GXBQPK-4xCES-5" source="s_SA-kj0GXBQPK-4xCES-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s_SA-kj0GXBQPK-4xCES-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-8" parent="s_SA-kj0GXBQPK-4xCES-5" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;glass=0;rounded=0;shadow=0;" value="Formate_charge_poids" vertex="1">
+          <mxGeometry height="60" width="180" x="20" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-15" edge="1" parent="s_SA-kj0GXBQPK-4xCES-5" source="s_SA-kj0GXBQPK-4xCES-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s_SA-kj0GXBQPK-4xCES-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-10" parent="s_SA-kj0GXBQPK-4xCES-5" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;glass=0;rounded=0;shadow=0;" value="Formate_date" vertex="1">
+          <mxGeometry height="60" width="180" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-11" parent="s_SA-kj0GXBQPK-4xCES-5" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;glass=0;rounded=0;shadow=0;" value="Create_trame_db" vertex="1">
+          <mxGeometry height="60" width="180" x="400" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-12" edge="1" parent="1" source="s_SA-kj0GXBQPK-4xCES-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s_SA-kj0GXBQPK-4xCES-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-13" edge="1" parent="1" source="s_SA-kj0GXBQPK-4xCES-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s_SA-kj0GXBQPK-4xCES-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-14" edge="1" parent="1" source="s_SA-kj0GXBQPK-4xCES-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s_SA-kj0GXBQPK-4xCES-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#0EFFAE;" value="date" vertex="1">
+          <mxGeometry height="30" width="60" x="425" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-19" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=17;fontColor=#FFD039;" value="Valeur de clé envoyée" vertex="1">
+          <mxGeometry height="50" width="120" x="330" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-20" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;rotation=90;fillColor=#150DF9;strokeColor=#FFD039;" value="" vertex="1">
+          <mxGeometry height="230" width="50" x="375" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-21" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#0EFFAE;" value="nom_exercice" vertex="1">
+          <mxGeometry height="30" width="86" x="414" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="s_SA-kj0GXBQPK-4xCES-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#0EFFAE;" value="charge" vertex="1">
+          <mxGeometry height="30" width="86" x="414" y="340" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
