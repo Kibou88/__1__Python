@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - logger.py</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .version {
+            display: inline-block;
+            background: #48bb78;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .meta-info {
+            background: #f7fafc;
+            padding: 20px 40px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .meta-info p {
+            margin: 5px 0;
+            color: #4a5568;
+        }
+
+        .meta-info strong {
+            color: #2d3748;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #2d3748;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #4a5568;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .class-box {
+            background: #edf2f7;
+            border-left: 4px solid #5a67d8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .class-box h4 {
+            color: #5a67d8;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f7fafc;
+            transition: background 0.3s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .param-name {
+            font-family: 'Courier New', monospace;
+            background: #fff5f5;
+            color: #c53030;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .method-name {
+            font-family: 'Courier New', monospace;
+            background: #e6fffa;
+            color: #047857;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .type-tag {
+            background: #bee3f8;
+            color: #2c5282;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            border: 2px solid #4a5568;
+        }
+
+        .flowchart {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .flow-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .flow-arrow {
+            font-size: 2em;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .highlight-box {
+            background: #fff5f5;
+            border-left: 4px solid #f56565;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .log-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin: 2px;
+        }
+
+        .level-debug { background: #e6fffa; color: #047857; }
+        .level-info { background: #ebf8ff; color: #2c5282; }
+        .level-warning { background: #fefcbf; color: #975a16; }
+        .level-error { background: #fed7d7; color: #9b2c2c; }
+        .level-critical { background: #feb2b2; color: #742a2a; }
+
+        footer {
+            background: #2d3748;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Documentation logger.py</h1>
+            <span class="version">Version V1.0.0</span>
+        </header>
+
+        <div class="meta-info">
+            <p><strong>📅 Date de création :</strong> 2026-01-31</p>
+            <p><strong>🔄 Date de modification :</strong> 2026-01-31</p>
+            <p><strong>🎯 Objectif :</strong> Classe pour configurer rapidement un logger avec gestion de handlers, rotation de fichiers et niveaux de logs</p>
+        </div>
+
+        <div class="content">
+            <!-- SECTION: Vue d'ensemble -->
+            <div class="section">
+                <h2>🔍 Vue d'ensemble</h2>
+                <p>
+                    Ce module Python fournit une classe <strong>Logs</strong> pour simplifier la configuration et la gestion des fichiers de logs. 
+                    Il utilise le module standard <code>logging</code> de Python avec des fonctionnalités avancées de rotation de fichiers.
+                </p>
+                
+                <div class="success-box">
+                    <strong>✨ Fonctionnalités principales :</strong>
+                    <ul>
+                        <li>Création automatique de nouveaux fichiers de log chaque jour à minuit</li>
+                        <li>Format de nom standardisé : <code>YYYY-MM-DD_nom_log.log</code></li>
+                        <li>Support de 5 niveaux de log : DEBUG, INFO, WARNING, ERROR, CRITICAL</li>
+                        <li>Format de log structuré avec horodatage, nom du logger, niveau et message</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SECTION: Classe Logs -->
+            <div class="section">
+                <h2>📦 Classe : Logs</h2>
+                
+                <div class="class-box">
+                    <h4>class Logs()</h4>
+                    <p><strong>Description :</strong> Classe principale pour la gestion des fichiers de logs avec rotation quotidienne automatique.</p>
+                </div>
+
+                <h3>🔧 Variables d'instance</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Variable</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="param-name">log_name</span></td>
+                            <td><span class="type-tag">str</span></td>
+                            <td>Nom du fichier de log (extension .log ajoutée automatiquement si absente)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">log_dir</span></td>
+                            <td><span class="type-tag">str</span></td>
+                            <td>Nom du dossier contenant les fichiers de logs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">log_level</span></td>
+                            <td><span class="type-tag">str</span></td>
+                            <td>Niveau de log (DEBUG, INFO, WARNING, ERROR, CRITICAL)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">logger_name</span></td>
+                            <td><span class="type-tag">str</span></td>
+                            <td>Nom du logger (extrait du nom du fichier sans extension)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">logger</span></td>
+                            <td><span class="type-tag">logging.Logger</span></td>
+                            <td>Instance du logger Python</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">time_handler</span></td>
+                            <td><span class="type-tag">TimedRotatingFileHandler</span></td>
+                            <td>Handler pour la rotation quotidienne des fichiers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">current_date</span></td>
+                            <td><span class="type-tag">str</span></td>
+                            <td>Date courante au format YYYY-MM-DD</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">log_file_name</span></td>
+                            <td><span class="type-tag">str</span></td>
+                            <td>Nom complet du fichier de log avec date</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECTION: Méthodes -->
+            <div class="section">
+                <h2>⚙️ Méthodes</h2>
+
+                <h3>Méthode d'initialisation</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Méthode</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method-name">__init__()</span></td>
+                            <td>
+                                <strong>Paramètres :</strong>
+                                <ul>
+                                    <li><code>log_name</code> (str) : Nom du fichier de log (par défaut : "logs.log")</li>
+                                    <li><code>log_dir</code> (str) : Dossier des logs (par défaut : "Logs")</li>
+                                    <li><code>log_level</code> (str) : Niveau de log (par défaut : "INFO")</li>
+                                </ul>
+                                <strong>Rôle :</strong> Initialise le logger, crée le dossier de logs, configure le handler et le niveau de log
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Méthodes de configuration</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Méthode</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method-name">init_logger()</span></td>
+                            <td>
+                                <strong>Paramètres :</strong> Aucun<br>
+                                <strong>Rôle :</strong> Initialise l'objet logger en extrayant le nom depuis le fichier de log
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-name">init_handler()</span></td>
+                            <td>
+                                <strong>Paramètres :</strong> Aucun<br>
+                                <strong>Rôle :</strong> Configure le TimedRotatingFileHandler pour créer un nouveau fichier à minuit et applique le formatage des logs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-name">configure_setLevel()</span></td>
+                            <td>
+                                <strong>Paramètres :</strong> Aucun<br>
+                                <strong>Rôle :</strong> Configure le niveau de log du logger et du handler selon <code>log_level</code>. Si le niveau est invalide, utilise INFO par défaut
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Méthodes de logging</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%">Méthode</th>
+                            <th>Niveau</th>
+                            <th>Description et usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method-name">log_debug(message)</span></td>
+                            <td><span class="log-level level-debug">DEBUG</span></td>
+                            <td>
+                                <strong>Paramètre :</strong> message (str)<br>
+                                <strong>Rôle :</strong> Enregistre des informations de débogage (développeurs uniquement, NON PRODUCTION)<br>
+                                <strong>Exemples :</strong> Variables internes, états d'exécution
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-name">log_info(message)</span></td>
+                            <td><span class="log-level level-info">INFO</span></td>
+                            <td>
+                                <strong>Paramètre :</strong> message (str)<br>
+                                <strong>Rôle :</strong> Enregistre des informations générales<br>
+                                <strong>Exemples :</strong> Connexion utilisateur, fichier traité, service démarré
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-name">log_warning(message)</span></td>
+                            <td><span class="log-level level-warning">WARNING</span></td>
+                            <td>
+                                <strong>Paramètre :</strong> message (str)<br>
+                                <strong>Rôle :</strong> Enregistre des avertissements<br>
+                                <strong>Exemples :</strong> Usage d'API obsolète, erreurs récupérables, configuration optionnelle manquante
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-name">log_error(message)</span></td>
+                            <td><span class="log-level level-error">ERROR</span></td>
+                            <td>
+                                <strong>Paramètre :</strong> message (str)<br>
+                                <strong>Rôle :</strong> Enregistre des erreurs<br>
+                                <strong>Exemples :</strong> TypeError, ValueError, exceptions capturées
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="method-name">log_critical(message)</span></td>
+                            <td><span class="log-level level-critical">CRITICAL</span></td>
+                            <td>
+                                <strong>Paramètre :</strong> message (str)<br>
+                                <strong>Rôle :</strong> Enregistre des erreurs critiques<br>
+                                <strong>Exemples :</strong> Perte de connexion BDD, mémoire saturée, faille de sécurité
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECTION: Format des logs -->
+            <div class="section">
+                <h2>📝 Format des logs</h2>
+                
+                <div class="info-box">
+                    <strong>Format de sortie :</strong>
+                    <div class="code-block">date heure | nom_logger | niveau_log | message</div>
+                    
+                    <strong>Exemple :</strong>
+                    <div class="code-block">2025-07-11 14:36:12,713 | Application | INFO | Utilisateur connecté avec succès</div>
+                </div>
+
+                <h3>Niveaux de log acceptés</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Niveau</th>
+                            <th>Utilisation</th>
+                            <th>Production</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="log-level level-debug">DEBUG</span></td>
+                            <td>Informations détaillées pour le débogage</td>
+                            <td>❌ Non recommandé</td>
+                        </tr>
+                        <tr>
+                            <td><span class="log-level level-info">INFO</span></td>
+                            <td>Événements normaux du système</td>
+                            <td>✅ Oui</td>
+                        </tr>
+                        <tr>
+                            <td><span class="log-level level-warning">WARNING</span></td>
+                            <td>Situations inhabituelles mais gérables</td>
+                            <td>✅ Oui</td>
+                        </tr>
+                        <tr>
+                            <td><span class="log-level level-error">ERROR</span></td>
+                            <td>Erreurs nécessitant une attention</td>
+                            <td>✅ Oui</td>
+                        </tr>
+                        <tr>
+                            <td><span class="log-level level-critical">CRITICAL</span></td>
+                            <td>Erreurs graves compromettant le système</td>
+                            <td>✅ Oui</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECTION: Logigramme -->
+            <div class="section">
+                <h2>📊 Logigramme d'initialisation</h2>
+                
+                <div class="flowchart">
+                    <div class="flow-box">Création de l'instance Logs</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">Vérification/Ajout extension .log</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">Création du dossier de logs</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">init_logger() - Initialisation du logger</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">Génération du nom de fichier avec date</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">init_handler() - Configuration TimedRotatingFileHandler</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">configure_setLevel() - Définition du niveau de log</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">Ajout du handler au logger</div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">✅ Logger prêt à l'emploi</div>
+                </div>
+            </div>
+
+            <!-- SECTION: Exemple d'utilisation -->
+            <div class="section">
+                <h2>💻 Exemple d'utilisation</h2>
+                
+                <div class="code-block">
+# Importation de la classe<br>
+from logger import Logs<br>
+<br>
+# Création d'une instance de logger<br>
+try:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log = Logs(log_name="Application.log", log_dir="Logs_App", log_level="INFO")<br>
+except:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("Erreur lors de la création des logs")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# Utilisation des différents niveaux de log<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log.log_debug("Message de débogage")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log.log_info("Application démarrée")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log.log_warning("Avertissement configuration")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log.log_error("Erreur lors du traitement")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;log.log_critical("Erreur critique système")
+                </div>
+
+                <div class="highlight-box">
+                    <strong>⚠️ Points importants :</strong>
+                    <ul>
+                        <li>Un nouveau fichier de log est créé automatiquement chaque jour à minuit</li>
+                        <li>Le dossier de logs est créé automatiquement s'il n'existe pas</li>
+                        <li>Si le niveau de log est invalide, INFO est utilisé par défaut</li>
+                        <li>Les logs DEBUG ne doivent pas être utilisés en production</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SECTION: Dépendances -->
+            <div class="section">
+                <h2>📚 Dépendances</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Utilisation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="param-name">datetime</span></td>
+                            <td>Génération de la date courante pour le nom des fichiers de log</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">pathlib.Path</span></td>
+                            <td>Gestion des chemins et création du dossier de logs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">logging</span></td>
+                            <td>Module principal de logging Python</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-name">logging.handlers</span></td>
+                            <td>Handlers pour rotation de fichiers (RotatingFileHandler, TimedRotatingFileHandler)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>📄 Documentation générée pour logger.py - Version V1.0.0</p>
+            <p>© 2026 - Tous droits réservés</p>
+        </footer>
+    </div>
+</body>
+</html>
