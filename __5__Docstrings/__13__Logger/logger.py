@@ -61,7 +61,7 @@ class Logs():
         Initialize the time handler, configure rotate file and formate the log.
         """
         self.time_handler = TimedRotatingFileHandler(  # Create a new file log at midnight
-            f"{self.log_dir}/{self.logger_name}",
+            f"{self.log_dir}/{self.log_file_name}",
             when="midnight"
         )
         formatter = logging.Formatter('%(asctime)s | %(name)s | %(levelname)s | %(message)s')
