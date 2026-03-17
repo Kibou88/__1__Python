@@ -1,91 +1,143 @@
-# logs.py
+# logger.py
 # --------------------------------
 # Purpose:
-# Permit to save logs for any events of the code
+# Class to configure quickly logger, handler, rotatingFileHandler or timeFileHandler and setLevel
 # -------------------------------------
-# Creation date: 2025-07-11
-# Modification date: 2025-07-11
+# Creation date: 2026-01-31
+# Modification date: 2026-02-01
 # ------------------------------------------
-# Version V1.0.0
+# Version V1.1
+# - Correction problem on create folder parts (V1.1)
 
-import logging
 from datetime import datetime
-import os
+from pathlib import Path, WindowsPath
+from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+import logging
+
 
 class Logs():
     """
-    This class permit to manage logs file and its level
+    This class permits to manage log files and their levels.
+    Every midnight, a new log file is created.
+    Log name format: YYYY-MM-DD_log_name.log
+    Log level accepted: DEBUG, INFO, WARNING, ERROR, CRITICAL
+    Log format: date time | log_name | log_level | log_message
     """
 
-    def __init__(self, application_name, log_dir="Logs"):
+    def __init__(self, log_name="logs.log", log_dir="Logs", log_level="INFO"):
         """
-        Intialisation of the logger with the date including in the log_name
-        :param application_name: (str) name of the application
-        :param log_dir: (str) directory of the log file
+        Initialize the logger, handler and formatter. Create the log_dir folder.
+        :param log_name (str): Name of the log file
+        :param log_dir (str): Name of the folder where the log file is located.
+        :param log_level (str): Level of the log file.
         """
-        self.application_name = application_name
+        if not (log_name.endswith(".log")): # Add '.log' extension if missing
+            log_name = log_name + ".log"
+
+        self.log_name = log_name
         self.log_dir = log_dir
+        self.log_level = log_level
 
-        # os.makedirs(self.log_dir, exist_ok=True) # Check if "Logs" folder already created
+        # Create the folder if not exist
+        if isinstance(log_dir, Path):
+            log_dir.mkdir(parents=True, exist_ok=True)
+        else:
+            # log_dir est une str : on en fait un Path
+            Path(log_dir).mkdir(parents=True, exist_ok=True)
 
-        current_date = datetime.now().strftime("%Y-%m-%d") # Format YYYY-MM-DD
-        log_filename = f"{application_name}.log"
+        self.init_logger()
 
-        # log_path = os.path.join(self.log_dir, log_filename) # Create the path for the log
-        log_path = self.log_dir / log_filename
-        logging.basicConfig(level=logging.DEBUG,
-                            filename=log_path,
-                            filemode='a',
-            format=f'%(asctime)s | %(levelname)s | %(message)s')
+        self.current_date = datetime.now().strftime("%Y-%m-%d")  # Format: YYYY-MM-DD
+        self.log_file_name = f"{self.current_date}_{self.log_name}" # Log name format "YYYY-MM-DD_logs.log"
 
-    def log_debug(self, message, function=None):
+        self.init_handler()
+
+        self.configure_setLevel()  # Configure set level according to log_level wrote
+        self.logger.addHandler(self.time_handler)
+
+    def init_logger(self):
+        """
+        Initialize the logger.
+        """
+        self.logger_name = self.log_name.split(".")[0]  # Bring back the name of the log, will be the name of logger
+        self.logger = logging.getLogger(self.logger_name)
+
+    def init_handler(self):
+        """
+        Initialize the time handler, configure rotate file and formate the log.
+        """
+        self.time_handler = TimedRotatingFileHandler(  # Create a new file log at midnight
+            f"{self.log_dir}/{self.log_file_name}",
+            when="midnight"
+        )
+        formatter = logging.Formatter('%(asctime)s | %(name)s | %(levelname)s | %(message)s')
+        self.time_handler.setFormatter(formatter)
+
+    def configure_setLevel(self):
+        """
+        Configure the setLevel of logger and handler came from log_level.
+        Default, setLevel is in INFO mode.
+        """
+        match(self.log_level):
+            case "DEBUG":
+                self.logger.setLevel(logging.DEBUG)
+                self.time_handler.setLevel(logging.DEBUG)
+            case "INFO":
+                self.logger.setLevel(logging.INFO)
+                self.time_handler.setLevel(logging.INFO)
+            case "WARNING":
+                self.logger.setLevel(logging.WARNING)
+                self.time_handler.setLevel(logging.WARNING)
+            case "ERROR":
+                self.logger.setLevel(logging.ERROR)
+                self.time_handler.setLevel(logging.ERROR)
+            case "CRITICAL":
+                self.logger.setLevel(logging.CRITICAL)
+                self.time_handler.setLevel(logging.CRITICAL)
+            case _:
+                print("Set Level choice invalid or empty. Set level is set to INFO")
+                self.logger.setLevel(logging.INFO)
+                self.time_handler.setLevel(logging.INFO)
+
+    def log_debug(self, message):
         """
         Add a log entry for debbugging information (for developpers only)
         NOT FOR PRODUCTION
         :param message (str): message to log
         :return: An entry in the log with this format
-        2025-07-11 14:36:12,713 | DEBUG | message
+        2025-07-11 14:36:12,713 | Application | DEBUG | message
         """
-        if function is None:
-            logging.debug(message)
-        else:
-            logging.debug(f"{function} | {message}")
+        self.logger.debug(message)
 
-    def log_info(self, message, function=None):
+    def log_info(self, message):
         """
         Add a log entry in log for general info
         Examples: user login, file processed, service started
         :param message (str): message to log
         :return: An entry in the log with this format
-        2025-07-11 14:36:12,713 | INFO | message
+        2025-07-11 14:36:12,713 | Application | INFO | message
         """
-        if function is None:
-            logging.info(message)
-        else:
-            logging.info(f"{function} | {message}")
+        self.logger.info(message)
 
-    def log_warning(self, message, function=None):
+    def log_warning(self, message):
         """
         Add a log entry for warning
         Examples: deprecated API usage, recoverable errors, missing optional config
         :param message (str): message to log
         :return: An entry in the log with this format
-        2025-07-11 14:36:12,713 | WARNING | message
+        2025-07-11 14:36:12,713 | Application | WARNING | message
         """
-        if function is None:
-            logging.warning(message)
-        else:
-            logging.warning(f"{function} | {message}")
+        self.logger.warning(message)
 
-    def log_error(self, message, function=None):
+    def log_error(self, message):
         """
         Add a log entry for errors
         Examples: TypeError, ValueError, ...)
         :param message (str): message to log
         :return: An entry in the log with this format
-        2025-07-11 14:36:12,713 | ERROR | message
+        2025-07-11 14:36:12,713 | Application | ERROR | message
         """
-        logging.error(message)
+        self.logger.error(message)
 
     def log_critical(self, message):
         """
@@ -93,13 +145,13 @@ class Logs():
         Examples: database connection lost, out of memory, security breach
         :param message (str): message to log
         :return: An entry in the log with this format
-        2025-07-11 14:36:12,713 | CRITICAL | message
+        2025-07-11 14:36:12,713 | Application | CRITICAL | message
         """
-        logging.critical(message)
+        self.logger.critical(message)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
-        log = Logs(application_name='Test')
+        log = Logs(log_name="Test.log", log_dir="Test_Logs", log_level="INFO")
     except:
         print("Probleme dans la creation des logs")
     else:
