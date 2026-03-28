@@ -6,7 +6,7 @@ But:
 Contient l'ihm et les saisies utilisateurs pour enregistrées une séance
 ----------------------------------------------------------------------------
 Date de création: 2026-02-01
-Date de modification: 2026-03-17
+Date de modification: 2026-03-28
 ----------------------------------------------------------------------------
 Version PROTOTYPE:
 
@@ -21,10 +21,15 @@ from tools.log import Logs
 
 class HMI_add_seance():
     """
-
+    Classe d'affichage de la classe HMI_add_seance et de la saisie des informations de la séance
+    Cette classe a pour fonction:
+    - De demander les différentes informations (exo, séries, reps, charge, date) pour l'ajout d'une séance
+    - De détecter des erreurs dans la saisie de ces informations, et de faire remonter un flag à la fonction "main".
+    Si flag, la classe enregistre dans son log, la raison du flag.
+    - Renvoie à la fonction main la séance à ajouter et le flag d'erreur
     """
 
-    def __init__(self, log=None):
+    def __init__(self, log=None, log_path=Path.cwd()/ "Test_log"):
         """
         Initialiser les variables de la classe HMI_add_seance.
         :param log (objet log): Enregistre les problèmes de la classe HMI_add_seance sur le log HMI parent
@@ -34,21 +39,19 @@ class HMI_add_seance():
         """
         self.warning_to_main = False
         self.dico_user = {}
-        LOG_PATH = Path.cwd() / "logs" # Création du log dans le répertoire du fichier ==> A modifier plus tard
-        self.log = Logs(log_name=log, log_dir=LOG_PATH)
-        self.hmi()
+        self.log = Logs(log_name=log, log_dir=log_path)
 
-    def hmi(self):
+    def hmi(self) -> (bool | dict):
         """
         Gestion de l'affichage des messages pour ajouter une séance
-        :return:
+        :return: self.warning_to_main (bool): Permet de faire un retour d'erreur au fichier "main"
+        :return: self.dico_user (dict): Dico de la séance à enregistrer
         """
         print(f"{Colors.LIGHT_PURPLE}==== Ajout d'une seance ====")
 
         self.ask_check_date()
         self.ask_seance()
-        print(self.dico_user)
-        return self.warning_to_main
+        return self.warning_to_main, self.dico_user
 
     # ===== OK =====
     def ask_check_date(self):
@@ -66,8 +69,7 @@ class HMI_add_seance():
 
             # Check nombre de caractères. Min=8: DD/MM/YY ou Max=10: DD/MM/YYYY
             if not(len(self.date_seance) == 8 or len(self.date_seance) == 10):
-                print(f"{Colors.RED}Erreur de syntaxe de la date. Le nombre de caractere pour la date est incoherent "
-                  f"avec le format DD/MM/YY ou DD/MM/YYYY")
+                print(f"{Colors.RED}Erreur de syntaxe de la date. Le nombre de caractere pour la date est incoherent ")
                 self.log.log_warning(f"ADD_SEANCE | Problème nombre de caractere incoherent: {len(self.date_seance)}")
                 self.warning_to_main = True
                 continue
@@ -223,5 +225,11 @@ class HMI_add_seance():
 
 
 if __name__ == "__main__":
-    test = HMI_add_seance(log="log_hmi")
-    print(test.dico_user)
+    import json
+
+    test_add_seance = HMI_add_seance(log="HMI")
+    flag_error, dico_user = test_add_seance.hmi()
+    # print(test_add_seance.dico_user)
+
+    with open("test_dico_user.json", "w", encoding="utf-8") as file:
+        json.dump(dico_user, file, indent=4, ensure_ascii=False)

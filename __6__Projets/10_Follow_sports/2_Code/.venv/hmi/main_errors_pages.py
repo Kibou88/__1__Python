@@ -13,6 +13,7 @@ Version PROTOTYPE:
 
 """
 import time
+from pathlib import Path
 
 from hmi.class_colors import Colors
 from tools.log import Logs
@@ -24,18 +25,22 @@ def main_page(log_dir) -> str:
     """
     log_hmi_path = log_dir / "hmi"
     log_hmi = Logs(log_name="HMI", log_dir=log_hmi_path)
-    print(f"{Colors.GREEN}Bienvenue dans le suivi de vos seances de sports\n"
-          f"Que voulez-vous faire?{Colors.END}\n"
-           f"{Colors.PURPLE}1 - Ajouter une séance{Colors.END}\n"
-           f"{Colors.BLUE}2 - Afficher une seance deja effectuee{Colors.END}\n"
-           f"{Colors.RED}exit - Quittez le programme{Colors.END}\n")
-    user_choice = input("Quel est votre choix? ")
+    while True:
+        print(f"{Colors.GREEN}Bienvenue dans le suivi de vos seances de sports\n"
+              f"Que voulez-vous faire?{Colors.END}\n"
+               f"{Colors.PURPLE}1 - Ajouter une séance{Colors.END}\n"
+               f"{Colors.BLUE}2 - Afficher une seance deja effectuee{Colors.END}\n"
+               f"{Colors.RED}exit - Quittez le programme{Colors.END}\n")
+        user_choice = input("Quel est votre choix? ")
 
-    if not user_choice.lower() in ("1", "2", "exit"):
-        log_hmi.log_warning("Choix utilisateur non compris")
-        return "erreur"
+        if user_choice.lower() in ("1", "2", "exit"):
+            return user_choice.lower(), log_hmi
 
-    return user_choice.lower(), log_hmi
+        log_hmi.log_warning(f"Choix utilisateur non compris: {user_choice}")
+        print("Choix utilisateur non compris")
+        time.sleep(1)
+
+
 
 def error_page():
     """
@@ -45,4 +50,5 @@ def error_page():
     time.sleep(1.2)
 
 if __name__ == "__main__":
-    print(main_page())
+    LOG_PATH = Path.cwd() / "logs"
+    print(main_page(log_dir=LOG_PATH))

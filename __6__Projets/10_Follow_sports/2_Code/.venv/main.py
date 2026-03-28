@@ -6,7 +6,7 @@ But:
 Contient la logique principale du programme
 ----------------------------------------------------------------------------
 Date de création: 2026-01-24
-Date de modification: 2026-01-24
+Date de modification: 2026-03-27
 ----------------------------------------------------------------------------
 Version PROTOTYPE:
 
@@ -21,7 +21,7 @@ from hmi.add_seance import HMI_add_seance
 
 
 USER_CHOICE = ""
-LOG_PATH = Path.cwd() / "logs"
+LOG_PATH = Path.cwd().parent / "Logs"
 MAIN_LOG = Logs(log_name="Main", log_dir=LOG_PATH)
 
 def programme(USER_CHOICE):
@@ -31,9 +31,12 @@ def programme(USER_CHOICE):
 
         match(USER_CHOICE):
             case "1": # Envoi vers la fonction "Ajout d'une séance"
-                warning_add_seance = HMI_add_seance(log=log_hmi)
+                # ===== OK ====
+                add_seance = HMI_add_seance(log="HMI", log_path=LOG_PATH)
+                warning_add_seance, new_seance = add_seance.hmi()
                 if(warning_add_seance):
                     MAIN_LOG.log_warning("Probleme survenu dans la sous-fonction 'Add seance' de l'IHM")
+
 
             case "2": # Envoi vers "l'extraction d'une séance"
                 pass
@@ -49,5 +52,6 @@ def programme(USER_CHOICE):
     sys.exit()
 
 if __name__ == "__main__":
+    print(LOG_PATH)
     MAIN_LOG.log_info("===== Debut du programme =====")
     programme(USER_CHOICE)
