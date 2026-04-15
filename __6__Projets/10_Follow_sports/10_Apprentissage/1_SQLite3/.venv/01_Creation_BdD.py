@@ -14,7 +14,7 @@ with sqlite3.connect('bibliotheque.db') as conn:  # Context manager auto-ferme
 
     # Étape 2: Créer table si inexistante
     cur.execute('''
-        CREATE TABLE IF NOT EXISTS livres (
+        CREATE TABLE IF NOT EXISTS liste_livres (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titre TEXT NOT NULL,
             auteur TEXT NOT NULL,
@@ -30,14 +30,14 @@ with sqlite3.connect('bibliotheque.db') as conn:  # Context manager auto-ferme
         ('Dune', 'Frank Herbert', 1965)
     ]
     # INSERT INTO livres (id, titre, auteur, annee) VALUES(titre, auteur, annee), liste(livres)
-    cur.executemany('INSERT INTO livres (titre, auteur, annee) VALUES (?, ?, ?)', livres)
+    cur.executemany('INSERT INTO liste_livres (titre, auteur, annee) VALUES (?, ?, ?)', livres)
     conn.commit()  # Sauvegarde obligatoire !
     print("3 livres insérés.")
 
 # Étape 4: Lire des données (nouvelle connexion)
 with sqlite3.connect('bibliotheque.db') as conn:
     cur = conn.cursor()
-    cur.execute('SELECT * FROM livres ORDER BY annee')
+    cur.execute('SELECT * FROM liste_livres ORDER BY annee')
     resultats = cur.fetchall()
     print(resultats)
     for livre in resultats:
