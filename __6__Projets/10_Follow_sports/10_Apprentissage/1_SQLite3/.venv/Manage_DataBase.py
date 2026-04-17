@@ -12,8 +12,9 @@ Version PROTOTYPE:
 
 
 """
-
+import os
 import sqlite3
+import sys
 
 from class_colors import Colors
 
@@ -22,180 +23,149 @@ class DataBase:
     Classe contenant la création et la gestion de tables BdD
     """
 
-    def __init__(self, dbName="default.db", dbTableName="default_table"):
+    def __init__(self, dbName="default.db"):
         """
         Initialisation de la classe BdD
-        :param dbName: Nom de la DB. Si le nom ne contient pas l'extension '.db', il est rajouté.
-        :param dbTableName: Nom de la table
+        :param dbName (str): Nom de la DB. Si le nom ne contient pas l'extension '.db', il est rajouté.
         """
-        if(dbName.endswith(".db")):
-            self.dbName = dbName
-        else:
-            self.dbName = dbName + ".db"
+        if not (dbName.endswith(".db")):
+            dbName = dbName + ".db"
+        elif dbName == "":
+            dbName = "default.db"
+        self.dbName = dbName
 
-        self.dbTableName = dbTableName
-
-    # -------- Test OK --------
-    def create_table(self, config_colonne=[]):
+    def check_or_create_db(self):
         """
-        Créer une nouvelle table en fonction des paramètres de l'utilisateur.
-        :param; self.dbTableName (str): nom de la table
-        :param: self.nom_table_colonne (str): forme concaténer des noms de colonnes et leurs critères
+        Vérifie si la database demandée est présente, sinon création de la db.
+        Ensuite, connexion à la db voulue
         :return:
         """
-        print("La table n'existe pas")
-        # if (self.check_tables_exists()):
-        self.config_colonne = config_colonne
-        self.create_column()
-        print(f"Table selectionne: {self.dbTableName}")
-        with sqlite3.connect(self.dbName) as conn:
-            cur = conn.cursor()
-
-            # Activer les clés étrangères dans SQLite
-            cur.execute("PRAGMA foreign_keys = ON;")
-
-
-            cur.execute(f'''
-                CREATE TABLE IF NOT EXISTS {self.dbTableName} (
-                    {self.table_colonne}
-                )
-            ''')
-            conn.commit()
-
-    # -------- Test OK --------
-    def create_column(self) -> str:
-        """
-        Demande à l'utilisateur le nombre de colonnes, ainsi que les noms et critères pour créer un nouvelle table
-        :return: self.nom_table_colonne (str): retourne la forme concaténer des noms de colonnes et leurs critères
-        """
-        if(self.config_colonne == []):
-            nombre_colonne = int(input("Nombre de colonne: "))
-            self.liste_table_colonne = []
-            for colonne in range(0, nombre_colonne):
-                nom_colonne = input("Nom de la colonne + criteres: ")
-                self.liste_table_colonne.append(nom_colonne)
-
-            self.table_colonne = ", ".join(self.liste_table_colonne)
-        else:
-            self.table_colonne = ", ".join(self.config_colonne)
-
-    # ************* A TESTER *************
-    def read_table(self):
-        """
-        Permet de lire la table et de récupérer les données souhaitées
-        :param self.dbTableName (str): nom de la table
-        :return:
-        """
-        with sqlite3.connect(self.dbName) as conn:
-            cur = conn.cursor()
-            cur.execute(f'SELECT * FROM {self.dbTableName} ORDER BY annee')
-            resultats = cur.fetchall()
-            print(resultats)
-            for livre in resultats:
-                print(f"ID: {livre[0]}, Titre: {livre[1]}, Auteur: {livre[2]}, Année: {livre[3]}")
-
-    # -------- Test OK --------
-    # - Améliorer la gestion d'erreur
-    def write_datas_table(self, table_selected: str, date_seance: str, datas: (tuple | list),
-                          name_colonne: list, secondary_table=True):
-        """
-                Permet d'écrire des données dans une table sélectionnée
-                :param table_selected (str): Nom de la table à sélectionner
-                :param datas (tuple | list): Données à envoyer à la table
-                :param name_colonne (list): Nom des colonnes
-                :param secondary_table (bool): Définit si c'est une table secondaire=True
-                :return:
-                """
-        self.date_seance = date_seance
-        if secondary_table:
-            name_colonne.insert(0, "seances_id")
-            self.recup_primary_id()
-            if self.seances_id:
-                datas = list(datas)
-                datas.insert(0, self.seances_id)
-
-        self.number_colonne = len(name_colonne)
-        name_colonne = ", ".join(name_colonne)
-
-
-        # ---- Fait correspondre le nombre de colonne avec le nombre de ? pour la requête SQL ----
-        if self.number_colonne > 1:
-            nbre_interrogations = "?, " * self.number_colonne
-            nbre_interrogations = nbre_interrogations[:-2]
-            # print("nombre ?: ", nbre_interrogations)
-        elif self.number_colonne == 1:
-            nbre_interrogations = "?"
-
-        if not (isinstance(datas, tuple | list)):
-            print(f"Mauvais format de fichier. Format envoye: {type(datas)}")
-            exit(1)
-
-        with sqlite3.connect(self.dbName) as conn:
-            cur = conn.cursor()
-            # print(datas)
-            try:
-                # print("datas: ", datas)
-                # print("name_colonne: ", name_colonne)
-                cur.execute(f"INSERT INTO {table_selected} ({name_colonne}) VALUES ({nbre_interrogations})", datas)
-                conn.commit()
-            except sqlite3.OperationalError as e:
-                print(f"{Colors.RED}Impossible d'ecrire dans le tableau")
-                print(e, Colors.END)
-            except sqlite3.ProgrammingError as e:
-                print(f"{Colors.RED}Impossible d'ecrire dans le tableau")
-                print(e, Colors.END)
-            except:
-                print(f"{Colors.RED}Erreur sur la sauvegarde{Colors.END}")
-
-    # ************* A TESTER *************
-    def show_tables(self, return_nom_table=0) -> list:
-        """
-        Permet d'afficher les noms des différentes tables de la base de données
-        :param return_nom_table (bool): A 1, pour récupérer les tables présentes
-        :return: self.names_tables (list): noms des tables de la base de données
-        """
-        self.names_tables = []
-        with sqlite3.connect(self.dbName) as conn:
-            cur = conn.cursor()
-            cur.execute('SELECT name FROM sqlite_master WHERE type = "table"')
-            noms_tables = cur.fetchall()
-            # print(noms_tables)
-            self.names_tables=["".join(list(nom_table)) for nom_table in noms_tables]
-            if(return_nom_table):
-                return self.names_tables
-            # print(self.names_tables)
-
-    # ************* A TESTER *************
-    def check_tables_exists(self) -> bool:
-        """
-        Vérifie si la table existe ou non
-        :return: True: la table n'existe pas
-        :return: False: la table n'existe pas
-        """
-        # self.show_tables()
-        if self.dbTableName not in self.names_tables:
+        try:
+            self.conn = sqlite3.connect(self.dbName)
+            self.cur = self.conn.cursor()
             return True
-        else:
-            print(f"La table {self.dbTableName} existe deja")
+        except Exception as e:
+            print(e)
+            return False
+        except PermissionError:
+            print(f"Permissions insuffisantes pour acceder a {self.dbName}")
             return False
 
-    # -------- Test OK --------
-    def recup_primary_id(self):
+
+
+    def db_close(self):
         """
-        Permet de récupérer l'ID contenu dans la table 'seances'
+        Déconnexion de la db
         :return:
         """
-        with sqlite3.connect(self.dbName) as conn:
-            cur = conn.cursor()
-            print("Date: ", self.date_seance)
-            cur.execute("SELECT id FROM seances WHERE date = ?", (f"{self.date_seance}",))
-            result = cur.fetchone()
-            if result:
-                self.seances_id = result[0]
-                # print("ID trouve: ", self.seances_id)
+        self.conn.close()
+
+    def manage_table(self):
+        """
+        Vérifie la présence de la table voulue dans la db, si absente elle sera créée
+        :return:
+        """
+        query = """
+            SELECT name FROM sqlite_master WHERE type='table' AND name=?
+            """
+        self.cur.execute(query, (self.table_name,))
+        if self.cur.fetchall() == []:
+            print("La table n'existe pas")
+            print(f"Creation de la table: {self.table_name}")
+            if self.define_columns():
+
+                if self.foreign_key_activated:
+                    self.cur.execute("PRAGMA foreign_keys = ON;")
+
+                self.cur.execute(f'''
+                                CREATE TABLE {self.table_name} 
+                                (
+                                    {(", ").join(self.config_colonne)}
+                                )
+                                ''')
+                return True
             else:
-                self.seances_id = None
-                # print("Client non trouve")
+                print("Liste colonne non recue")
+                print("table non creee")
+                return False
+        else:
+            print("La table existe")
+            return True
+
+
+    def define_columns(self):
+        """
+        Permet de définir les différentes colonnes et leurs caractéristiques SQL
+        Gestion du format pour être reconnu par SQL => A FAIRE PLUS TARD
+        :return:
+        """
+        if self.config_colonne== "" or self.config_colonne == [] or self.config_colonne == {}:
+            print("Aucun critère de colonne envoye")
+            return False
+        else:
+            print("Liste recu")
+            return True
+
+    def nbre_interrogations(self):
+        # ---- Fait correspondre le nombre de colonne avec le nombre de ? pour la requête SQL ----
+        self.extract_colonne_name()
+        if len(self.list_name_colonne) > 1:
+            interrogations = "?, " * len(self.list_name_colonne)
+            return interrogations[:-2]
+        elif len(self.list_name_colonne) == 1:
+            return "?"
+
+    def extract_colonne_name(self):
+        self.list_name_colonne = []
+        for colonne in self.config_colonne:
+            if not colonne.split(" ")[0] == "id":
+                self.list_name_colonne.append((colonne.split(" "))[0])
+
+        self.name_colonne = (', ').join(self.list_name_colonne)
+
+    def write_data(self, table_name, config_colonne, datas, foreign_key_activated):
+        self.table_name = table_name
+        self.config_colonne = config_colonne
+        self.datas = datas
+        self.foreign_key_activated = foreign_key_activated
+
+        # self.extract_colonne_name()
+
+        if self.check_or_create_db(): # Vérification aucune erreur de création ou accès à la db
+            print("Connecte")
+            if self.manage_table():
+                self.extract_colonne_name()
+                print("nom colonne: ", self.name_colonne)
+                print("nbre ?: ", self.nbre_interrogations())
+                try:
+
+                    self.cur.execute(
+                        f"INSERT INTO {self.table_name} ({self.name_colonne}) "
+                        f"VALUES ({self.nbre_interrogations()})",
+                        datas)
+                    self.conn.commit()
+
+                except sqlite3.OperationalError as e:
+                    print(f"{Colors.RED}Impossible d'ecrire dans le tableau")
+                    print(e, Colors.END)
+                except sqlite3.ProgrammingError as e:
+                    print(f"{Colors.RED}Impossible d'ecrire dans le tableau")
+                    print(e, Colors.END)
+                except AttributeError as e:
+                    print(f"{Colors.RED}Erreur sur l'attribut d'un objet")
+                    print(e, Colors.END)
+                except:
+                    print(f"{Colors.RED}Erreur de sauvegarde des donnees. Probleme detecte{Colors.END}")
+
+                self.db_close()
+                sys.exit()
+            else:
+                self.db_close()
+                sys.exit(1)
+        else:
+            print("Not Connected")
+            sys.exit(1)
+
 
 if __name__ == "__main__":
 
@@ -204,20 +174,13 @@ if __name__ == "__main__":
                       "date TEXT NOT NULL",
                       "exercices TEXT NOT NULL"]
     name_colonne = ["date", "exercices"]
-    database_seance = DataBase(dbName="test_db_seance.db", dbTableName="seances")
-    database_seance.create_table(config_colonne=config_colonne)
-    database_seance.write_datas_table("seances",
-                                      "26/03/26",
-                                      datas=test_datas,
-                                      name_colonne=name_colonne,
-                                      secondary_table=False)
 
     exo_date = '28/03/26'
-    test_datas = [('28/03/26', 'squats fentes_avant'), ("5", "10", "15")]
+    test_datas2 = [('28/03/26', 'squats fentes_avant'), ("5", "10", "15")]
 
-    list_name_table = ["seances", "squats"]
+    list_name_table2 = ["seances", "squats"]
 
-    config_colonne = [
+    config_colonne2 = [
                     ["id INTEGER PRIMARY KEY AUTOINCREMENT",
                       "date TEXT NOT NULL",
                       "exercices TEXT NOT NULL"],
@@ -229,29 +192,15 @@ if __name__ == "__main__":
                       ]
 
 
-    name_colonne = [
+    name_colonne2 = [
                     ["date", "exercices"],
                     ["series", "reps", "loads"]
                     ]
 
-    print("1er table OK")
-    print("-------------------------")
-    #  ---- Fonctionne sans FOREIGN KEY ----
-    for i in range(len(list_name_table)):
-        # print(list_name_table[i])
-        # print(test_datas[i])
 
-
-        database_seance = DataBase(dbName="test_db_seance.db", dbTableName=list_name_table[i])
-        database_seance.create_table(config_colonne=config_colonne[i])
-        secondary_table = False if i == 0 else True
-
-        database_seance.write_datas_table(table_selected=list_name_table[i],
-                                          date_seance=exo_date,
-                                          datas = test_datas[i],
-                                          name_colonne=name_colonne[i],
-                                          secondary_table=secondary_table)
-        print("Table ok: ", list_name_table[i])
-        print("-------------------------")
-
+    test_db = DataBase("Test")
+    test_db.write_data(table_name="test",
+                       config_colonne=config_colonne,
+                       datas=test_datas,
+                       foreign_key_activated=False)
 
