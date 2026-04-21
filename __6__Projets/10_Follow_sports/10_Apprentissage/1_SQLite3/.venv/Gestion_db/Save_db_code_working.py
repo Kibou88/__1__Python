@@ -91,8 +91,7 @@ class DataBase:
             cur.execute(f'SELECT * FROM {self.dbTableName} ORDER BY annee')
             resultats = cur.fetchall()
             print(resultats)
-            for livre in resultats:
-                print(f"ID: {livre[0]}, Titre: {livre[1]}, Auteur: {livre[2]}, Année: {livre[3]}")
+
 
     # -------- Test OK --------
     # - Améliorer la gestion d'erreur
