@@ -40,16 +40,19 @@ class Create_table:
             True -> La classe est utilisée dans ce programme pour faire des tests de fonctionnement
         """
         
-        if (dbName == '' or tableName == ''):
-            print("Aucune information envoye")
-            sys.exit()
+
 
         self.dbName = dbName
         self.tableName = tableName
-
-        self.conn = sqlite3.connect(self.dbName)
-        self.cur = self.conn.cursor()
         self.test = test
+
+
+        if (dbName == '' or tableName == ''):
+            print("Aucune information envoye")
+            sys.exit()
+        with sqlite3.connect(self.dbName) as self.conn:
+            self.cur = self.conn.cursor()
+
         match (typeTable):
             case 0:
                 self.creation_table_personal_data()
@@ -133,7 +136,7 @@ class Create_table:
                            "series INTEGER NOT NULL",
                            "reps INTEGER NOT NULL",
                            "loads_kg INTEGER",
-                           "FOREIGN KEY (seances_id) REFERENCES seances (id)"]
+                           "FOREIGN KEY (seances_id) REFERENCES seances(id)"]
         self.cur.execute("PRAGMA foreign_keys = ON;")
         self.cur.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName} 
                             (
