@@ -6,10 +6,10 @@ But:
 Création des différentes tables dans un db
 ----------------------------------------------------------------------------
 Date de création: 2026-04-20
-Date de modification: 2026-05-06
+Date de modification: 2026-05-12
 ----------------------------------------------------------------------------
-Version V1:
-
+Version V2:
+- Ajout de la méthode creation_type_table (V2)
 
 """
 import os
@@ -25,15 +25,32 @@ class Create_table:
     """
     Classe pour créer les différentes tables dans une db conforme au Cahier des Charges du projet
     """
-    # i = 0
-    # i += 1
 
-    def __init__(self, dbName: str, tableName: str, typeTable: int, test=False,
-                 log="default", log_path=Path.cwd()/ "Test_log"):
+    def __init__(self, dbName: str, test=False, log="default", log_path=Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe de création de tables.
 
         :param dbName (str): Nom de la base de données.
+        :param test (bool): Permet de tester la classe seule.
+            False -> La classe est utilisée par un autre programme
+            True -> La classe est utilisée dans ce programme pour faire des tests de fonctionnement
+        """
+        self.dbName = dbName
+        self.test = test
+        self.log = Logs(log_name=log, log_dir=log_path)
+
+        if (dbName == ''):
+            print("Aucun nom de Database envoye")
+            self.log.log_error(f"CREATE_TABLE | Aucun nom de Database envoye")
+            if not test: # Si test à False, on quitte
+                sys.exit(1)
+
+
+
+
+    def creation_type_tabe(self, tableName: str, typeTable: int):
+        """
+        Permet de choisir définir le type de table et son nom à créer dans la db
         :param tableName (str): Nom de la table.
         :param typeTable (int): Permet de choisir un type de table par rapport aux données voulues.
             N° table -> Titre de la table (nom des colonnes)
@@ -41,40 +58,32 @@ class Create_table:
             1 -> Table Mensurations (date, poids_kg)
             2 -> Table Séances (id, date, exercices)
             3 -> Table Exercices (seance_id [foreign key], series, reps, charge_kg)
-        :param test (bool): Permet de tester la classe seule.
-            False -> La classe est utilisée par un autre programme
-            True -> La classe est utilisée dans ce programme pour faire des tests de fonctionnement
         """
-
-        self.dbName = dbName
+        if (tableName == ''):
+            print("Aucune information de table envoyee")
+            self.log.log_error(f"CREATE_TABLE | Aucun nom de table envoye")
+            sys.exit(1)
         self.tableName = tableName
-        self.test = test
-        self.log = Logs(log_name=log, log_dir=log_path)
 
-
-        if (dbName == '' or tableName == ''):
-            print("Aucune information envoyee")
-            self.log.log_error(f"CREATE_TABLE | Aucune information envoyee")
-            sys.exit()
         with sqlite3.connect(self.dbName) as self.conn:
             self.cur = self.conn.cursor()
 
         match (typeTable):
             case 0:
                 self.creation_table_personal_data()
-
+                self.log.log_info(f"CREATE_TABLE | Table information personnelle creee")
                 print("Table information personnelle creee")
             case 1:
                 self.creation_table_mensurations()
-
+                self.log.log_info(f"CREATE_TABLE | Table mensuration creee")
                 print("Table mensurations creee")
             case 2:
                 self.creation_table_seances()
-
+                self.log.log_info(f"CREATE_TABLE | Table seances creee")
                 print("Table seances creee")
             case 3:
                 self.creation_table_exercices()
-
+                self.log.log_info(f"CREATE_TABLE | Table exercices creee")
                 print("Table exercices creee")
 
     def creation_table_personal_data(self):
@@ -92,7 +101,7 @@ class Create_table:
                                 {", ".join(param_colonne)}
                             )
                         ''')
-        self.log.log_info(f"CREATE_TABLE | Table information personnelle creee")
+
         if self.test:
             self.db_save_and_close()
 
@@ -110,7 +119,7 @@ class Create_table:
                                         {", ".join(param_colonne)}
                                     )
                                 ''')
-        self.log.log_info(f"CREATE_TABLE | Table mensuration creee")
+
         if self.test:
             self.db_save_and_close()
 
@@ -131,7 +140,7 @@ class Create_table:
                                         {", ".join(param_colonne)}
                                     )
                                 ''')
-        self.log.log_info(f"CREATE_TABLE | Table seances creee")
+
         if self.test:
             self.db_save_and_close()
 
@@ -156,7 +165,7 @@ class Create_table:
                                 {", ".join(param_colonne)}
                             )
                         ''')
-        self.log.log_info(f"CREATE_TABLE | Table exercices creee")
+
         if self.test:
             self.db_save_and_close()
 
@@ -175,9 +184,10 @@ if __name__ == "__main__":
     liste_name_table = ["informations_personnelles", "mensurations", "seances", "exercices"]
     dbName = "Test_template.db"
 
+    creation_table = Create_table(dbName=dbName, test=True, log="Create_table")
     for i, name_table in enumerate(liste_name_table):
-        # print(name_table, i)
-        # print(type(name_table), type(i))
-        Create_table(dbName=dbName, tableName=name_table, typeTable=i, test=True, log="CREATE_TABLE")
+        creation_table.creation_type_tabe(tableName=name_table, typeTable = i)
 
-    # Create_table(dbName=dbName, tableName="squats", typeTable=3, test=True, log="CREATE_TABLE")
+    fail_creation_table = Create_table(dbName="", test=True, log="Create_table")
+    fail_creation_table2 = Create_table(dbName=dbName, test=True, log="Create_table")
+    fail_creation_table2.creation_type_tabe(tableName='', typeTable = 1)
