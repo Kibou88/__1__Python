@@ -15,7 +15,7 @@ Version PROTOTYPE:
 from datetime import datetime
 from pathlib import Path
 
-from hmi.class_colors import Colors
+from tools.class_colors import Colors
 from tools.log import Logs
 
 
@@ -61,7 +61,9 @@ class HMI_add_seance():
             - contient que des nombres
             - jour compris entre 1 et 31
             - mois compris entre 1 et 12
-        :return: self.dico_user (dict): Ajout de la clé [date] avec sa valeur
+            - le nombre de chiffre dans pour l'année. Si 2, on rajoute "20" devant les chiffres. Si 4, on vérifie que ça
+            commence par "20"
+        :return: self.dico_user (dict): Ajout de la clé [date] avec une donnée de la forme "DD/MM/YYYY"
         """
         while True:
 
@@ -114,14 +116,25 @@ class HMI_add_seance():
                             self.warning_to_main = True
                             self.log.log_warning(f"ADD_SEANCE | Problème saisie utilisateur pour le mois de la "
                                              f"séance: {date_number[index]}")
+                    case 2: # Année si 2 chiffres rajouter "20". Ex: si année = 26 alors année devient 2026
+                        if (len(date_number[index]) == 2):
+                            date_number[index] = "20" + date_number[index]
+                        elif (len(date_number[index]) == 4):
+                            if not date_number[index].startswith("20"):
+                                print(f"{Colors.RED}Erreur dans le nombre l'annee. Doit commence par '20'")
+                                error_date_flag = True
+                                self.warning_to_main = True
+                                self.log.log_warning(f"ADD_SEANCE | Problème saisie utilisateur pour l'annee de la "
+                                                     f"séance: {date_number[index]}")
                 if error_date_flag:
                     break
 
             if error_date_flag:
                 continue
 
-            self.dico_user["date"] = self.date_seance
+            self.dico_user["date"] = "/".join(date_number)
             return
+
 
     # ===== OK =====
     def ask_seance(self):
@@ -228,8 +241,9 @@ if __name__ == "__main__":
     import json
 
     test_add_seance = HMI_add_seance(log="HMI")
-    flag_error, dico_user = test_add_seance.hmi()
+    test_add_seance.ask_check_date()
+    # flag_error, dico_user = test_add_seance.hmi()
     # print(test_add_seance.dico_user)
 
-    with open("test_dico_user.json", "w", encoding="utf-8") as file:
-        json.dump(dico_user, file, indent=4, ensure_ascii=False)
+    # with open("test_dico_user.json", "w", encoding="utf-8") as file:
+    #     json.dump(dico_user, file, indent=4, ensure_ascii=False)

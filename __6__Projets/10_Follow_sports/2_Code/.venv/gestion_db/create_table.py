@@ -15,15 +15,21 @@ Version V1:
 import os
 import sqlite3
 import sys
+from pathlib import Path
 
-from class_colors import Colors
+from tools.class_colors import Colors
+from tools.log import Logs
+
 
 class Create_table:
     """
     Classe pour créer les différentes tables dans une db conforme au Cahier des Charges du projet
     """
+    # i = 0
+    # i += 1
 
-    def __init__(self, dbName: str, tableName: str, typeTable: int, test=False):
+    def __init__(self, dbName: str, tableName: str, typeTable: int, test=False,
+                 log="default", log_path=Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe de création de tables.
 
@@ -39,16 +45,16 @@ class Create_table:
             False -> La classe est utilisée par un autre programme
             True -> La classe est utilisée dans ce programme pour faire des tests de fonctionnement
         """
-        
-
 
         self.dbName = dbName
         self.tableName = tableName
         self.test = test
+        self.log = Logs(log_name=log, log_dir=log_path)
 
 
         if (dbName == '' or tableName == ''):
-            print("Aucune information envoye")
+            print("Aucune information envoyee")
+            self.log.log_error(f"CREATE_TABLE | Aucune information envoyee")
             sys.exit()
         with sqlite3.connect(self.dbName) as self.conn:
             self.cur = self.conn.cursor()
@@ -56,15 +62,19 @@ class Create_table:
         match (typeTable):
             case 0:
                 self.creation_table_personal_data()
+
                 print("Table information personnelle creee")
             case 1:
                 self.creation_table_mensurations()
+
                 print("Table mensurations creee")
             case 2:
                 self.creation_table_seances()
+
                 print("Table seances creee")
             case 3:
                 self.creation_table_exercices()
+
                 print("Table exercices creee")
 
     def creation_table_personal_data(self):
@@ -82,6 +92,7 @@ class Create_table:
                                 {", ".join(param_colonne)}
                             )
                         ''')
+        self.log.log_info(f"CREATE_TABLE | Table information personnelle creee")
         if self.test:
             self.db_save_and_close()
 
@@ -99,6 +110,7 @@ class Create_table:
                                         {", ".join(param_colonne)}
                                     )
                                 ''')
+        self.log.log_info(f"CREATE_TABLE | Table mensuration creee")
         if self.test:
             self.db_save_and_close()
 
@@ -112,13 +124,14 @@ class Create_table:
         exercices -> TEXT NOT NULL
         """
         param_colonne = ["id INTEGER PRIMARY KEY AUTOINCREMENT",
-                          "date TEXT NOT NULL",
-                          "exercices TEXT NOT NULL"]
+                         "date TEXT NOT NULL",
+                         "exercices TEXT NOT NULL"]
         self.cur.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName} 
                                     (
                                         {", ".join(param_colonne)}
                                     )
                                 ''')
+        self.log.log_info(f"CREATE_TABLE | Table seances creee")
         if self.test:
             self.db_save_and_close()
 
@@ -133,16 +146,17 @@ class Create_table:
         loads_kg -> REAL (virgule)
         """
         param_colonne = ["seances_id INTEGER",
-                           "series INTEGER NOT NULL",
-                           "reps INTEGER NOT NULL",
-                           "loads_kg REAL",
-                           "FOREIGN KEY (seances_id) REFERENCES seances(id)"]
+                         "series INTEGER NOT NULL",
+                         "reps INTEGER NOT NULL",
+                         "loads_kg REAL",
+                         "FOREIGN KEY (seances_id) REFERENCES seances(id)"]
         self.cur.execute("PRAGMA foreign_keys = ON;")
         self.cur.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName} 
                             (
                                 {", ".join(param_colonne)}
                             )
                         ''')
+        self.log.log_info(f"CREATE_TABLE | Table exercices creee")
         if self.test:
             self.db_save_and_close()
 
@@ -153,6 +167,7 @@ class Create_table:
         self.conn.commit()
         self.conn.close()
 
+
 if __name__ == "__main__":
     # Mettre test à True!!
 
@@ -160,6 +175,9 @@ if __name__ == "__main__":
     liste_name_table = ["informations_personnelles", "mensurations", "seances", "exercices"]
     dbName = "Test_template.db"
 
-    for i in range(len(liste_name_table)):
-        Create_table(dbName=dbName, tableName=liste_name_table[i], typeTable=i, test=True)
+    for i, name_table in enumerate(liste_name_table):
+        # print(name_table, i)
+        # print(type(name_table), type(i))
+        Create_table(dbName=dbName, tableName=name_table, typeTable=i, test=True, log="CREATE_TABLE")
 
+    # Create_table(dbName=dbName, tableName="squats", typeTable=3, test=True, log="CREATE_TABLE")

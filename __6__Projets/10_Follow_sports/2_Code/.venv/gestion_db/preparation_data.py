@@ -1,5 +1,5 @@
 """
-Format data
+Preparation data
 ------------------------------
 But:
 ---
@@ -15,7 +15,7 @@ Version V1:
 import sys
 import sqlite3
 
-class Format_data:
+class Preparation_data:
     """
     Gestion du formattage des données pour être utilisées dans les requêtes SQL
     Gestion du nombre de champ à transmettre: nombre de "?" dans les requêtes SQL

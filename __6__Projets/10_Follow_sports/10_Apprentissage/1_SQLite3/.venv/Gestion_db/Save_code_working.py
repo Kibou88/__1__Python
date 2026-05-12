@@ -177,8 +177,8 @@ class DataBase:
 
     def recup_primary_id(self):
         """
-
-        :return:
+        Permet de récupérer l'id de la séance présente dans la table "séances"
+        :return: self.seances_id (int): Variable contenant la valeur de l'id correspondant à la séance
         """
         with sqlite3.connect(self.dbName) as conn:
             cur = conn.cursor()
