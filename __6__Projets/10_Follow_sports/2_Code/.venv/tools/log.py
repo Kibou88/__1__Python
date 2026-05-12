@@ -6,8 +6,9 @@
 # Creation date: 2026-01-31
 # Modification date: 2026-02-01
 # ------------------------------------------
-# Version V1.1
+# Version V1.2
 # - Correction problem on create folder parts (V1.1)
+# - Ajout d'un handler clear pour éviter les doublons de logs (V1.2)
 
 from datetime import datetime
 from pathlib import Path, WindowsPath
@@ -53,6 +54,10 @@ class Logs():
         self.init_handler()
 
         self.configure_setLevel()  # Configure set level according to log_level wrote
+
+        # Supprime handlers existants pour éviter doublons de logs (V2.1)
+        if self.logger.handlers:
+            self.logger.handlers.clear()
         self.logger.addHandler(self.time_handler)
 
     def init_logger(self):
