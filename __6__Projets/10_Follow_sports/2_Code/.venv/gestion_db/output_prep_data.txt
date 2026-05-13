@@ -1,0 +1,5 @@
+Test 2:
+seances	('28/03/26', 'squats fentes_avant')	?, ?
+squats	(10, 20, 30.5)	?, ?, ?, ?
+squats	(20, 30, 40.0)	?, ?, ?, ?
+fentes_avant	(10, 20, 35)	?, ?, ?, ?

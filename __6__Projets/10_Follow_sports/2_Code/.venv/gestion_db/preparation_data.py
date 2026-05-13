@@ -19,6 +19,7 @@ class Preparation_data:
     """
     Gestion du formattage des données pour être utilisées dans les requêtes SQL
     Gestion du nombre de champ à transmettre: nombre de "?" dans les requêtes SQL
+    /!\Pris en charge seulement du type dict/!\
     """
 
     def __init__(self, data: (list or tuple or dict), test=False):
@@ -115,12 +116,12 @@ if __name__ == "__main__":
                                 {
                                     "series": 10,
                                     "reps": 20,
-                                    "loads": 30
+                                    "loads": 30.5
                                 },
                                 {
                                     "series": 20,
                                     "reps": 30,
-                                    "loads": 40
+                                    "loads": 40.0
                                 }
                             ]
                         },
@@ -140,15 +141,30 @@ if __name__ == "__main__":
 
 
     # test_list_datas = Format_data(list_datas, test=True)
-    test_dict_datas = Format_data(dict_datas, test=True).detect_type()
+    test_dict_datas = Preparation_data(dict_datas, test=True).detect_type()
 
-    test2_dict_datas = Format_data(dict_datas).detect_type()
+    test2_dict_datas = Preparation_data(dict_datas).detect_type()
     print("------------------------------")
     print("Test 2:")
-    for table, row, nb_fields in test2_dict_datas:
-        print(table, row, nb_fields)
+    with open("output_prep_data.txt", "w+") as f:
+        f.write("Test 2:\n")
 
-    list_dict_tables = zip(*test_dict_datas)
-    print("Test 3: ")
-    print(list_dict_tables)
-    # test_int_datas = Format_data(int_datas, test=True)
+        for table, row, nb_fields in test2_dict_datas:
+            f.writelines(table)
+            f.write('\t')
+            f.writelines(str(row))
+            f.write('\t')
+            f.writelines(nb_fields)
+            f.write("\n")
+            print(table, row, nb_fields)
+
+        # f.write("------------------------------n")
+        # f.write("Test 3:\n")
+        # list_dict_tables = zip(*test_dict_datas)
+        # print("Test 3: ")
+        # f.write(list_dict_tables)
+        f.close()
+        # print(list_dict_tables)
+    # test_int_datas = Preparation_data(int_datas, test=True)
+
+

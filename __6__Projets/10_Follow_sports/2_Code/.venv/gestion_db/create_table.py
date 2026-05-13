@@ -8,8 +8,9 @@ Création des différentes tables dans un db
 Date de création: 2026-04-20
 Date de modification: 2026-05-12
 ----------------------------------------------------------------------------
-Version V2:
+Version V2.1:
 - Ajout de la méthode creation_type_table (V2)
+- Ajout du raise ValueError pour les tests (test=True) pour vérifier la présence de nom pour dbName et tableName (V2.1)
 
 """
 import os
@@ -40,9 +41,11 @@ class Create_table:
         self.log = Logs(log_name=log, log_dir=log_path)
 
         if (dbName == ''):
-            print("Aucun nom de Database envoye")
             self.log.log_error(f"CREATE_TABLE | Aucun nom de Database envoye")
             if not test: # Si test à False, on quitte
+                sys.exit(1)
+            elif test:
+                raise ValueError("aucun nom de DB envoye")
                 sys.exit(1)
 
 
@@ -189,5 +192,5 @@ if __name__ == "__main__":
         creation_table.creation_type_tabe(tableName=name_table, typeTable = i)
 
     fail_creation_table = Create_table(dbName="", test=True, log="Create_table")
-    fail_creation_table2 = Create_table(dbName=dbName, test=True, log="Create_table")
+    fail_creation_table2 = Create_table(dbName=dbName, test=True, log="Create_tabley")
     fail_creation_table2.creation_type_tabe(tableName='', typeTable = 1)
