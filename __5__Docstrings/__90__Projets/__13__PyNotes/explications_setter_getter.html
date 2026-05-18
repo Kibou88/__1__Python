@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explication des propriétés Python - Classe Note</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f8f8f8;
+        }
+        h1, h2 {
+            color: #0078d4;
+        }
+        h1 {
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #0078d4;
+            padding-bottom: 5px;
+        }
+        pre {
+            background-color: #010409;
+            color: #d4d4d4;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            margin: 10px 0;
+        }
+        .line {
+            display: block;
+            margin-left: 10px;
+        }
+        .line-number {
+            color: #858585;
+            display: inline-block;
+            width: 20px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .comment {
+            color: #6a9955;
+        }
+        .keyword {
+            color: #569cd6;
+        }
+        .string {
+            color: #ce9178;
+        }
+        .decorator {
+            color: #dcdcaa;
+        }
+        ul {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .important {
+            font-weight: bold;
+        }
+        .highlight {
+            text-decoration: underline;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Explication des propriétés Python - Classe Note</h1>
+
+    <h2>Vue d'ensemble</h2>
+    <p>
+        Les deux dernières méthodes de votre classe <span class="important">Note</span> implémentent un 
+        <span class="important">système de propriété avec getter et setter</span>. Cette approche permet de 
+        contrôler l'accès et la modification d'un attribut tout en conservant une syntaxe simple.
+    </p>
+
+    <h2>1. La méthode getter (@property)</h2>
+
+    <pre><span class="line"><span class="line-number">1</span><span class="decorator">@property</span></span>
+<span class="line"><span class="line-number">2</span><span class="keyword">def</span> content(<span class="keyword">self</span>):</span>
+<span class="line"><span class="line-number">3</span>    <span class="keyword">return</span> <span class="keyword">self</span>._content</span></pre>
+
+    <h3>Rôle et fonctionnement</h3>
+    <ul>
+        <li><span class="line-number">1</span> : Le décorateur <span class="highlight">@property</span> transforme cette méthode en une <span class="important">propriété accessible en lecture</span>.</li>
+        <li><span class="line-number">2</span> : Définit la méthode <span class="highlight">content</span> qui agit comme un getter.</li>
+        <li><span class="line-number">3</span> : Retourne la valeur de l'attribut privé <span class="highlight">_content</span>.</li>
+    </ul>
+
+    <div class="info">
+        <strong>Info :</strong> Grâce au décorateur @property, vous pouvez accéder à content comme un attribut normal : 
+        <code>ma_note.content</code> au lieu de <code>ma_note.content()</code>
+    </div>
+
+    <h2>2. La méthode setter (@content.setter)</h2>
+
+    <pre><span class="line"><span class="line-number">1</span><span class="decorator">@content.setter</span></span>
+<span class="line"><span class="line-number">2</span><span class="keyword">def</span> content(<span class="keyword">self</span>, value):</span>
+<span class="line"><span class="line-number">3</span>    <span class="keyword">if</span> isinstance(value, str):</span>
+<span class="line"><span class="line-number">4</span>        <span class="keyword">self</span>._content = value</span>
+<span class="line"><span class="line-number">5</span>    <span class="keyword">else</span>:</span>
+<span class="line"><span class="line-number">6</span>        <span class="keyword">raise</span> TypeError(<span class="string">f"Content must be of type str"</span>)</span></pre>
+
+    <h3>Rôle et fonctionnement</h3>
+    <ul>
+        <li><span class="line-number">1</span> : Le décorateur <span class="highlight">@content.setter</span> permet de définir une méthode qui sera appelée lors de l'<span class="important">assignation de valeur</span> à la propriété.</li>
+        <li><span class="line-number">2</span> : La méthode reçoit <span class="highlight">value</span>, la nouvelle valeur à assigner.</li>
+        <li><span class="line-number">3</span> : <span class="important">Validation du type</span> : vérifie que la valeur est bien une chaîne de caractères.</li>
+        <li><span class="line-number">4</span> : Si la validation réussit, assigne la valeur à l'attribut privé <span class="highlight">_content</span>.</li>
+        <li><span class="line-number">5-6</span> : Si la validation échoue, lève une exception <span class="highlight">TypeError</span> avec un message explicite.</li>
+    </ul>
+
+    <h2>Avantages de cette approche</h2>
+
+    <h3>1. Encapsulation et contrôle d'accès</h3>
+    <p>
+        Cette implémentation suit le principe d'<span class="important">encapsulation</span> en créant une interface contrôlée 
+        pour accéder et modifier l'attribut <span class="highlight">_content</span>.
+    </p>
+
+    <h3>2. Validation automatique</h3>
+    <p>
+        Chaque fois qu'une valeur est assignée à <span class="highlight">content</span>, 
+        la validation de type est automatiquement effectuée, garantissant l'intégrité des données.
+    </p>
+
+    <h3>3. Syntaxe naturelle</h3>
+    <p>
+        L'utilisateur de la classe peut utiliser <span class="highlight">content</span> comme un attribut normal, 
+        sans savoir qu'il y a une logique de validation en arrière-plan.
+    </p>
+
+    <h2>Exemple d'utilisation</h2>
+
+    <pre><span class="line"><span class="line-number">1</span><span class="comment"># Création d'une instance</span></span>
+<span class="line"><span class="line-number">2</span>ma_note = Note(<span class="string">"Titre"</span>, <span class="string">"Contenu initial"</span>)</span>
+<span class="line"><span class="line-number">3</span></span>
+<span class="line"><span class="line-number">4</span><span class="comment"># Lecture du contenu (utilise le getter)</span></span>
+<span class="line"><span class="line-number">5</span>print(ma_note.content)  <span class="comment"># Affiche: "Contenu initial"</span></span>
+<span class="line"><span class="line-number">6</span></span>
+<span class="line"><span class="line-number">7</span><span class="comment"># Modification du contenu (utilise le setter)</span></span>
+<span class="line"><span class="line-number">8</span>ma_note.content = <span class="string">"Nouveau contenu"</span>  <span class="comment"># ✓ Valide</span></span>
+<span class="line"><span class="line-number">9</span></span>
+<span class="line"><span class="line-number">10</span><span class="comment"># Tentative d'assignation d'un type incorrect</span></span>
+<span class="line"><span class="line-number">11</span>ma_note.content = 123  <span class="comment"># ✗ Lève TypeError</span></span></pre>
+
+    <ul>
+        <li><span class="line-number">5</span> : Lecture transparente du contenu via le getter.</li>
+        <li><span class="line-number">8</span> : Assignation valide, le setter accepte la chaîne de caractères.</li>
+        <li><span class="line-number">11</span> : Assignation invalide, le setter rejette le nombre entier.</li>
+    </ul>
+
+    <div class="warning">
+        <strong>Attention :</strong> Notez que dans votre code, l'attribut privé <code>_content</code> n'est pas initialisé 
+        dans le constructeur <code>__init__</code>. Cela pourrait causer une erreur lors du premier accès au getter.
+    </div>
+
+    <h2>Problème potentiel et solution</h2>
+
+    <h3>Problème identifié</h3>
+    <p>
+        L'attribut <span class="highlight">_content</span> n'est pas initialisé dans <span class="highlight">__init__</span>, 
+        mais le getter essaie d'y accéder. Cela peut provoquer une <span class="important">AttributeError</span>.
+    </p>
+
+    <h3>Solution recommandée</h3>
+    <pre><span class="line"><span class="line-number">1</span><span class="keyword">def</span> __init__(<span class="keyword">self</span>, title=<span class="string">""</span>, contents=<span class="string">""</span>, uuid=<span class="keyword">None</span>):</span>
+<span class="line"><span class="line-number">2</span>    <span class="keyword">self</span>.title = title</span>
+<span class="line"><span class="line-number">3</span>    <span class="keyword">self</span>.contents = contents  <span class="comment"># Attribut existant</span></span>
+<span class="line"><span class="line-number">4</span>    <span class="keyword">self</span>._content = contents  <span class="comment"># Initialiser l'attribut privé</span></span>
+<span class="line"><span class="line-number">5</span>    <span class="keyword">self</span>.uuid = str(uuid4())</span></pre>
+
+    <p>
+        Ou mieux encore, utiliser directement le setter pour l'initialisation :
+    </p>
+
+    <pre><span class="line"><span class="line-number">1</span><span class="keyword">def</span> __init__(<span class="keyword">self</span>, title=<span class="string">""</span>, contents=<span class="string">""</span>, uuid=<span class="keyword">None</span>):</span>
+<span class="line"><span class="line-number">2</span>    <span class="keyword">self</span>.title = title</span>
+<span class="line"><span class="line-number">3</span>    <span class="keyword">self</span>.content = contents  <span class="comment"># Utilise le setter pour validation</span></span>
+<span class="line"><span class="line-number">4</span>    <span class="keyword">self</span>.uuid = str(uuid4())</span></pre>
+
+    <div class="info">
+        <strong>Conseil :</strong> La deuxième approche est préférable car elle garantit que la validation 
+        est effectuée même lors de l'initialisation de l'objet.
+    </div>
+</body>
+</html>

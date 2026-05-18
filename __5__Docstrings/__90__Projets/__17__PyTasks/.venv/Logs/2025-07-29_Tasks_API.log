@@ -1,0 +1,13 @@
+2025-07-29 22:18:19,557 | INFO | {'Apprendre Python': False, 'test': False} removed
+2025-07-29 22:18:20,384 | INFO | {'Apprendre Python': False, 'test': True} removed
+2025-07-29 22:18:21,256 | INFO | {'Apprendre Python': True, 'test': True} removed
+2025-07-29 22:18:25,523 | INFO | {'Apprendre Python': False, 'test': True} removed
+2025-07-29 22:18:26,522 | INFO | {'Apprendre Python': False, 'test': False} removed
+2025-07-29 22:18:36,328 | INFO | {'Apprendre Python': True, 'test': False} removed
+2025-07-29 22:18:37,411 | INFO | {'Apprendre Python': True, 'test': True} removed
+2025-07-29 22:18:41,446 | INFO | {'Apprendre Python': True, 'test': True, 'fef': False} removed
+2025-07-29 22:18:53,184 | INFO | {'Apprendre Python': False, 'test': True, 'fef': False} removed
+2025-07-29 22:20:07,343 | INFO | {'Apprendre Python': False, 'test': True, 'fef': True} removed
+2025-07-29 22:20:11,472 | INFO | {'Apprendre Python': True, 'test': True, 'fef': True} removed
+2025-07-29 22:20:13,670 | INFO | {'Apprendre Python': True, 'test': False, 'fef': True} removed
+2025-07-29 22:20:15,474 | INFO | {'Apprendre Python': True, 'test': False, 'fef': False} removed
