@@ -1,0 +1,6 @@
+2026-01-31 23:06:37,825 | Test | INFO | info
+2026-01-31 23:06:37,825 | Test | WARNING | warning
+2026-01-31 23:06:37,825 | Test | ERROR | error
+2026-01-31 23:10:23,005 | Test | INFO | info
+2026-01-31 23:10:23,005 | Test | WARNING | warning
+2026-01-31 23:10:23,005 | Test | ERROR | error

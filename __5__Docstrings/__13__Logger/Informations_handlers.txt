@@ -1,0 +1,13 @@
+Le module logging repose sur:
+- Loggers: Emettent des messages
+- Handlers: Déterminent où envoyer les logs (fichier, console, ...)
+- Formatters: Définissent le format des messages
+
+Types de Handlers:
+- StreamHandler: Envoie des logs vers la console(sys.stdout/sys.stderr)
+- FileHandler: Enregistre les logs dans le un fichier (créé automatiquement si absent)
+- RotatingFileHandler: Fichier rotatif (limite de taille, ex: 5Mo)
+- TimedRotatingFileHandler: Rotation baseé sur le temps (ex: quotidiennement)
+- SocketHandler: Envoie des logs via un socket réseau
+- SysLogHandler: Envoie des logs au démon syslog (Linux)
+

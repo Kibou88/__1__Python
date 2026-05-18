@@ -1,0 +1,238 @@
+2025-07-16 14:42:36,692 | ERROR | name 'QtWidgets' is not defined
+2025-07-16 14:43:54,609 | ERROR | name 'QtWidgets' is not defined
+2025-07-16 14:44:43,670 | INFO | Successfully setup UI.
+2025-07-16 14:44:46,680 | INFO | Application is shutting down
+2025-07-16 14:45:44,687 | ERROR | [Errno 2] No such file or directory: 'C:\\Users\\Satoshi\\Desktop\\Code\\__1__Entrainement_Python\\__5__Docstrings\\__90__Projets\\__100_Explorer_perso\\.venv\\resource\\style.css'
+2025-07-16 14:47:03,065 | INFO | Successfully applied style.css.
+2025-07-16 14:47:03,066 | INFO | Successfully setup UI.
+2025-07-16 14:47:04,502 | INFO | Application is shutting down
+2025-07-16 14:51:51,990 | INFO | Initializing Explorer
+2025-07-16 14:51:52,000 | INFO | Successfully applied style.css.
+2025-07-16 14:51:52,028 | INFO | Successfully setup UI.
+2025-07-16 14:51:57,650 | INFO | Application is shutting down
+2025-07-16 15:00:41,165 | INFO | Initializing Explorer
+2025-07-16 15:00:41,179 | INFO | Successfully applied style.css.
+2025-07-16 15:00:41,196 | INFO | Successfully setup UI.
+2025-07-16 15:00:44,566 | INFO | Application is shutting down
+2025-07-16 15:04:54,609 | INFO | Initializing Explorer
+2025-07-16 15:04:54,624 | INFO | Successfully applied style.css.
+2025-07-16 15:04:54,638 | INFO | Successfully setup UI.
+2025-07-16 15:04:56,956 | INFO | Application is shutting down
+2025-07-16 15:06:44,889 | INFO | Initializing Explorer
+2025-07-16 15:06:44,901 | INFO | Successfully applied style.css.
+2025-07-16 15:06:44,914 | ERROR | descriptor 'setDocument' for 'PySide6.QtWidgets.QTextEdit' objects doesn't apply to a 'str' object
+2025-07-16 15:08:25,636 | INFO | Initializing Explorer
+2025-07-16 15:08:25,650 | INFO | Successfully applied style.css.
+2025-07-16 15:08:25,705 | ERROR | 'PySide6.QtWidgets.QTextEdit.setDocument' called with wrong argument types:
+  PySide6.QtWidgets.QTextEdit.setDocument(str)
+Supported signatures:
+  PySide6.QtWidgets.QTextEdit.setDocument(document: PySide6.QtGui.QTextDocument, /)
+2025-07-16 15:13:46,609 | INFO | Initializing Explorer
+2025-07-16 15:13:46,625 | INFO | Successfully applied style.css.
+2025-07-16 15:13:46,640 | ERROR | 'MainWindow' object has no attribute 'main_layout'
+2025-07-16 15:15:26,850 | INFO | Initializing Explorer
+2025-07-16 15:15:26,865 | INFO | Successfully applied style.css.
+2025-07-16 15:15:26,880 | INFO | Successfully setup UI.
+2025-07-16 15:15:29,962 | INFO | Application is shutting down
+2025-07-16 15:15:39,238 | INFO | Initializing Explorer
+2025-07-16 15:15:39,254 | INFO | Successfully applied style.css.
+2025-07-16 15:15:39,267 | INFO | Successfully setup UI.
+2025-07-16 15:15:41,763 | INFO | Application is shutting down
+2025-07-16 15:16:08,243 | INFO | Initializing Explorer
+2025-07-16 15:16:08,256 | INFO | Successfully applied style.css.
+2025-07-16 15:16:08,271 | INFO | Successfully setup UI.
+2025-07-16 15:16:10,437 | INFO | Application is shutting down
+2025-07-16 15:16:23,004 | INFO | Initializing Explorer
+2025-07-16 15:16:23,016 | INFO | Successfully applied style.css.
+2025-07-16 15:16:23,028 | INFO | Successfully setup UI.
+2025-07-16 15:16:25,119 | INFO | Application is shutting down
+2025-07-16 15:16:32,920 | INFO | Initializing Explorer
+2025-07-16 15:16:32,932 | INFO | Successfully applied style.css.
+2025-07-16 15:16:32,944 | INFO | Successfully setup UI.
+2025-07-16 15:16:34,525 | INFO | Application is shutting down
+2025-07-16 15:18:37,269 | INFO | Initializing Explorer
+2025-07-16 15:18:37,282 | INFO | Successfully applied style.css.
+2025-07-16 15:18:37,297 | INFO | Successfully setup UI.
+2025-07-16 15:18:39,014 | INFO | Application is shutting down
+2025-07-16 15:18:42,980 | INFO | Initializing Explorer
+2025-07-16 15:18:42,994 | INFO | Successfully applied style.css.
+2025-07-16 15:18:43,009 | INFO | Successfully setup UI.
+2025-07-16 15:18:45,268 | INFO | Application is shutting down
+2025-07-16 15:18:53,097 | INFO | Initializing Explorer
+2025-07-16 15:18:53,110 | INFO | Successfully applied style.css.
+2025-07-16 15:18:53,123 | INFO | Successfully setup UI.
+2025-07-16 15:19:01,191 | INFO | Application is shutting down
+2025-07-16 15:26:07,768 | INFO | Initializing Explorer
+2025-07-16 15:26:07,785 | INFO | Successfully applied style.css.
+2025-07-16 15:26:07,801 | INFO | Successfully setup UI.
+2025-07-16 15:26:12,239 | INFO | Application is shutting down
+2025-07-16 15:34:04,828 | INFO | Initializing Explorer
+2025-07-16 15:34:04,846 | INFO | Successfully applied style.css.
+2025-07-16 15:34:04,910 | ERROR | 'PySide6.QtWidgets.QTextEdit' object has no attribute 'setRootIndex'
+2025-07-16 15:34:21,468 | INFO | Initializing Explorer
+2025-07-16 15:34:21,482 | INFO | Successfully applied style.css.
+2025-07-16 15:34:21,516 | INFO | Successfully setup UI.
+2025-07-16 15:34:30,896 | INFO | Application is shutting down
+2025-07-16 15:36:28,134 | INFO | Initializing Explorer
+2025-07-16 15:36:28,149 | INFO | Successfully applied style.css.
+2025-07-16 15:36:28,178 | INFO | Successfully setup UI.
+2025-07-16 15:36:35,176 | INFO | Application is shutting down
+2025-07-16 15:39:03,852 | INFO | Initializing Explorer
+2025-07-16 15:39:03,866 | INFO | Successfully applied style.css.
+2025-07-16 15:39:03,893 | INFO | Successfully setup UI.
+2025-07-16 15:40:08,600 | INFO | Application is shutting down
+2025-07-16 15:40:10,547 | INFO | Initializing Explorer
+2025-07-16 15:40:10,560 | INFO | Successfully applied style.css.
+2025-07-16 15:40:10,585 | INFO | Successfully setup UI.
+2025-07-16 15:41:24,094 | INFO | Initializing Explorer
+2025-07-16 15:41:24,109 | INFO | Successfully applied style.css.
+2025-07-16 15:41:24,134 | INFO | Successfully setup UI.
+2025-07-16 15:42:07,137 | INFO | Initializing Explorer
+2025-07-16 15:42:07,152 | INFO | Successfully applied style.css.
+2025-07-16 15:42:07,188 | INFO | Successfully setup UI.
+2025-07-16 15:42:35,019 | INFO | Application is shutting down
+2025-07-16 15:45:41,245 | INFO | Initializing Explorer
+2025-07-16 15:45:41,258 | INFO | Successfully applied style.css.
+2025-07-16 15:45:41,284 | INFO | Successfully setup UI.
+2025-07-16 15:47:01,423 | INFO | Application is shutting down
+2025-07-16 15:47:03,777 | INFO | Initializing Explorer
+2025-07-16 15:47:03,790 | INFO | Successfully applied style.css.
+2025-07-16 15:47:03,813 | INFO | Successfully setup UI.
+2025-07-16 15:48:07,508 | INFO | Initializing Explorer
+2025-07-16 15:48:07,522 | INFO | Successfully applied style.css.
+2025-07-16 15:48:07,548 | INFO | Successfully setup UI.
+2025-07-16 15:48:17,597 | INFO | Successfully loaded C:/Users/Satoshi/Desktop/fin de contrat nounou.txt
+2025-07-16 15:48:34,344 | INFO | Application is shutting down
+2025-07-16 15:48:49,616 | INFO | Initializing Explorer
+2025-07-16 15:48:49,629 | INFO | Successfully applied style.css.
+2025-07-16 15:48:49,656 | INFO | Successfully setup UI.
+2025-07-16 15:48:55,606 | INFO | Successfully loaded C:/Users/Satoshi/Desktop/fin de contrat nounou.txt
+2025-07-16 15:48:57,915 | INFO | Application is shutting down
+2025-07-16 16:11:40,170 | INFO | Initializing Explorer
+2025-07-16 16:11:40,188 | INFO | Successfully applied style.css.
+2025-07-16 16:11:40,218 | INFO | Successfully setup UI.
+2025-07-16 16:11:53,156 | INFO | Application is shutting down
+2025-07-16 16:20:43,011 | INFO | Initializing Explorer
+2025-07-16 16:20:43,029 | INFO | Successfully applied style.css.
+2025-07-16 16:20:43,057 | ERROR | 'PySide6.QtWidgets.QLabel' object has no attribute 'toPixmap'
+2025-07-16 16:21:33,893 | INFO | Initializing Explorer
+2025-07-16 16:21:33,906 | INFO | Successfully applied style.css.
+2025-07-16 16:21:33,931 | ERROR | 'PySide6.QtWidgets.QLabel' object has no attribute 'QPixmap'
+2025-07-16 16:22:11,440 | INFO | Initializing Explorer
+2025-07-16 16:22:11,453 | INFO | Successfully applied style.css.
+2025-07-16 16:22:11,656 | INFO | Successfully setup UI.
+2025-07-16 16:23:14,890 | INFO | Application is shutting down
+2025-07-16 16:23:16,800 | INFO | Initializing Explorer
+2025-07-16 16:23:16,814 | INFO | Successfully applied style.css.
+2025-07-16 16:23:17,011 | INFO | Successfully setup UI.
+2025-07-16 16:23:27,754 | INFO | Application is shutting down
+2025-07-16 16:24:42,722 | INFO | Initializing Explorer
+2025-07-16 16:24:42,738 | INFO | Successfully applied style.css.
+2025-07-16 16:24:42,938 | ERROR | QPixmap.width() takes no arguments (1 given)
+2025-07-16 16:24:57,659 | INFO | Initializing Explorer
+2025-07-16 16:24:57,672 | INFO | Successfully applied style.css.
+2025-07-16 16:24:57,861 | ERROR | QPixmap.size() takes no arguments (2 given)
+2025-07-16 16:25:07,911 | INFO | Initializing Explorer
+2025-07-16 16:25:07,926 | INFO | Successfully applied style.css.
+2025-07-16 16:25:08,207 | INFO | Successfully setup UI.
+2025-07-16 16:25:11,817 | INFO | Application is shutting down
+2025-07-16 16:26:00,282 | INFO | Initializing Explorer
+2025-07-16 16:26:00,296 | INFO | Successfully applied style.css.
+2025-07-16 16:26:00,495 | INFO | Successfully setup UI.
+2025-07-16 16:26:05,589 | INFO | Application is shutting down
+2025-07-16 16:26:14,396 | INFO | Initializing Explorer
+2025-07-16 16:26:14,410 | INFO | Successfully applied style.css.
+2025-07-16 16:26:14,595 | INFO | Successfully setup UI.
+2025-07-16 16:26:19,649 | INFO | Application is shutting down
+2025-07-16 16:26:34,757 | INFO | Initializing Explorer
+2025-07-16 16:26:34,773 | INFO | Successfully applied style.css.
+2025-07-16 16:26:34,978 | ERROR | PySide6.QtGui.QPixmap.scaled(): not enough arguments. Note: keyword arguments are only supported for optional parameters.
+2025-07-16 16:27:12,792 | INFO | Initializing Explorer
+2025-07-16 16:27:12,805 | INFO | Successfully applied style.css.
+2025-07-16 16:27:12,997 | ERROR | name 'imaage_path' is not defined
+2025-07-16 16:27:17,918 | INFO | Initializing Explorer
+2025-07-16 16:27:17,931 | INFO | Successfully applied style.css.
+2025-07-16 16:27:18,172 | INFO | Successfully setup UI.
+2025-07-16 16:27:21,118 | INFO | Application is shutting down
+2025-07-16 16:28:28,537 | INFO | Initializing Explorer
+2025-07-16 16:28:28,551 | INFO | Successfully applied style.css.
+2025-07-16 16:28:28,747 | INFO | Successfully setup UI.
+2025-07-16 16:28:30,890 | INFO | Application is shutting down
+2025-07-16 16:32:36,548 | INFO | Initializing Explorer
+2025-07-16 16:32:36,573 | INFO | Successfully applied style.css.
+2025-07-16 16:32:36,798 | ERROR | 'float' object is not callable
+2025-07-16 16:34:19,483 | INFO | Initializing Explorer
+2025-07-16 16:34:19,496 | INFO | Successfully applied style.css.
+2025-07-16 16:34:19,778 | ERROR | 'PySide6.QtGui.QPixmap' object has no attribute 'scale'
+2025-07-16 16:34:26,914 | INFO | Initializing Explorer
+2025-07-16 16:34:26,926 | INFO | Successfully applied style.css.
+2025-07-16 16:34:27,117 | INFO | Successfully setup UI.
+2025-07-16 16:34:32,048 | INFO | Application is shutting down
+2025-07-16 16:34:50,525 | INFO | Initializing Explorer
+2025-07-16 16:34:50,538 | INFO | Successfully applied style.css.
+2025-07-16 16:34:50,741 | INFO | Successfully setup UI.
+2025-07-16 16:34:55,667 | INFO | Application is shutting down
+2025-07-16 16:35:46,814 | INFO | Initializing Explorer
+2025-07-16 16:35:46,830 | INFO | Successfully applied style.css.
+2025-07-16 16:35:47,067 | INFO | Successfully setup UI.
+2025-07-16 16:35:51,704 | INFO | Application is shutting down
+2025-07-16 16:37:51,260 | INFO | Initializing Explorer
+2025-07-16 16:37:51,273 | INFO | Successfully applied style.css.
+2025-07-16 16:37:51,299 | ERROR | cannot access local variable 'image_path' where it is not associated with a value
+2025-07-16 16:38:24,527 | INFO | Initializing Explorer
+2025-07-16 16:38:24,539 | INFO | Successfully applied style.css.
+2025-07-16 16:38:24,573 | ERROR | PySide6.QtGui.QPixmap.scaled(): unsupported keyword 'transformMode'
+2025-07-16 16:38:47,357 | INFO | Initializing Explorer
+2025-07-16 16:38:47,370 | INFO | Successfully applied style.css.
+2025-07-16 16:38:47,628 | ERROR | PySide6.QtGui.QPixmap.scaled(): unsupported keyword 'transformMode'
+2025-07-16 16:39:15,828 | INFO | Initializing Explorer
+2025-07-16 16:39:15,841 | INFO | Successfully applied style.css.
+2025-07-16 16:39:16,091 | INFO | Successfully setup UI.
+2025-07-16 16:39:22,133 | INFO | Application is shutting down
+2025-07-16 16:42:39,431 | INFO | Initializing Explorer
+2025-07-16 16:42:39,445 | INFO | Successfully applied style.css.
+2025-07-16 16:42:39,458 | ERROR | 'MainWindow' object has no attribute 'image_view'
+2025-07-16 16:42:51,168 | INFO | Initializing Explorer
+2025-07-16 16:42:51,181 | INFO | Successfully applied style.css.
+2025-07-16 16:42:51,216 | INFO | Successfully setup UI.
+2025-07-16 16:42:58,213 | INFO | Successfully loaded C:/Users/Satoshi/Desktop/fin de contrat nounou.txt
+2025-07-16 16:43:01,051 | INFO | Application is shutting down
+2025-07-16 16:43:34,010 | INFO | Initializing Explorer
+2025-07-16 16:43:34,024 | INFO | Successfully applied style.css.
+2025-07-16 16:43:34,052 | INFO | Successfully setup UI.
+2025-07-16 16:43:39,412 | INFO | Successfully loaded C:/Users/Satoshi/Desktop/fin de contrat nounou.txt
+2025-07-16 16:43:43,807 | INFO | Application is shutting down
+2025-07-16 16:44:00,156 | INFO | Initializing Explorer
+2025-07-16 16:44:00,171 | INFO | Successfully applied style.css.
+2025-07-16 16:44:00,206 | INFO | Successfully setup UI.
+2025-07-16 16:44:03,637 | ERROR | QLabel.selectedText() takes no arguments (1 given)
+2025-07-16 16:44:05,820 | ERROR | QLabel.selectedText() takes no arguments (1 given)
+2025-07-16 16:44:11,491 | ERROR | 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+2025-07-16 16:44:13,555 | ERROR | QLabel.selectedText() takes no arguments (1 given)
+2025-07-16 16:44:13,829 | ERROR | QLabel.selectedText() takes no arguments (1 given)
+2025-07-16 16:44:14,165 | ERROR | QLabel.selectedText() takes no arguments (1 given)
+2025-07-16 16:44:15,304 | INFO | Application is shutting down
+2025-07-16 16:44:39,761 | INFO | Initializing Explorer
+2025-07-16 16:44:39,782 | INFO | Successfully applied style.css.
+2025-07-16 16:44:39,811 | INFO | Successfully setup UI.
+2025-07-16 16:44:44,973 | ERROR | QLabel.selectedText() takes no arguments (1 given)
+2025-07-16 16:44:46,425 | INFO | Application is shutting down
+2025-07-16 16:45:41,526 | INFO | Initializing Explorer
+2025-07-16 16:45:41,539 | INFO | Successfully applied style.css.
+2025-07-16 16:45:41,563 | INFO | Successfully setup UI.
+2025-07-16 16:45:46,814 | INFO | Successfully loaded C:/Users/Satoshi/Desktop/fin de contrat nounou.txt
+2025-07-16 16:45:50,260 | INFO | Successfully loaded C:/Users/Satoshi/Desktop/fin de contrat nounou.txt
+2025-07-16 16:45:52,620 | INFO | Application is shutting down
+2025-07-16 16:48:02,147 | INFO | Initializing Explorer
+2025-07-16 16:48:02,164 | INFO | Successfully applied style.css.
+2025-07-16 16:48:02,191 | INFO | Successfully setup UI.
+2025-07-16 16:48:11,251 | ERROR | name 'text_path' is not defined
+2025-07-16 16:48:16,023 | INFO | Application is shutting down
+2025-07-16 16:51:17,744 | INFO | Initializing Explorer
+2025-07-16 16:51:17,759 | INFO | Successfully applied style.css.
+2025-07-16 16:51:17,788 | INFO | Successfully setup UI.
+2025-07-16 16:51:22,589 | ERROR | name 'text_path' is not defined
+2025-07-16 16:51:23,900 | ERROR | name 'text_path' is not defined
+2025-07-16 16:51:28,577 | ERROR | name 'text_path' is not defined
+2025-07-16 16:51:30,716 | ERROR | name 'text_path' is not defined
+2025-07-16 16:51:32,367 | INFO | Application is shutting down

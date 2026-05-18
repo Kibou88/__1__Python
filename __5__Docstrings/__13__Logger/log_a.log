@@ -1,0 +1,3 @@
+logger_a - DEBUG - Message DEBUG venant de logger_a (visible uniquement dans log_a.log)
+logger_a - INFO - Message INFO venant de logger_a (console et log_a.log)
+logger_a - WARNING - Message WARNING venant de logger_a (console et log_a.log)
