@@ -51,7 +51,7 @@ class Create_table:
 
 
 
-    def creation_type_tabe(self, tableName: str, typeTable: int):
+    def creation_type_table(self, tableName: str, typeTable: int):
         """
         Permet de choisir définir le type de table et son nom à créer dans la db
         :param tableName (str): Nom de la table.
@@ -63,9 +63,12 @@ class Create_table:
             3 -> Table Exercices (seance_id [foreign key], series, reps, charge_kg)
         """
         if (tableName == ''):
-            print("Aucune information de table envoyee")
             self.log.log_error(f"CREATE_TABLE | Aucun nom de table envoye")
-            sys.exit(1)
+            if not self.test: # Si test à False, on quitte
+                sys.exit(1)
+            elif self.test:
+                raise ValueError("aucun nom de table envoye")
+                sys.exit(1)
         self.tableName = tableName
 
         with sqlite3.connect(self.dbName) as self.conn:
