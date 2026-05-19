@@ -9,6 +9,8 @@
 # Version V1.2
 # - Correction problem on create folder parts (V1.1)
 # - Ajout d'un handler clear pour éviter les doublons de logs (V1.2)
+# - self.configure_setLevel() s'exécute après le self.logger.addHandler (V1.3)
+# - Ajout d'une méthode close log pour ferme les logs lors des tests unitaires (V1.3)
 
 from datetime import datetime
 from pathlib import Path, WindowsPath
@@ -25,12 +27,13 @@ class Logs():
     Log format: date time | log_name | log_level | log_message
     """
 
-    def __init__(self, log_name="logs.log", log_dir="Logs", log_level="INFO"):
+    def __init__(self, log_name="logs.log", log_dir="Logs", log_level="INFO", test = False):
         """
         Initialize the logger, handler and formatter. Create the log_dir folder.
         :param log_name (str): Name of the log file
         :param log_dir (str): Name of the folder where the log file is located.
         :param log_level (str): Level of the log file.
+        :param test (bool): If true, close the log file. Defaults to False. (V1.3)
         """
         if not (log_name.endswith(".log")): # Add '.log' extension if missing
             log_name = log_name + ".log"
@@ -38,6 +41,7 @@ class Logs():
         self.log_name = log_name
         self.log_dir = log_dir
         self.log_level = log_level
+        self.test = test
 
         # Create the folder if not exist
         if isinstance(log_dir, Path):
@@ -53,12 +57,17 @@ class Logs():
 
         self.init_handler()
 
-        self.configure_setLevel()  # Configure set level according to log_level wrote
-
-        # Supprime handlers existants pour éviter doublons de logs (V2.1)
+        # Supprime handlers existants pour éviter doublons de logs (V1.2)
         if self.logger.handlers:
-            self.logger.handlers.clear()
+            for handler in list(self.logger.handlers):
+                self.logger.removeHandler(handler)
+                handler.close()
+        # if self.logger.handlers:
+        #     self.logger.handlers.clear()
         self.logger.addHandler(self.time_handler)
+
+        # Must be execute after logger.addHandler (V1.3)
+        self.configure_setLevel()  # Configure set level according to log_level wrote
 
     def init_logger(self):
         """
@@ -153,6 +162,22 @@ class Logs():
         2025-07-11 14:36:12,713 | Application | CRITICAL | message
         """
         self.logger.critical(message)
+
+    def close_log(self):
+        """
+        Use in Test case, to close the log (V1.3)
+        :return:
+        """
+        for handler in list(self.logger.handlers):
+            try:
+                #
+                handler.flush() # Vide et écris le contenu du buffer sur le disque
+                handler.close() # Libère le verrou OS sur le fichier → unlink() possible
+            except Exception:
+                pass
+            self.logger.removeHandler(handler)
+            # Retirer aussi du registre global de logging
+        logging.root.manager.loggerDict.pop(self.logger_name, None)
 
 if __name__ == "__main__":
     try:

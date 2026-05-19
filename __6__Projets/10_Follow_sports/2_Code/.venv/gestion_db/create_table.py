@@ -8,9 +8,10 @@ Création des différentes tables dans un db
 Date de création: 2026-04-20
 Date de modification: 2026-05-12
 ----------------------------------------------------------------------------
-Version V2.1:
+Version V2.2:
 - Ajout de la méthode creation_type_table (V2)
 - Ajout du raise ValueError pour les tests (test=True) pour vérifier la présence de nom pour dbName et tableName (V2.1)
+- Ajout du return conn dans la méthode creation_type_table pour fermer la bd lors des tests uniquement + suppression des éléments inutiles (V2.2)
 
 """
 import os
@@ -27,7 +28,7 @@ class Create_table:
     Classe pour créer les différentes tables dans une db conforme au Cahier des Charges du projet
     """
 
-    def __init__(self, dbName: str, test=False, log="default", log_path=Path.cwd()/ "Test_log"):
+    def __init__(self, dbName: str, test = False, log = "default", log_path = Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe de création de tables.
 
@@ -38,15 +39,16 @@ class Create_table:
         """
         self.dbName = dbName
         self.test = test
-        self.log = Logs(log_name=log, log_dir=log_path)
+        self.log = Logs(log_name = log, log_dir = log_path, test = test)
 
         if (dbName == ''):
             self.log.log_error(f"CREATE_TABLE | Aucun nom de Database envoye")
             if not test: # Si test à False, on quitte
                 sys.exit(1)
             elif test:
+                self.log.close_log()
                 raise ValueError("aucun nom de DB envoye")
-                sys.exit(1)
+                
 
 
 
@@ -67,8 +69,9 @@ class Create_table:
             if not self.test: # Si test à False, on quitte
                 sys.exit(1)
             elif self.test:
+                self.log.close_log()
                 raise ValueError("aucun nom de table envoye")
-                sys.exit(1)
+                
         self.tableName = tableName
 
         with sqlite3.connect(self.dbName) as self.conn:
@@ -91,6 +94,9 @@ class Create_table:
                 self.creation_table_exercices()
                 self.log.log_info(f"CREATE_TABLE | Table exercices creee")
                 print("Table exercices creee")
+        if self.test:
+            self.log.close_log()
+            return self.conn
 
     def creation_table_personal_data(self):
         """
@@ -108,9 +114,6 @@ class Create_table:
                             )
                         ''')
 
-        if self.test:
-            self.db_save_and_close()
-
     def creation_table_mensurations(self):
         """
         Création de la table mensurations.
@@ -125,9 +128,6 @@ class Create_table:
                                         {", ".join(param_colonne)}
                                     )
                                 ''')
-
-        if self.test:
-            self.db_save_and_close()
 
     def creation_table_seances(self):
         """
@@ -146,9 +146,6 @@ class Create_table:
                                         {", ".join(param_colonne)}
                                     )
                                 ''')
-
-        if self.test:
-            self.db_save_and_close()
 
     def creation_table_exercices(self):
         """
@@ -172,15 +169,7 @@ class Create_table:
                             )
                         ''')
 
-        if self.test:
-            self.db_save_and_close()
-
-    def db_save_and_close(self):
-        """
-        Sauvegarde et déconnexion de la db
-        """
-        self.conn.commit()
-        self.conn.close()
+    
 
 
 if __name__ == "__main__":
