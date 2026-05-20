@@ -38,12 +38,17 @@ class Preparation_data:
         """
         if (type(self.data) == dict):
             self.format_dico()
-            if not self.test:
-                return self.zip_tables_data_fields
+            #if not self.test:
+            print("---Retour---")
+            return self.zip_tables_data_fields
         elif (type(self.data) == list or type(self.data) == tuple):
+            if self.test:
+                raise Exception(f"Format {type(self.data)} non implemente dans cette version")
             self.format_liste_tuple()
         else:
             print(f"Format {type(self.data)} non pris en charge")
+            if self.test:
+                raise TypeError(f"Format {type(self.data)} non pris en charge") 
             sys.exit(1)
 
     def format_dico(self) -> zip:
@@ -70,23 +75,23 @@ class Preparation_data:
 
         self.list_datas.insert(0, (self.data["date"], " ".join(self.list_exo_seance)))
 
-        print(self.list_tables)
+        #print(self.list_tables)
         # Compte le nombre de champs utiles par rapport aux données
         self.list_nb_fields = [self.nbre_interro(self.list_tables[i], self.list_datas[i])
                                for i in range(len(self.list_datas))]
 
         self.zip_tables_data_fields = zip(self.list_tables, self.list_datas, self.list_nb_fields)
 
-        if self.test:
-
-            for table, row, nb_fields in self.zip_tables_data_fields:
-                print(table, row, nb_fields)
+        # if self.test:
+        #     for table, row, nb_fields in self.zip_tables_data_fields:
+        #         print(table, row, nb_fields)
+            
 
 
     # -------------------- A CODER --------------------
     def format_liste_tuple(self):
         """
-        A CODER
+        ABSENT POUR LA V1
         :return:
         """
         print("Format liste ou tuple")
@@ -143,7 +148,7 @@ if __name__ == "__main__":
     # test_list_datas = Format_data(list_datas, test=True)
     test_dict_datas = Preparation_data(dict_datas, test=True).detect_type()
 
-    test2_dict_datas = Preparation_data(dict_datas).detect_type()
+    test2_dict_datas = Preparation_data(dict_datas, test=True).detect_type()
     print("------------------------------")
     print("Test 2:")
     with open("output_prep_data.txt", "w+") as f:

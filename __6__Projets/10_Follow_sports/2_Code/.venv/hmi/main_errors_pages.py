@@ -15,7 +15,7 @@ Version PROTOTYPE:
 import time
 from pathlib import Path
 
-from hmi.class_colors import Colors
+from tools.class_colors import Colors
 from tools.log import Logs
 
 def main_page(log_dir) -> str:

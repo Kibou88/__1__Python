@@ -35,8 +35,7 @@ def programme(USER_CHOICE):
                 add_seance = HMI_add_seance(log="HMI", log_path=LOG_PATH)
                 warning_add_seance, new_seance = add_seance.hmi()
                 if(warning_add_seance):
-                    MAIN_LOG.log_warning("Probleme survenu dans la sous-fonction 'Add seance' de l'IHM")
-
+                    MAIN_LOG.log_warning("Probleme survenu dans la sous-fonction 'Add seance' de l'HMI")
 
             case "2": # Envoi vers "l'extraction d'une séance"
                 pass
