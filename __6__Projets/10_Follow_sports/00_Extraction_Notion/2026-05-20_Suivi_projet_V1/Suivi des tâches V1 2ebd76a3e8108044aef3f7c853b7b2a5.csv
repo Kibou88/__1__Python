@@ -1,0 +1,17 @@
+﻿Nom de la tâche,Date d’échéance,Description,Niveau d’effort,Numéro,Personne assignée,Priorité,Sélection multiple,Type de tâche,État
+Création du projet sous GitHub,02/03/2025,Modifier le texte de l’en-tête pour mieux refléter nos dernières offres de produits.,Moyenne,0-Structure,Thomas BOUTIN,Moyenne,,📐 Structure,Terminé
+Architecture du projet,02/20/2025,Mettre à jour les documents de support pour refléter les nouvelles sorties de produits.,Faible,0-Structure,,Élevée,,📐 Structure,Terminé
+Librairie SQLite3,02/28/2025,Inclure les mises à jour du produit dans la prochaine note de version.,Faible,9-Apprentissage,,Faible,,📚 Apprentissage,En cours
+Spécification détaillée des tables de la base de donnée,,Spécifier les différents tableaux à utiliser,,2-Spécifications_détaillées,,Moyenne,,📋 Spécifications,Terminé
+Spécification fonctionnelle IHM,,Spécifier les fonctionnalités de l’IHM pour correspondre aux besoins,,1-Spécifications_fonctionnelles,,Élevée,1,📋 Spécifications,Terminé
+Cahier des charges V1,,Cahier des charges des requis attendus pour la V1,,0-Structure,,Élevée,,📐 Structure,Terminé
+Spécification fonctionnelle de la base de donnée,,Spécifier les fonctionnalités que devra avoir la gestion de la base de données,,1-Spécifications_fonctionnelles,,Élevée,1,📋 Spécifications,Terminé
+Spécification détaillée d’IHM_Ajout_séance,,Spécifier les fonctions/classes/messages de l’IHM,,2-Spécifications_détaillées,,Moyenne,,📋 Spécifications,Terminé
+Spécification fonctionnelle du formatage/validation des données,,Spécifier le formatage des données utilisateur ←—→BdD,,1-Spécifications_fonctionnelles,,Élevée,1,📋 Spécifications,Terminé
+Spécification détaillée du formatage/validation/extraction des données,,Spécifier les blocs réalisant le formatage des données utilisateur ↔BdD,,2-Spécifications_détaillées,,Moyenne,,📋 Spécifications,Pas commencé
+Fonction main.py,,,,3-Programmation,,Élevée,,💻 Code,A tester
+Tests unitaires fonction “Gestion_db”,,,,4-Tests_Unitaires,,Moyenne,,🧪 Tests,Pas commencé
+Ajout de séance,,,,3-Programmation,,Élevée,,💻 Code,A tester
+Préparation données pour la DB,,,,3-Programmation,,Élevée,,💻 Code,A tester
+Tests unitaires fonction “HMI”,,,,4-Tests_Unitaires,,Moyenne,,🧪 Tests,Pas commencé
+,,,,4-Tests_Unitaires,,,,,Pas commencé
