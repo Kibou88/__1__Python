@@ -39,8 +39,8 @@ class Preparation_data:
         if (type(self.data) == dict):
             self.format_dico()
             #if not self.test:
-            print("---Retour---")
-            return self.zip_tables_data_fields
+            print("---Retour prep data---")
+            return self.zip_tables_data_fields # ---- OK ----
         elif (type(self.data) == list or type(self.data) == tuple):
             if self.test:
                 raise Exception(f"Format {type(self.data)} non implemente dans cette version")

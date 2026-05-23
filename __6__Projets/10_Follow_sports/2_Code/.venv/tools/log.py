@@ -27,11 +27,11 @@ class Logs():
     Log format: date time | log_name | log_level | log_message
     """
 
-    def __init__(self, log_name="logs.log", log_dir="Logs", log_level="INFO", test = False):
+    def __init__(self, log_name="logs.log", log_path="Logs", log_level="INFO", test = False):
         """
-        Initialize the logger, handler and formatter. Create the log_dir folder.
+        Initialize the logger, handler and formatter. Create the log_path folder.
         :param log_name (str): Name of the log file
-        :param log_dir (str): Name of the folder where the log file is located.
+        :param log_path (str): Name of the folder where the log file is located.
         :param log_level (str): Level of the log file.
         :param test (bool): If true, close the log file. Defaults to False. (V1.3)
         """
@@ -39,16 +39,16 @@ class Logs():
             log_name = log_name + ".log"
 
         self.log_name = log_name
-        self.log_dir = log_dir
+        self.log_path = log_path
         self.log_level = log_level
         self.test = test
 
         # Create the folder if not exist
-        if isinstance(log_dir, Path):
-            log_dir.mkdir(parents=True, exist_ok=True)
+        if isinstance(log_path, Path):
+            log_path.mkdir(parents=True, exist_ok=True)
         else:
-            # log_dir est une str : on en fait un Path
-            Path(log_dir).mkdir(parents=True, exist_ok=True)
+            # log_path est une str : on en fait un Path
+            Path(log_path).mkdir(parents=True, exist_ok=True)
 
         self.init_logger()
 
@@ -81,7 +81,7 @@ class Logs():
         Initialize the time handler, configure rotate file and formate the log.
         """
         self.time_handler = TimedRotatingFileHandler(  # Create a new file log at midnight
-            f"{self.log_dir}/{self.log_file_name}",
+            f"{self.log_path}/{self.log_file_name}",
             when="midnight"
         )
         formatter = logging.Formatter('%(asctime)s | %(name)s | %(levelname)s | %(message)s')
@@ -181,7 +181,7 @@ class Logs():
 
 if __name__ == "__main__":
     try:
-        log = Logs(log_name="Test.log", log_dir="Test_Logs", log_level="INFO")
+        log = Logs(log_name="Test.log", log_path="Test_Logs", log_level="INFO")
     except:
         print("Probleme dans la creation des logs")
     else:

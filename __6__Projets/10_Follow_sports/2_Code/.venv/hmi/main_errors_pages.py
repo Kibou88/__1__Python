@@ -18,13 +18,13 @@ from pathlib import Path
 from tools.class_colors import Colors
 from tools.log import Logs
 
-def main_page(log_dir) -> str:
+def main_page(log_path) -> str:
     """
     Affiche le menu principale de l'IHM
     :return: user_choice (str): choix utilisateur en lowercase
     """
-    log_hmi_path = log_dir / "hmi"
-    log_hmi = Logs(log_name="HMI", log_dir=log_hmi_path)
+    log_hmi_path = log_path / "hmi"
+    log_hmi = Logs(log_name="HMI", log_path=log_hmi_path)
     while True:
         print(f"{Colors.GREEN}Bienvenue dans le suivi de vos seances de sports\n"
               f"Que voulez-vous faire?{Colors.END}\n"
@@ -51,4 +51,4 @@ def error_page():
 
 if __name__ == "__main__":
     LOG_PATH = Path.cwd() / "logs"
-    print(main_page(log_dir=LOG_PATH))
+    print(main_page(log_path=LOG_PATH))

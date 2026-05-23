@@ -15,26 +15,31 @@ import os
 import sqlite3
 import sys
 
+from pathlib import Path
 
-from class_colors import Colors
-from format_data import Format_data
-from create_table_db import Create_table
+from tools.class_colors import Colors
+from tools.log import Logs
+from gestionDB.preparation_data import Preparation_data
+from gestionDB.create_table import Create_table
 
 class DataBase:
     """
     Classe contenant la création et la gestion de tables BdD
     """
 
-    def __init__(self, dbName="default.db", data_to_send=""):
+    def __init__(self, dbName="default.db", data_to_send={}, log_path=Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe BdD
         :param dbName (str): Nom de la DB. Si le nom ne contient pas l'extension '.db', il est rajouté.
+        :param data_to_send (dict): Données à envoyer à la db sous format dict
+        :param log_path (str): Chemin vers le dossier des logs
         """
         if (data_to_send == "" or data_to_send == {} or data_to_send == []):
             print("Aucune donnee recue")
             sys.exit(1)
 
         self.data_to_send = data_to_send
+        self.log_path = log_path
 
         if not (dbName.endswith(".db")):
             dbName = dbName + ".db"
@@ -87,9 +92,11 @@ class DataBase:
         self.db_save_and_close()
         if not tables:
             if table == "seances":
-                Create_table(dbName=self.dbName, tableName=table, typeTable=2)
+                (Create_table(dbName=self.dbName, log_path=self.log_path)
+                 .creation_type_table(tableName=table, typeTable=2))
             else: # type 3 si c'est une table exercice
-                Create_table(dbName=self.dbName, tableName=table, typeTable=3)
+                (Create_table(dbName=self.dbName, log_path=self.log_path)
+                 .creation_type_table(tableName=table, typeTable=3))
         self.access_db()
 
     def catch_id_key(self):
@@ -107,8 +114,13 @@ class DataBase:
         """
         try:
             self.access_db()
-            package_datas = Format_data(self.data_to_send).detect_type()
+
+            package_datas = Preparation_data(self.data_to_send).detect_type()
+            # temp = package_datas
+            # for table, row, fields in temp:
+            #     print(table, row, fields)
             for table, row, fields in package_datas:
+                # print(table, row, fields)
                 self.check_or_create_table(table)
                 self.request_write_data(table, row, fields)
             self.db_save_and_close()

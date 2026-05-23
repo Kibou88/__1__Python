@@ -1,8 +1,5 @@
-for index in range(3):
-    match index:
-        case 0:
-            print("jour")
-        case 1:
-            print("mois")
-        case _:
-            print("annee")
+test = "3,5"
+
+print(test.isnumeric())
+print(test.isdecimal())
+print(test.isalpha())

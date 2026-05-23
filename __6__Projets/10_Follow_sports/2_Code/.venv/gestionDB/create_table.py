@@ -28,7 +28,7 @@ class Create_table:
     Classe pour créer les différentes tables dans une db conforme au Cahier des Charges du projet
     """
 
-    def __init__(self, dbName: str, test = False, log = "default", log_path = Path.cwd()/ "Test_log"):
+    def __init__(self, dbName: str, test=False, log="default", log_path = Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe de création de tables.
 
@@ -39,7 +39,7 @@ class Create_table:
         """
         self.dbName = dbName
         self.test = test
-        self.log = Logs(log_name = log, log_dir = log_path, test = test)
+        self.log = Logs(log_name=log, log_path=log_path, test=test)
 
         if (dbName == ''):
             self.log.log_error(f"CREATE_TABLE | Aucun nom de Database envoye")
@@ -48,9 +48,6 @@ class Create_table:
             elif test:
                 self.log.close_log()
                 raise ValueError("aucun nom de DB envoye")
-                
-
-
 
 
     def creation_type_table(self, tableName: str, typeTable: int):
@@ -141,7 +138,7 @@ class Create_table:
         param_colonne = ["id INTEGER PRIMARY KEY AUTOINCREMENT",
                          "date TEXT NOT NULL",
                          "exercices TEXT NOT NULL"]
-        self.cur.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName} 
+        self.cur.execute(f'''CREATE TABLE IF NOT EXISTS seances 
                                     (
                                         {", ".join(param_colonne)}
                                     )

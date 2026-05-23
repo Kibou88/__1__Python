@@ -39,7 +39,7 @@ class HMI_add_seance():
         """
         self.warning_to_main = False
         self.dico_user = {}
-        self.log = Logs(log_name=log, log_dir=log_path)
+        self.log = Logs(log_name=log, log_path=log_path)
 
     def hmi(self) -> (bool | dict):
         """
@@ -175,7 +175,7 @@ class HMI_add_seance():
                 series_reps_load["loads"] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise["name"]} "
                                                   f"seance {nb_seance}: Entrez la charge/poids, en Kg, "
                                                   f"de cette serie: ")
-                series_reps_load["loads"] = self.check_user_input_add_seance(series_reps_load["loads"], "int")
+                series_reps_load["loads"] = self.check_user_input_add_seance(series_reps_load["loads"], "float")
 
                 if self.error_seance_flag:
                     print(f"{Colors.RED}Erreur de saisie lors de l'ajout d'une seance. "
@@ -208,17 +208,21 @@ class HMI_add_seance():
         self.dico_user["exercices"] = exercises
 
 
-    def check_user_input_add_seance(self, variable: str | int, expectedType: str | int) -> int:
+    def check_user_input_add_seance(self, variable: str | int, expectedType: str | int | float) -> int | float:
         """
         Vérifie si la variable est exclusivement du type prévu. Si ce n'est pas le cas, mets le flag à True
         Exemple:
-         - variable: "123", type: "int => OK - error_seance_flag = False => Conversion en int => Retour dans le programme
-         - variable: "123g", type: "int => NOK - error_seance_flag = True
+         - variable: "123", type: "int" => OK - error_seance_flag = False
+                                                    => Conversion en int => Retour dans le programme
+         - variable: "123g", type: "int" => NOK - error_seance_flag = True
+         - variable: "12.4", type: "float" => OK - error_seance_flag = False
+                                                    => Conversion en float => Retour dans le programme
+         - variable: "12,4", type: "float" => OK - error_seance_flag = True
         :param variable (str): Variable à tester
-        :param expectedType (str ou int): Type attendu de la variable à tester
+        :param expectedType (str, int ou float): Type attendu de la variable à tester
         :return: self.error_seance_flag (bool): Passe à True si la variable  n'est pas exclusivment du type prévu
-        :return: variable (int): Si la variable est comporte uniquement des nombres, alors elle est convertit et retourne
-        en int dans le programme
+        :return: variable (int ou float): Si la variable est comporte uniquement des nombres (entiers ou décimaux),
+         alors elle est convertit dans son type et renvoyée dans le programme
         """
 
         match(expectedType):
@@ -235,6 +239,27 @@ class HMI_add_seance():
                     print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des lettres")
                     self.error_seance_flag = True
                     return variable # Pour que l'erreur soit logguée
+
+            case "float":
+                test_float = variable
+                if (variable.isdigit()):
+                    # Si le poids correspond à un entier (ex: 20), on le convertit en int
+                    self.check_user_input_add_seance(variable=variable, expectedType=int)
+                elif (variable.count(".") == 1):
+                    # Test présence '.' dans le nombre décimal
+                    test_float = variable.split(".")
+                else:
+                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des chiffres entiers ou décimaux '.'")
+                    self.error_seance_flag = True
+                    return variable  # Pour que l'erreur soit logguée
+
+                for case in test_float:
+                    if not case.isdigit():
+                        print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des chiffres entiers ou "
+                              f"décimaux '.'")
+                        self.error_seance_flag = True
+                        return variable  # Pour que l'erreur soit logguée
+                return float(variable)
 
 
 if __name__ == "__main__":
