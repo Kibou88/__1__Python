@@ -1,0 +1,30 @@
+dict_datas = {
+				"date": "xxx",
+				"exercices": [
+					{
+						"name": "Zzzz",
+						"seance": [
+							{
+								"series": A,
+								"reps": B,
+								"loads": C
+							},
+							{
+								"series": A,
+								"reps": B,
+								"loads": C
+							}
+						]
+					},
+					{
+						"name": "Yyyyy",
+						"seance": [
+							{
+								"series": A,
+								"reps": B,
+								"loads": C
+							}
+						]
+					}
+				]
+			}

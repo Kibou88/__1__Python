@@ -1,5 +1,5 @@
 """
-Creation Bade de Données
+Creation Bae de Données
 ---------------------------
 But:
 Premier pas avec SQLite3
