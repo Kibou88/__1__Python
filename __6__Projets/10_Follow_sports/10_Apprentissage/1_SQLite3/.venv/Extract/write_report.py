@@ -8,8 +8,8 @@ from extract_datas import Extract_datas
 
 class Write_report:
 
-    def __init__(self, filename: str, database: str):
-        self.filename = filename
+    def __init__(self, database: str):
+        # self.filename = filename
 
         if database.endswith('.db'):
             self.database = database
@@ -19,7 +19,15 @@ class Write_report:
 
         self.report_contents = []
 
+    def creation_file_name(self, j):
+        if j == 0:
+            self.filename = self.dict_extracted["date"] + "_" + self.dict_extracted['exercices'][0]['name']
+        else:
+            self.filename += "_" + self.dict_extracted['exercices'][j]['name']
+
     def create_txt_file(self):
+        self.filename= self.filename.replace("/", "-")
+        self.filename = self.filename + ".txt"
         try:
             with open(self.filename, "x", encoding="utf-8") as file:
                 for line in self.report_contents:
@@ -52,6 +60,7 @@ class Write_report:
         self.type_separator(1)
         for j in range(len(self.dict_extracted["exercices"])):
             self.report_exercices(j)
+            self.creation_file_name(j)
             for i in range(len(self.dict_extracted['exercices'][j]['seances'])):
                 self.report_seances(i, j)
             self.type_separator(2)
@@ -63,4 +72,4 @@ class Write_report:
 if __name__ == "__main__":
     # test = Extract_datas("tests.db").list_items_table_seances()
     # print(len(test['exercices']))
-    Write_report("write_report.txt", "tests.db").process_write_report()
+    Write_report("tests.db").process_write_report()
