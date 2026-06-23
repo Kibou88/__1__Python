@@ -22,6 +22,7 @@ def main_page(log_path) -> str:
     """
     Affiche le menu principale de l'IHM
     :return: user_choice (str): choix utilisateur en lowercase
+    :return: log_hmi (bool): bool utilisateur en lowercase
     """
     log_hmi_path = log_path / "hmi"
     log_hmi = Logs(log_name="HMI", log_path=log_hmi_path)
@@ -34,7 +35,7 @@ def main_page(log_path) -> str:
         user_choice = input("Quel est votre choix? ")
 
         if user_choice.lower() in ("1", "2", "exit"):
-            return user_choice.lower(), log_hmi
+            return user_choice.lower()
 
         log_hmi.log_warning(f"Choix utilisateur non compris: {user_choice}")
         print("Choix utilisateur non compris")

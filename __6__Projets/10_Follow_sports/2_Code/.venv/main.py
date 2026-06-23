@@ -19,16 +19,18 @@ from tools.log import Logs
 from hmi.main_errors_pages import main_page, error_page
 from hmi.add_seance import HMI_add_seance
 from gestionDB.manage_DataBase import DataBase
+from formate_extract_datas import write_report
 
 
 USER_CHOICE = ""
 LOG_DIR = Path.cwd() / "Logs"
 MAIN_LOG = Logs(log_name="Main", log_path=LOG_DIR)
+DATABASE_NAME = "test"
 
 def programme(USER_CHOICE):
 
-    while USER_CHOICE != "exit":
-        USER_CHOICE, log_hmi = main_page(log_path=LOG_DIR)
+    while USER_CHOICE.lower() != "exit":
+        USER_CHOICE = main_page(log_path=LOG_DIR)
 
         match(USER_CHOICE):
             case "1": # Envoi vers la fonction "Ajout d'une séance"
@@ -42,11 +44,7 @@ def programme(USER_CHOICE):
 
 
             case "2": # Envoi vers "l'extraction d'une séance"
-                pass
-
-            # case default:
-            #     error_page()
-            #     MAIN_LOG.log_warning("Problème survenu dans la fonction HMI")
+                write_report = write_report(MAIN_LOG)
 
             case "exit":
                 MAIN_LOG.log_info("===== Fermeture du programme =====")
