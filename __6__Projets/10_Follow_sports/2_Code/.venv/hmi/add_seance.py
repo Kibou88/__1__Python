@@ -21,31 +21,41 @@ from tools.log import Logs
 
 class HMI_add_seance():
     """
-    Classe d'affichage de la classe HMI_add_seance et de la saisie des informations de la séance
-    Cette classe a pour fonction:
-    - De demander les différentes informations (exo, séries, reps, charge, date) pour l'ajout d'une séance
-    - De détecter des erreurs dans la saisie de ces informations, et de faire remonter un flag à la fonction "main".
-    Si flag, la classe enregistre dans son log, la raison du flag.
-    - Renvoie à la fonction main la séance à ajouter et le flag d'erreur
+    Gère l'interface de saisie pour l'ajout d'une séance.
+
+    Cette classe collecte les informations saisies par l'utilisateur
+    (date, exercices, séries, répétitions et charge), vérifie leur cohérence
+    et renvoie un dictionnaire prêt à être exploité par le reste du programme.
+
+    Attributes:
+        warning_to_main (bool): Indique si une anomalie a été détectée pendant la saisie.
+        dico_user (dict): Dictionnaire contenant la séance saisie par l'utilisateur.
+        log (Logs): Instance utilisée pour enregistrer les erreurs et avertissements.
     """
 
-    def __init__(self, log=None, log_path=Path.cwd()/ "Test_log"):
+    def __init__(self, log_name="HMI_add_seance", log_path=Path.cwd()/ "Test_log"):
         """
-        Initialiser les variables de la classe HMI_add_seance.
-        :param log (objet log): Enregistre les problèmes de la classe HMI_add_seance sur le log HMI parent
-        :parameter warning_to_main (bool): Permet de faire un retour au fichier "main" si un warning a été enregistré
-        au cours de l'ajout d'une séance
-        :parameter dico_user (dict): Dictionnaire contenant la séance
+        Initialise l'interface de saisie et le système de log.
+
+        Args:
+            log_name (str, optional): Nom utilisé pour le fichier de log.
+                Defaults to "HMI_add_seance".
+            log_path (Path, optional): Dossier de stockage des logs.
+                Defaults to Path.cwd() / "Test_log".
         """
         self.warning_to_main = False
         self.dico_user = {}
-        self.log = Logs(log_name=log, log_path=log_path)
+        self.log = Logs(log_name=log_name, log_path=log_path)
 
     def hmi(self) -> (bool | dict):
         """
-        Gestion de l'affichage des messages pour ajouter une séance
-        :return: self.warning_to_main (bool): Permet de faire un retour d'erreur au fichier "main"
-        :return: self.dico_user (dict): Dico de la séance à enregistrer
+        Lance le flux complet de saisie d'une séance.
+
+        La méthode demande d'abord la date, puis les exercices et leurs séries.
+        Elle renvoie un indicateur d'avertissement ainsi que les données saisies.
+
+        Returns:
+            bool | dict: Tuple contenant le flag d'avertissement et le dictionnaire de la séance.
         """
         print(f"{Colors.LIGHT_PURPLE}==== Ajout d'une seance ====")
 
@@ -56,14 +66,15 @@ class HMI_add_seance():
     # ===== OK =====
     def ask_check_date(self):
         """
-        Demande la date et vérifie ces conditions:
-            - présence de 2 '-' ou 2 '/'
-            - contient que des nombres
-            - jour compris entre 1 et 31
-            - mois compris entre 1 et 12
-            - le nombre de chiffre dans pour l'année. Si 2, on rajoute "20" devant les chiffres. Si 4, on vérifie que ça
-            commence par "20"
-        :return: self.dico_user (dict): Ajout de la clé [date] avec une donnée de la forme "DD/MM/YYYY"
+        Demande la date de séance et vérifie son format.
+
+        La date doit contenir deux séparateurs identiques ('-' ou '/'), un jour
+        compris entre 1 et 31, un mois compris entre 1 et 12, et une année sur
+        2 ou 4 chiffres. Si l'année est sur 2 chiffres, elle est convertie en
+        format complet avec le préfixe '20'.
+
+        Returns:
+            None: La date validée est stockée dans `self.dico_user["date"]`.
         """
         while True:
 
@@ -135,13 +146,17 @@ class HMI_add_seance():
             self.dico_user["date"] = "/".join(date_number)
             return
 
-
     # ===== OK =====
     def ask_seance(self):
         """
-        Menu "ajouter une séance"
-        Prends les données utilisateurs et les formattent sous forme de dico
-        :return: self.dico_user: (dict):
+        Demande à l'utilisateur de saisir une séance complète.
+
+        La méthode collecte successivement le nom de chaque exercice, puis les
+        séries, répétitions et charges associées. Les données sont stockées dans
+        `self.dico_user["exercices"]`.
+
+        Returns:
+            None: Le dictionnaire final est enregistré dans `self.dico_user`.
         """
         exercises = []
         nb_exercices = 0
@@ -164,15 +179,15 @@ class HMI_add_seance():
                 series_reps_load = {}
                 self.error_seance_flag = False
 
-                series_reps_load["series"] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise["name"]} "
+                series_reps_load['series'] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise['name']} "
                                                        f"seance {nb_seance}: Entrez le nombre de series: ")
-                series_reps_load["series"] = self.check_user_input_add_seance(series_reps_load["series"], "int")
+                series_reps_load['series'] = self.check_user_input_add_seance(series_reps_load['series'], "int")
 
-                series_reps_load["reps"] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise["name"]} "
+                series_reps_load["reps"] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise['name']} "
                                                      f"seance {nb_seance}: Entrez le nombre de reps: ")
                 series_reps_load["reps"] = self.check_user_input_add_seance(series_reps_load["reps"], "int")
 
-                series_reps_load["loads"] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise["name"]} "
+                series_reps_load["loads"] = input(f"{Colors.LIGHT_PURPLE}{seance_exercise['name']} "
                                                   f"seance {nb_seance}: Entrez la charge/poids, en Kg, "
                                                   f"de cette serie: ")
                 series_reps_load["loads"] = self.check_user_input_add_seance(series_reps_load["loads"], "float")
@@ -187,7 +202,7 @@ class HMI_add_seance():
 
                 # Choix pour quitter la boucle d'ajout des séances pour un exercice
                 continue_add_seance = input(f"{Colors.CYAN}Voulez vous ajouter une autre seance à l'exercice "
-                                                 f"{seance_exercise["name"]}? oui ou non:  ")
+                                                 f"{seance_exercise['name']}? oui ou non:  ")
                 if continue_add_seance.lower() not in ["yes", "y", "oui", "o"]:
                     print("Fin ajout seance")
                     break
@@ -204,27 +219,26 @@ class HMI_add_seance():
                 print("Fin ajout exos")
                 break
 
-            
         self.dico_user["exercices"] = exercises
-
 
     def check_user_input_add_seance(self, variable: str | int, expectedType: str | int | float) -> int | float:
         """
-        Vérifie si la variable est exclusivement du type prévu. Si ce n'est pas le cas, mets le flag à True
-        Exemple:
-         - variable: "123", type: "int" => OK - error_seance_flag = False
-                                                    => Conversion en int => Retour dans le programme
-         - variable: "123g", type: "int" => NOK - error_seance_flag = True
-         - variable: "12.4", type: "float" => OK - error_seance_flag = False
-                                                    => Conversion en float => Retour dans le programme
-         - variable: "12,4", type: "float" => OK - error_seance_flag = True
-        :param variable (str): Variable à tester
-        :param expectedType (str, int ou float): Type attendu de la variable à tester
-        :return: self.error_seance_flag (bool): Passe à True si la variable  n'est pas exclusivment du type prévu
-        :return: variable (int ou float): Si la variable est comporte uniquement des nombres (entiers ou décimaux),
-         alors elle est convertit dans son type et renvoyée dans le programme
-        """
+        Vérifie qu'une saisie utilisateur correspond au type attendu.
 
+        La méthode valide les nombres entiers, les chaînes alphabétiques et les
+        nombres décimaux au format avec un point. En cas d'erreur, elle active
+        `self.error_seance_flag` et renvoie la valeur originale pour permettre
+        la journalisation de l'incident.
+
+        Args:
+            variable (str | int): Valeur saisie par l'utilisateur.
+            expectedType (str | int | float): Type attendu, sous forme de mot-clé
+                ou de type utilisé dans l'appel.
+
+        Returns:
+            int | float | str: Valeur convertie si la saisie est valide, sinon la
+            valeur d'origine.
+        """
         match(expectedType):
             case "int":
                 if not (variable.isdigit()):
@@ -265,7 +279,7 @@ class HMI_add_seance():
 if __name__ == "__main__":
     import json
 
-    test_add_seance = HMI_add_seance(log="HMI")
+    test_add_seance = HMI_add_seance(log_name="HMI")
     test_add_seance.ask_check_date()
     # flag_error, dico_user = test_add_seance.hmi()
     # print(test_add_seance.dico_user)
