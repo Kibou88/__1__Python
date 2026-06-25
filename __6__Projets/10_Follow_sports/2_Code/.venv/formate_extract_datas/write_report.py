@@ -5,16 +5,18 @@ But:
 Mettre en forme les informations de l'extraction et sauvegarder sous un txt
 ----------------------------------------------------------------------------
 Date de création: 2026-06-19
-Date de modification: 2026-06-19
+Date de modification: 2026-06-24
 ----------------------------------------------------------------------------
 Version PROTOTYPE:
 """
-
-from extract_datas import Extract_datas
 from pathlib import Path
 
+from formate_extract_datas.extract_datas import ExtractDatas
 
-class Write_report:
+from tools.log import Logs
+
+
+class WriteReport:
     """
     Génère un rapport texte à partir des données extraites d'une séance.
 
@@ -27,16 +29,24 @@ class Write_report:
         report_contents (list): Contenu ligne par ligne du rapport.
         current_path (Path): Répertoire courant utilisé pour enregistrer le rapport.
         filename (str): Nom du fichier généré.
-        dict_extract (dict): Données extraites utilisées pour construire le rapport.
+        dict_extracted (dict): Données extraites utilisées pour construire le rapport.
+        log (Logs): Gestionnaire de logs.
+        error_to_main (bool): Indique qu'une erreur bloquante doit être remontée.
+        warning_to_main (bool): Indique qu'un avertissement doit être remonté.
     """
 
-    def __init__(self, database: str, current_path: Path):
+    def __init__(self, database: str, current_path: Path, dict_extracted={},
+                 log_name="Write_report", log_path=Path.cwd()/ "Test_log"):
         """
-        Initialise l'objet avec la base de données et le chemin de sortie.
+        Initialise l'objet avec la base de données, le dossier de sortie et les données optionnelles.
 
         Args:
             database (str): Nom ou chemin de la base de données.
             current_path (Path): Répertoire courant de travail.
+            dict_extracted (dict, optional): Dictionnaire des données extraites.
+                Defaults to {}.
+            log_name (str, optional): Nom utilisé pour les logs. Defaults to "Extract_datas".
+            log_path (Path, optional): Répertoire des logs. Defaults to Path.cwd() / "Test_log".
         """
         if database.endswith('.db'):
             self.database = database
@@ -46,10 +56,15 @@ class Write_report:
 
         self.report_contents = []
         self.current_path = current_path
+        self.dict_extracted = dict_extracted
+        self.log = Logs(log_name=log_name, log_path=log_path)
+        self.error_to_main = False
+        self.warning_to_main = False
+
 
     def creation_file_name(self, j):
         """
-        Construit le nom du fichier rapport à partir de la séance et des exercices.
+        Construit progressivement le nom du fichier rapport.
 
         Le premier appel initialise le nom avec la date et le premier exercice,
         puis les appels suivants ajoutent les autres exercices.
@@ -68,6 +83,9 @@ class Write_report:
 
         Le fichier est ouvert en mode création exclusive pour éviter d'écraser
         un fichier déjà existant.
+
+        Returns:
+            None: Le fichier est écrit sur disque et les logs sont mis à jour.
         """
         self.filename = self.filename.replace("/", "-")
         self.filename = self.filename + ".txt"
@@ -76,28 +94,23 @@ class Write_report:
             with open(path_filename, "x", encoding="utf-8") as file:
                 for line in self.report_contents:
                     file.write(line)
-
+            self.log.log_info(f"WRITE REPORT | Rapport {self.filename} cree")
         except FileExistsError:
-            print("Fichier deja existant")
+            self.log.log_warning(f"WRITE REPORT | Rapport {self.filename} deja existant")
+            self.warning_to_main = True
 
     def folder_to_save(self):
         """
         Prépare le dossier de sauvegarde du rapport.
 
-        Crée un sous-dossier 'Rapport_seances' dans le répertoire courant
+        Crée un sous-dossier `Rapport_seances` dans le répertoire courant
         s'il n'existe pas déjà.
+
+        Returns:
+            None: Met à jour `self.current_path`.
         """
         self.current_path = self.current_path / "Rapport_seances"
         self.current_path.mkdir(parents=True, exist_ok=True)
-
-    def dict_extract_datas(self):
-        """
-        Charge les données extraites depuis la base de données.
-
-        Cette méthode stocke le dictionnaire retourné par la classe
-        Extract_datas pour être réutilisé dans la génération du rapport.
-        """
-        self.dict_extracted = Extract_datas("tests.db").list_items_table_seances()
 
     def type_separator(self, type_sep):
         """
@@ -127,6 +140,8 @@ class Write_report:
         Args:
             j (int): Index de l'exercice dans la liste des exercices extraits.
         """
+        if self.dict_extracted['exercices'][j]['name'].count(" "):
+            self.dict_extracted['exercices'][j]['name'] = self.dict_extracted['exercices'][j]['name'].replace(" ", "_")
         self.report_contents.append(f"\n- Exercice: {self.dict_extracted['exercices'][j]['name']}")
 
     def report_seances(self, i, j):
@@ -134,7 +149,7 @@ class Write_report:
         Ajoute une ligne décrivant une série d'exercice au rapport.
 
         Args:
-            i (int): Index de la série dans l'exercice.
+            i (int): Ind1ex de la série dans l'exercice.
             j (int): Index de l'exercice dans la séance.
         """
         self.report_contents.append(f"\n\t* {self.dict_extracted['exercices'][j]['seances'][i]}")
@@ -143,10 +158,16 @@ class Write_report:
         """
         Lance le processus complet de génération du rapport.
 
-        Récupère les données extraites, construit le contenu texte, crée le
-        dossier de sortie puis écrit le fichier .txt final.
+        Si aucune donnée n'est déjà fournie, elles sont extraites depuis la base.
+        Le contenu est ensuite formaté, le dossier de sortie est créé, puis le
+        fichier texte est écrit sur disque.
+
+        Returns:
+            bool: Valeur de `self.warning_to_main`, indiquant si un avertissement
+            a été détecté pendant la génération du rapport.
         """
-        self.dict_extracted = Extract_datas(self.database).process_extract_seance()
+        if self.dict_extracted == {}:
+            self.dict_extracted, warning, error = ExtractDatas(self.database).process_extract_seance()
         self.report_title()
         self.type_separator(1)
         for j in range(len(self.dict_extracted["exercices"])):
@@ -155,12 +176,28 @@ class Write_report:
             for i in range(len(self.dict_extracted['exercices'][j]['seances'])):
                 self.report_seances(i, j)
             self.type_separator(2)
-        print(self.report_contents)
 
         self.folder_to_save()
         self.create_txt_file()
+        if self.warning_to_main:
+            return self.warning_to_main
+
+    def dict_extract_datas(self):
+        """
+        NON UTILISEE
+        Charge les données extraites depuis la base de données.
+
+        Cette méthode stocke le dictionnaire retourné par la classe
+        `ExtractDatas` pour être réutilisé dans la génération du rapport.
+
+        Returns:
+            None: Met à jour `self.dict_extracted`.
+        """
+        self.dict_extracted = ExtractDatas("tests.db").list_items_table_seances()
 
 
 if __name__ == "__main__":
     current_path = Path.cwd()
-    Write_report("tests.db", current_path).process_write_report()
+    warning = WriteReport("tests.db", current_path).process_write_report()
+    if warning:
+        print("Un warning a ete generee")
