@@ -1,0 +1,3 @@
+2026-06-24 22:52:57,417 | Manage_database | ERROR | MANAGE_DATABASE | Erreur survenue: 'DataBase' object has no attribute 'db_save_and_close'
+2026-06-24 22:53:30,446 | Manage_database | ERROR | MANAGE_DATABASE | Erreur survenue: 'DataBase' object has no attribute 'db_save_and_close'
+2026-06-24 22:53:30,447 | Manage_database | ERROR | MANAGE_DATABASE | Erreur survenue: 'DataBase' object has no attribute 'db_save_and_close'

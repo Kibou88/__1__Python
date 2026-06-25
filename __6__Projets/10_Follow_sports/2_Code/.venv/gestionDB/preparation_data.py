@@ -14,6 +14,9 @@ Version V1:
 
 import sys
 import sqlite3
+from pathlib import Path
+
+from tools.log import Logs
 
 class Preparation_data:
     """
@@ -22,10 +25,14 @@ class Preparation_data:
     /!\Pris en charge seulement du type dict/!\
     """
 
-    def __init__(self, data: (list or tuple or dict), test=False):
+    def __init__(self, data: (list or tuple or dict), log_name="Preparation_database", log_path=Path.cwd()/ "Test_log"
+                 , test=False):
 
         self.test = test
         self.data = data
+        self.log_path = log_path
+        self.log = Logs(log_name=log_name, log_path=log_path)
+        self.error_to_main = False
 
 
     def detect_type(self: (dict or list or tuple)) -> zip:
@@ -39,17 +46,17 @@ class Preparation_data:
         if (type(self.data) == dict):
             self.format_dico()
             #if not self.test:
-            print("---Retour prep data---")
-            return self.zip_tables_data_fields # ---- OK ----
+            return self.zip_tables_data_fields, self.error_to_main # ---- OK ----
         elif (type(self.data) == list or type(self.data) == tuple):
             if self.test:
                 raise Exception(f"Format {type(self.data)} non implemente dans cette version")
             self.format_liste_tuple()
         else:
             print(f"Format {type(self.data)} non pris en charge")
+            self.log.log_error(f"PREPARATION DATA | Format {type(self.data)} non pris en charge")
             if self.test:
                 raise TypeError(f"Format {type(self.data)} non pris en charge") 
-            sys.exit(1)
+            self.error_to_main = True
 
     def format_dico(self) -> zip:
         """
@@ -63,24 +70,29 @@ class Preparation_data:
         self.list_nb_fields = []
 
         # ------- Table séance -------
-        self.list_tables.append("seances")
-        for i in range(len(self.data["exercices"])):
-            self.list_exo_seance.append((self.data["exercices"][i]["name"]).lower().replace(" ", "_"))
+        try:
+            self.list_tables.append("seances")
+            for i in range(len(self.data["exercices"])):
+                self.list_exo_seance.append((self.data["exercices"][i]["name"]).lower().replace(" ", "_"))
 
-            for j in range(len(self.data["exercices"][i]["seance"])):
-                self.list_tables.append(self.data["exercices"][i]["name"].lower().replace(" ", "_"))
-                self.list_datas.append((self.data["exercices"][i]["seance"][j]["series"],
-                                        self.data["exercices"][i]["seance"][j]["reps"],
-                                        self.data["exercices"][i]["seance"][j]["loads"]))
+                for j in range(len(self.data["exercices"][i]["seance"])):
+                    self.list_tables.append(self.data["exercices"][i]["name"].lower().replace(" ", "_"))
+                    self.list_datas.append((self.data["exercices"][i]["seance"][j]["series"],
+                                            self.data["exercices"][i]["seance"][j]["reps"],
+                                            self.data["exercices"][i]["seance"][j]["loads"]))
 
-        self.list_datas.insert(0, (self.data["date"], " ".join(self.list_exo_seance)))
+            self.list_datas.insert(0, (self.data["date"], " ".join(self.list_exo_seance)))
 
-        #print(self.list_tables)
-        # Compte le nombre de champs utiles par rapport aux données
-        self.list_nb_fields = [self.nbre_interro(self.list_tables[i], self.list_datas[i])
-                               for i in range(len(self.list_datas))]
+            #print(self.list_tables)
+            # Compte le nombre de champs utiles par rapport aux données
+            self.list_nb_fields = [self.nbre_interro(self.list_tables[i], self.list_datas[i])
+                                   for i in range(len(self.list_datas))]
 
-        self.zip_tables_data_fields = zip(self.list_tables, self.list_datas, self.list_nb_fields)
+            self.zip_tables_data_fields = zip(self.list_tables, self.list_datas, self.list_nb_fields)
+        except:
+            self.log.log_error(f"Une erreur est survenue lors du formatage du dictionnaire:")
+            self.log.log_erreor(f"{self.data}")
+            self.error_to_main = True
 
         # if self.test:
         #     for table, row, nb_fields in self.zip_tables_data_fields:

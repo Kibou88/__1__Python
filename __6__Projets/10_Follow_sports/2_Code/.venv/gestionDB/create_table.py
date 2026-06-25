@@ -6,12 +6,13 @@ But:
 Création des différentes tables dans un db
 ----------------------------------------------------------------------------
 Date de création: 2026-04-20
-Date de modification: 2026-05-12
+Date de modification: 2026-06-24
 ----------------------------------------------------------------------------
-Version V2.2:
+Version V2.3:
 - Ajout de la méthode creation_type_table (V2)
 - Ajout du raise ValueError pour les tests (test=True) pour vérifier la présence de nom pour dbName et tableName (V2.1)
 - Ajout du return conn dans la méthode creation_type_table pour fermer la bd lors des tests uniquement + suppression des éléments inutiles (V2.2)
+- Modification "log" par "log_name" dans __init__ (V2.3)
 
 """
 import os
@@ -28,7 +29,7 @@ class Create_table:
     Classe pour créer les différentes tables dans une db conforme au Cahier des Charges du projet
     """
 
-    def __init__(self, dbName: str, test=False, log="default", log_path = Path.cwd()/ "Test_log"):
+    def __init__(self, dbName: str, test=False, log_name="Create_table", log_path = Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe de création de tables.
 
@@ -39,7 +40,9 @@ class Create_table:
         """
         self.dbName = dbName
         self.test = test
-        self.log = Logs(log_name=log, log_path=log_path, test=test)
+        self.log = Logs(log_name=log_name, log_path=log_path, test=test)
+        self.error_to_main = False
+        self.warning_to_main = False
 
         if (dbName == ''):
             self.log.log_error(f"CREATE_TABLE | Aucun nom de Database envoye")
@@ -63,9 +66,10 @@ class Create_table:
         """
         if (tableName == ''):
             self.log.log_error(f"CREATE_TABLE | Aucun nom de table envoye")
-            if not self.test: # Si test à False, on quitte
-                sys.exit(1)
-            elif self.test:
+            # if not self.test: # Si test à False, on quitte
+            #     sys.exit(1)
+            self.error_to_main = True
+            if self.test:
                 self.log.close_log()
                 raise ValueError("aucun nom de table envoye")
                 
@@ -90,7 +94,8 @@ class Create_table:
             case 3:
                 self.creation_table_exercices()
                 self.log.log_info(f"CREATE_TABLE | Table exercices creee")
-                print("Table exercices creee")
+                print(f"Table exercice {tableName} creee")
+
         if self.test:
             self.log.close_log()
             return self.conn

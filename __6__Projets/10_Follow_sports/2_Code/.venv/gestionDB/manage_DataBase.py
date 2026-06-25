@@ -27,7 +27,7 @@ class DataBase:
     Classe contenant la création et la gestion de tables BdD
     """
 
-    def __init__(self, dbName="default.db", data_to_send={}, log_path=Path.cwd()/ "Test_log"):
+    def __init__(self, dbName="default.db", data_to_send={}, log_name="Manage_database", log_path=Path.cwd()/ "Test_log"):
         """
         Initialisation de la classe BdD
         :param dbName (str): Nom de la DB. Si le nom ne contient pas l'extension '.db', il est rajouté.
@@ -38,14 +38,17 @@ class DataBase:
             print("Aucune donnee recue")
             sys.exit(1)
 
-        self.data_to_send = data_to_send
-        self.log_path = log_path
-
         if not (dbName.endswith(".db")):
             dbName = dbName + ".db"
         elif dbName == "":
             dbName = "default.db"
+
         self.dbName = dbName
+        self.data_to_send = data_to_send
+        self.log_name = log_name
+        self.log_path = log_path
+        self.log = Logs(log_name=log_name, log_path=log_path)
+        self.error_to_main = False
 
     def access_db(self):
         """
@@ -53,6 +56,7 @@ class DataBase:
         """
         with sqlite3.connect(self.dbName) as self.conn:
             self.cur = self.conn.cursor()
+
 
     def db_save_and_close(self):
         """
@@ -72,7 +76,6 @@ class DataBase:
         if table == "seances":
             header_columns = "date, exercices"
         else:
-            self.catch_id_key()
             row = list(row)
             row.insert(0, self.catch_id_key())
             header_columns = "seances_id, series, reps, loads_kg"
@@ -92,10 +95,10 @@ class DataBase:
         self.db_save_and_close()
         if not tables:
             if table == "seances":
-                (Create_table(dbName=self.dbName, log_path=self.log_path)
+                (Create_table(dbName=self.dbName, log_name=self.log_name, log_path=self.log_path)
                  .creation_type_table(tableName=table, typeTable=2))
             else: # type 3 si c'est une table exercice
-                (Create_table(dbName=self.dbName, log_path=self.log_path)
+                (Create_table(dbName=self.dbName, log_name=self.log_name, log_path=self.log_path)
                  .creation_type_table(tableName=table, typeTable=3))
         self.access_db()
 
@@ -114,8 +117,10 @@ class DataBase:
         """
         try:
             self.access_db()
+            # with sqlite3.connect(self.dbName) as self.conn:
+            #     self.cur = self.conn.cursor()
 
-            package_datas = Preparation_data(self.data_to_send).detect_type()
+            package_datas, error_prep_data = Preparation_data(self.data_to_send).detect_type()
             # temp = package_datas
             # for table, row, fields in temp:
             #     print(table, row, fields)
@@ -123,13 +128,20 @@ class DataBase:
                 # print(table, row, fields)
                 self.check_or_create_table(table)
                 self.request_write_data(table, row, fields)
-            self.db_save_and_close()
+            self.conn.close()
+
         except Exception as e:
             print(e)
-            sys.exit(1)
+            self.log.log_error(f"MANAGE_DATABASE | Erreur survenue: {e}")
+            self.error_to_main = True
+            self.conn.close()
+
         except PermissionError:
             print(f"Permissions insuffisantes pour acceder a {self.dbName}")
-            sys.exit(1)
+            self.log.log_error(f"MANAGE_DATABASE | Permissions insuffisantes pour acceder a {self.dbName}")
+            self.error_to_main = True
+            self.conn.close()
+        return self.error_to_main
 
 if __name__ == "__main__":
     test_datas2 = {
@@ -183,5 +195,5 @@ if __name__ == "__main__":
             }
         ]
     }
-    test2 = DataBase(dbName="test_manageDB2.db",data_to_send=test_datas2).process_to_write_data()
-    test3 = DataBase(dbName="test_manageDB2.db", data_to_send=test_datas3).process_to_write_data()
+    error2 = DataBase(dbName="test_manageDB2.db",data_to_send=test_datas2).process_to_write_data()
+    error3 = DataBase(dbName="test_manageDB2.db", data_to_send=test_datas3).process_to_write_data()
