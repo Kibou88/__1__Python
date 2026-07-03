@@ -47,7 +47,7 @@ class Format_data:
             data (list | tuple | dict): Données à traiter.
             log_name (str, optional): Nom utilisé pour les logs. Defaults to "Formate_datas".
             log_path (Path, optional): Répertoire des logs. Defaults to Path.cwd() / "Test_log".
-            test (bool, optional): Active l'affichage de contrôle. Defaults to False.
+            test (bool, optional): Utiliser pour les tests. Defaults to False.
         """
         self.test = test
         self.data = data

@@ -29,6 +29,7 @@ class HMI_add_seance():
 
     Attributes:
         warning_to_main (bool): Indique si une anomalie a été détectée pendant la saisie.
+        error_to_main (bool): Indique si une erreur a été détectée pendant la saisie.
         dico_user (dict): Dictionnaire contenant la séance saisie par l'utilisateur.
         log (Logs): Instance utilisée pour enregistrer les erreurs et avertissements.
     """
@@ -44,6 +45,7 @@ class HMI_add_seance():
                 Defaults to Path.cwd() / "Test_log".
         """
         self.warning_to_main = False
+        self.error_to_main = False
         self.dico_user = {}
         self.log = Logs(log_name=log_name, log_path=log_path)
 
@@ -61,7 +63,7 @@ class HMI_add_seance():
 
         self.ask_check_date()
         self.ask_seance()
-        return self.warning_to_main, self.dico_user
+        return self.warning_to_main, self.error_to_main, self.dico_user
 
     # ===== OK =====
     def ask_check_date(self):
@@ -100,22 +102,22 @@ class HMI_add_seance():
 
             date_number = self.date_seance.split(sep)
 
-            error_date_flag = False
+            # error_date_flag = False
             # Check si les dates sont bien des nombres et que leurs valeurs sont cohérentes
             for index, i in enumerate(date_number):
 
                 if not i.isdigit():
                     print(f"{Colors.RED}Presence d'un caractere au lieu d'un nombre")
-                    error_date_flag = True
+                    # error_date_flag = True
                     self.warning_to_main = True
-                    self.log.log_error(f"ADD_SEANCE | Problème présence du caractere: {i}")
+                    self.log.log_warning(f"ADD_SEANCE | Problème présence du caractere: {i}")
                     break
 
                 match index:
                     case 0: # Jour compris entre 1 et 31
                         if not (1 <= int(date_number[index]) <= 31):
                             print(f"{Colors.RED}Erreur dans le nombre du jour. Doit etre en 1 et 31")
-                            error_date_flag = True
+                            # error_date_flag = True
                             self.warning_to_main = True
                             self.log.log_warning(f"ADD_SEANCE | Problème saisie utilisateur pour le jour de la "
                                                  f"séance: {date_number[index]}")
@@ -123,7 +125,7 @@ class HMI_add_seance():
                     case 1: # Mois compris entre 1 et 12
                         if not (1 <= int(date_number[index]) <= 12):
                             print(f"{Colors.RED}Erreur dans le nombre de mois dans l'annee. Doit etre en 1 et 12")
-                            error_date_flag = True
+                            # error_date_flag = True
                             self.warning_to_main = True
                             self.log.log_warning(f"ADD_SEANCE | Problème saisie utilisateur pour le mois de la "
                                              f"séance: {date_number[index]}")
@@ -133,14 +135,13 @@ class HMI_add_seance():
                         elif (len(date_number[index]) == 4):
                             if not date_number[index].startswith("20"):
                                 print(f"{Colors.RED}Erreur dans le nombre l'annee. Doit commence par '20'")
-                                error_date_flag = True
                                 self.warning_to_main = True
                                 self.log.log_warning(f"ADD_SEANCE | Problème saisie utilisateur pour l'annee de la "
                                                      f"séance: {date_number[index]}")
-                if error_date_flag:
+                if self.warning_to_main:
                     break
 
-            if error_date_flag:
+            if self.warning_to_main:
                 continue
 
             self.dico_user["date"] = "/".join(date_number)
@@ -195,10 +196,12 @@ class HMI_add_seance():
                 if self.error_seance_flag:
                     print(f"{Colors.RED}Erreur de saisie lors de l'ajout d'une seance. "
                           f"Seance non enregistree{Colors.END}")
-                    self.log.log_error(f" ASK SEANCE | Erreur dans l'ajout d'une seance: {series_reps_load}")
+                    self.log.log_error(f" ADD_SEANCE | Erreur dans l'ajout d'une seance: {series_reps_load}")
+                    nb_exercices -= 1 # Suppression de l'exercice du compteur nombre exos
+                    self.error_to_main = True
                     break
-
-                seance.append(series_reps_load)
+                else:
+                    seance.append(series_reps_load)
 
                 # Choix pour quitter la boucle d'ajout des séances pour un exercice
                 continue_add_seance = input(f"{Colors.CYAN}Voulez vous ajouter une autre seance à l'exercice "
@@ -206,9 +209,14 @@ class HMI_add_seance():
                 if continue_add_seance.lower() not in ["yes", "y", "oui", "o"]:
                     print("Fin ajout seance")
                     break
+                if self.error_seance_flag:
+                    break
 
-            seance_exercise["seance"] = seance
-            exercises.append(seance_exercise)
+            if not self.error_seance_flag:
+                seance_exercise["seance"] = seance
+                exercises.append(seance_exercise)
+
+
 
             print(f"{Colors.END}===========================================\n")
 
@@ -216,7 +224,8 @@ class HMI_add_seance():
             continue_add_exercices = input(f"{Colors.CYAN}Voulez vous ajouter une autre exercice? oui ou non:  ")
 
             if continue_add_exercices.lower() not in ["yes", "y", "oui", "o"]:
-                print("Fin ajout exos")
+                print("Fin ajout exos\n")
+                print(f"{Colors.END}===========================================\n")
                 break
 
         self.dico_user["exercices"] = exercises
@@ -242,7 +251,8 @@ class HMI_add_seance():
         match(expectedType):
             case "int":
                 if not (variable.isdigit()):
-                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des chiffres")
+                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des chiffres{Colors.END}")
+                    self.log.log_warning(f"ADD_SEANCE | {variable} n'est pas valide")
                     self.error_seance_flag = True
                     return variable # Pour que l'erreur soit logguée
                 else: # Convertit la variable type 'str' en 'int'
@@ -250,30 +260,23 @@ class HMI_add_seance():
 
             case "str":
                 if not (variable.isalpha()):
-                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des lettres")
+                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des lettres{Colors.END}")
+                    self.log.log_warning(f"ADD_SEANCE | {variable} n'est pas valide")
                     self.error_seance_flag = True
                     return variable # Pour que l'erreur soit logguée
 
             case "float":
-                test_float = variable
-                if (variable.isdigit()):
-                    # Si le poids correspond à un entier (ex: 20), on le convertit en int
-                    self.check_user_input_add_seance(variable=variable, expectedType=int)
-                elif (variable.count(".") == 1):
-                    # Test présence '.' dans le nombre décimal
-                    test_float = variable.split(".")
-                else:
-                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des chiffres entiers ou décimaux '.'")
-                    self.error_seance_flag = True
-                    return variable  # Pour que l'erreur soit logguée
+                if "," in variable:
+                    variable = variable.replace(",", ".")
 
-                for case in test_float:
-                    if not case.isdigit():
-                        print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des chiffres entiers ou "
-                              f"décimaux '.'")
-                        self.error_seance_flag = True
-                        return variable  # Pour que l'erreur soit logguée
-                return float(variable)
+                try:
+                    variable = float(variable)
+                except ValueError:
+                    print(f"{Colors.RED}WARNING!! Veuillez noter UNIQUEMENT des lettres{Colors.END}")
+                    self.log.log_warning(f"ADD_SEANCE | {variable} n'est pas valide")
+                    self.error_seance_flag = True
+                return variable
+
 
 
 if __name__ == "__main__":

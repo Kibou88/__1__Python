@@ -81,20 +81,20 @@ class Create_table:
         match (typeTable):
             case 0:
                 self.creation_table_personal_data()
-                self.log.log_info(f"CREATE_TABLE | Table information personnelle creee")
-                print("Table information personnelle creee")
+                self.log.log_info(f"CREATE_TABLE | Table {self.tableName} type information personnelle creee")
+                # print("Table information personnelle creee")
             case 1:
                 self.creation_table_mensurations()
-                self.log.log_info(f"CREATE_TABLE | Table mensuration creee")
-                print("Table mensurations creee")
+                self.log.log_info(f"CREATE_TABLE | Table type mensuration creee")
+                # print("Table mensurations creee")
             case 2:
                 self.creation_table_seances()
                 self.log.log_info(f"CREATE_TABLE | Table seances creee")
-                print("Table seances creee")
+                # print("Table seances creee")
             case 3:
                 self.creation_table_exercices()
-                self.log.log_info(f"CREATE_TABLE | Table exercices creee")
-                print(f"Table exercice {tableName} creee")
+                self.log.log_info(f"CREATE_TABLE | Table {self.tableName} type exercices creee")
+                # print(f"Table exercice {tableName} creee")
 
         if self.test:
             self.log.close_log()

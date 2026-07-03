@@ -19,7 +19,7 @@ from pathlib import Path
 
 from tools.class_colors import Colors
 from tools.log import Logs
-from gestionDB.preparation_data import Preparation_data
+from formate_extract_datas.formate_datas import Format_data
 from gestionDB.create_table import Create_table
 
 class DataBase:
@@ -27,16 +27,18 @@ class DataBase:
     Classe contenant la création et la gestion de tables BdD
     """
 
-    def __init__(self, dbName="default.db", data_to_send={}, log_name="Manage_database", log_path=Path.cwd()/ "Test_log"):
+    def __init__(self, dbName="default.db", data_to_send={}, log_name="Manage_database",
+                 log_path=Path.cwd()/ "Test_log", test=False):
         """
         Initialisation de la classe BdD
         :param dbName (str): Nom de la DB. Si le nom ne contient pas l'extension '.db', il est rajouté.
         :param data_to_send (dict): Données à envoyer à la db sous format dict
         :param log_path (str): Chemin vers le dossier des logs
+        :param test (bool): Utiliser pour les tests. False à défaut
         """
         if (data_to_send == "" or data_to_send == {} or data_to_send == []):
             print("Aucune donnee recue")
-            sys.exit(1)
+            self
 
         if not (dbName.endswith(".db")):
             dbName = dbName + ".db"
@@ -49,6 +51,22 @@ class DataBase:
         self.log_path = log_path
         self.log = Logs(log_name=log_name, log_path=log_path)
         self.error_to_main = False
+        self.test=test
+
+        if (data_to_send == "" or data_to_send == {} or data_to_send == []):
+            print("Aucune donnee recue")
+            self.log.log_error("Aucune donnee recue")
+            self.error_to_main = True
+            if self.test:
+                raise ValueError ("Aucune donnee recue")
+
+        if not (dbName.endswith(".db")):
+            dbName = dbName + ".db"
+        elif dbName == "":
+            self.log.log_warning("Aucun nom pour la db reçue. Nom par défaut: default.db")
+            dbName = "default.db"
+            if self.test:
+                raise ValueError ("Aucun nom pour la db reçue")
 
     def access_db(self):
         """
@@ -120,7 +138,7 @@ class DataBase:
             # with sqlite3.connect(self.dbName) as self.conn:
             #     self.cur = self.conn.cursor()
 
-            package_datas, error_prep_data = Preparation_data(self.data_to_send).detect_type()
+            package_datas, error_prep_data = Format_data(self.data_to_send).detect_type()
             # temp = package_datas
             # for table, row, fields in temp:
             #     print(table, row, fields)
