@@ -6,7 +6,7 @@ But:
 Contient la logique principale du programme
 ----------------------------------------------------------------------------
 Date de création: 2026-01-24
-Date de modification: 2026-03-27
+Date de modification: 2026-07-03
 ----------------------------------------------------------------------------
 Version PROTOTYPE:
 
@@ -40,14 +40,17 @@ def programme(USER_CHOICE):
             case "1": # Envoi vers la fonction "Ajout d'une séance"
                 # ===== OK ====
                 add_seance = HMI_add_seance(log_name="HMI", log_path=LOG_DIR)
-                warning_add_seance, new_seance = add_seance.hmi()
+                warning_add_seance, error_add_seance, new_seance = add_seance.hmi()
                 if(warning_add_seance):
-                    MAIN_LOG.log_warning("Probleme survenu dans la sous-fonction 'Add seance' de l'HMI")
+                    MAIN_LOG.log_warning("Au moins un probleme survenu dans la sous-fonction 'Add seance' de l'HMI")
+                if (error_add_seance):
+                    MAIN_LOG.log_error("Au moins une erreur est survenue dans la sous-fonction 'Add seance' de l'HMI")
                 # print(new_seance)
                 DataBase(dbName=DATABASE_NAME, data_to_send=new_seance,log_name="Gestion_DB", log_path=LOG_DIR).process_to_write_data()
 
 
             case "2": # Envoi vers "l'extraction d'une séance"
+                # ===== OK ====
                 print(f"{Colors.LIGHT_BLUE}")
                 dict_extracted, warning_extract, error_extract = \
                     (ExtractDatas(database=DATABASE_NAME, log_name="Formate_Extract_datas", log_path=LOG_DIR)
@@ -56,9 +59,9 @@ def programme(USER_CHOICE):
                 if not warning_extract and not error_extract:
                     MAIN_LOG.log_info("Extraction réussi")
 
-                elif warning_extract and not error_extract:
+                if (warning_extract):
                     MAIN_LOG.log_warning("Un warning est apparu lors de l'extraction des donnees.")
-                elif not warning_extract and error_extract:
+                if (error_extract):
                     MAIN_LOG.log_error("Une erreur est survenue lors de l'extraction des donnees")
 
                 if not error_extract:
