@@ -138,7 +138,8 @@ class DataBase:
             # with sqlite3.connect(self.dbName) as self.conn:
             #     self.cur = self.conn.cursor()
 
-            package_datas, error_prep_data = Format_data(self.data_to_send).detect_type()
+            package_datas, error_prep_data = Format_data(self.data_to_send, log_name=self.log_name,
+                                                         log_path=self.log_path).detect_type()
             # temp = package_datas
             # for table, row, fields in temp:
             #     print(table, row, fields)
