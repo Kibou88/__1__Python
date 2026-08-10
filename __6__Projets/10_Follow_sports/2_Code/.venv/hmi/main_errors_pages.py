@@ -6,9 +6,9 @@ But:
 Contient la présentation de la page principale et la page d'erreur
 ----------------------------------------------------------------------------
 Date de création: 2026-01-25
-Date de modification: 2026-01-25
+Date de modification: 2026-07-15
 ----------------------------------------------------------------------------
-Version PROTOTYPE:
+Version V1:
 
 
 """

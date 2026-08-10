@@ -6,9 +6,9 @@ But:
 Contient l'ihm et les saisies utilisateurs pour enregistrées une séance
 ----------------------------------------------------------------------------
 Date de création: 2026-02-01
-Date de modification: 2026-03-28
+Date de modification: 2026-07-15
 ----------------------------------------------------------------------------
-Version PROTOTYPE:
+Version V1:
 
 
 """

@@ -6,9 +6,9 @@ But:
 Afficher le compte-rendy de la séance sélectionné
 ----------------------------------------------------------------------------
 Date de création: 2026-06-23
-Date de modification: 2026-06-23
+Date de modification: 2026-07-15
 ----------------------------------------------------------------------------
-Version PROTO:
+Version V1:
 
 """
 import sys

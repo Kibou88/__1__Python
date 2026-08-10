@@ -6,9 +6,9 @@ But:
 Contient la logique principale du programme
 ----------------------------------------------------------------------------
 Date de création: 2026-01-24
-Date de modification: 2026-07-03
+Date de modification: 2026-07-15
 ----------------------------------------------------------------------------
-Version PROTOTYPE:
+Version V1:
 
 
 """
@@ -75,6 +75,10 @@ def programme(USER_CHOICE):
             case "exit":
                 MAIN_LOG.log_info("===== Fermeture du programme =====")
                 print("Au revoir")
+
+            case _:
+                MAIN_LOG.log_warning(f"Saisie utilisateur non valide: {USER_CHOICE}")
+                print(f"Saisie utilisateur non valide: {USER_CHOICE}")
 
     sys.exit()
 
