@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Architecture — sport_suivi_v2</title>
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --card: #ffffff;
+    --border: #e4e2da;
+    --text: #2c2c2a;
+    --text-muted: #8b8a82;
+    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background: var(--bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+  }
+  .wrap { width: 100%; max-width: 640px; }
+
+  .title-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0c447c;
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 10px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 14px rgba(12,68,124,0.25);
+  }
+  .title-badge .icon { font-size: 20px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-size: 14px;
+  }
+
+  .root-files {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .module {
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    background: var(--accent-bg);
+    padding: 10px 16px 12px 14px;
+    margin-bottom: 12px;
+  }
+  .module:last-child { margin-bottom: 0; }
+
+  .folder-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--accent-text);
+    margin-bottom: 8px;
+  }
+  .folder-row .icon { font-size: 15px; }
+
+  .file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 22px;
+  }
+  .file-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  .file-row .icon { color: #c9c7bc; font-size: 13px; }
+
+  .rapport { --accent: #b7791f; --accent-bg: #fef3c7; --accent-text: #744210; }
+  .users   { --accent: #0f6e56; --accent-bg: #e1f5ee; --accent-text: #085041; }
+  .interface { --accent: #185fa5; --accent-bg: #e6f1fb; --accent-text: #0c447c; }
+  .structure { --accent: #534ab7; --accent-bg: #eeedfe; --accent-text: #3c3489; }
+  .controllers { --accent: #993c1d; --accent-bg: #faece7; --accent-text: #712b13; }
+
+  .root-file-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  .root-file-row.folder { color: var(--text); font-weight: 600; font-family: -apple-system, sans-serif; font-size: 13.5px; }
+  .root-file-row .icon { color: #c9c7bc; font-size: 13px; }
+  .root-file-row.folder .icon { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="title-badge">
+    <span class="icon">📁</span>sport_suivi_v2/
+  </div>
+
+  <div class="card">
+
+    <div class="root-files">
+      <div class="root-file-row"><span class="icon">📄</span>main.py</div>
+    </div>
+
+	<div class="module rapport">
+	  <div class="root-file-row folder"><span class="icon">📁</span>Rapport/</div>
+	  <div class="file-list">
+	    <div class="file-row"><span class="icon">📄</span>rapport_X_AAAA-MM-DD.db</div>
+        <div class="file-row"><span class="icon">📄</span>rapport_Y_AAAA-MM-DD.db</div>
+	  </div>
+    </div>
+    <div class="module users">
+      <div class="folder-row"><span class="icon">📁</span>users/</div>
+      <div class="file-list">
+        <div class="file-row"><span class="icon">📄</span>X.db</div>
+        <div class="file-row"><span class="icon">📄</span>Y.db</div>
+      </div>
+    </div>
+
+    <div class="module interface">
+      <div class="folder-row"><span class="icon">📁</span>Interface/</div>
+      <div class="file-list">
+        <div class="file-row"><span class="icon">📄</span>__init__.py</div>
+        <div class="file-row"><span class="icon">📄</span>user_interface.py</div>
+        <div class="file-row"><span class="icon">📄</span>seance_interface.py</div>
+        <div class="file-row"><span class="icon">📄</span>mensuration_interface.py</div>
+        <div class="file-row"><span class="icon">📄</span>export_interface.py</div>
+      </div>
+    </div>
+
+    <div class="module structure">
+      <div class="folder-row"><span class="icon">📁</span>Structure/</div>
+      <div class="file-list">
+        <div class="file-row"><span class="icon">📄</span>__init__.py</div>
+        <div class="file-row"><span class="icon">📄</span>seance_structure.py</div>
+        <div class="file-row"><span class="icon">📄</span>mensuration_structure.py</div>
+        <div class="file-row"><span class="icon">📄</span>user_structure.py</div>
+        <div class="file-row"><span class="icon">📄</span>format_rules.py</div>
+      </div>
+    </div>
+
+    <div class="module controllers">
+      <div class="folder-row"><span class="icon">📁</span>Controllers/</div>
+      <div class="file-list">
+        <div class="file-row"><span class="icon">📄</span>__init__.py</div>
+        <div class="file-row"><span class="icon">📄</span>user_controller.py</div>
+        <div class="file-row"><span class="icon">📄</span>seance_controller.py</div>
+        <div class="file-row"><span class="icon">📄</span>mensuration_controller.py</div>
+        <div class="file-row"><span class="icon">📄</span>export_controller.py</div>
+        <div class="file-row"><span class="icon">📄</span>db_manager.py</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

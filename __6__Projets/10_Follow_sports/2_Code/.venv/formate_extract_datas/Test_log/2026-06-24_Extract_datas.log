@@ -1,0 +1,8 @@
+2026-06-24 22:10:34,635 | Extract_datas | WARNING | EXTRACT_DATAS | L'utilisateur a saise la valeur 
+2026-06-24 22:10:37,624 | Extract_datas | WARNING | EXTRACT_DATAS | L'utilisateur a saise la valeur 
+2026-06-24 22:12:23,024 | Extract_datas | INFO | WRITE REPORT | Rapport 23-05-2026_Squats_Biceps.txt cree
+2026-06-24 22:18:59,508 | Extract_datas | WARNING | WRITE REPORT | Rapport 23-05-2026_Squats_Biceps.txt deja existant
+2026-06-24 22:19:16,492 | Extract_datas | INFO | WRITE REPORT | Rapport 17-06-2026_Fentes avant.txt cree
+2026-06-24 22:22:44,633 | Extract_datas | INFO | WRITE REPORT | Rapport 17-06-2026_Fentes_avant.txt cree
+2026-06-24 22:22:56,583 | Extract_datas | WARNING | WRITE REPORT | Rapport 17-06-2026_Fentes_avant.txt deja existant
+2026-06-24 22:23:50,462 | Extract_datas | WARNING | WRITE REPORT | Rapport 17-06-2026_Fentes_avant.txt deja existant

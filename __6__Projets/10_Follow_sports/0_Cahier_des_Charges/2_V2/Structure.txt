@@ -1,0 +1,25 @@
+sport_suivi_V2/
+├── main.py
+├── users/
+│   ├── X.db
+│   └── Y.db
+├── Rapport/
+├── Interface/
+│   ├── __init__.py
+│   ├── user_interface.py
+│   ├── seance_interface.py
+│   ├── mensuration_interface.py
+│   └── export_interface.py
+├── Structure/
+│   ├── __init__.py
+│   ├── seance_structure.py
+│   ├── mensuration_structure.py
+│   ├── user_structure.py
+│   └── format_rules.py
+└── Controllers/
+    ├── __init__.py
+    ├── user_controller.py
+    ├── seance_controller.py
+    ├── mensuration_controller.py
+    ├── export_controller.py
+    └── db_manager.py

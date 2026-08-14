@@ -1,0 +1,30 @@
+{
+    "date": "28/03/26",
+    "exercices": [
+        {
+            "name": "Squats",
+            "seance": [
+                {
+                    "series": 10,
+                    "reps": 20,
+                    "loads": 30
+                },
+                {
+                    "series": 20,
+                    "reps": 30,
+                    "loads": 40
+                }
+            ]
+        },
+        {
+            "name": "Fentes avant",
+            "seance": [
+                {
+                    "series": 10,
+                    "reps": 20,
+                    "loads": 35
+                }
+            ]
+        }
+    ]
+}
